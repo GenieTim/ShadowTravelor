@@ -1,16 +1,18 @@
 package bernhardwebstudio.shadowtravelor.service;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 
-public class BootService extends Service {
-    public BootService() {
-    }
+public class BootService extends BroadcastReceiver {
+
 
     @Override
-    public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
+    public void onReceive(Context context, Intent intent) {
+        Intent startServiceIntent = new Intent(context, PositionService.class);
+        context.startService(startServiceIntent);
     }
+
 }
