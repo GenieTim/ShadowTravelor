@@ -16,6 +16,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ImproveActivity"
+            android:label="@string/title_activity_improve" >
+        </activity>
+
+        <service
+            android:name=".service.NetworkChangedService"
+            android:exported="false" >
+        </service>
+        <service
+            android:name=".service.PositionService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+        <service
+            android:name=".service.TimerService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+        <service
+            android:name=".service.BootService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
 </manifest>
