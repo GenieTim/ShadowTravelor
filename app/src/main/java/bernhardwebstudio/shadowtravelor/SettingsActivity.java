@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.util.Log;
 
 import static android.net.ConnectivityManager.*;
 
@@ -22,10 +23,13 @@ public class SettingsActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
+
+    }
+
+    protected void reset() {
         Context context = this.getApplicationContext();
         Intent intent = getIntent();
-        NetworkInfo netInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
-        if (ConnectivityManager.TYPE_WIFI == netInfo.getType()) {
+        try {
             WifiManager netManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
             WifiInfo info = netManager.getConnectionInfo();
 
@@ -33,6 +37,8 @@ public class SettingsActivity extends Activity {
             SharedPreferences.Editor editor = preferences.edit();
 
             editor.putString("ssid", info.getSSID());
+        } catch (Exception e) {
+            Log.e("SHIT", e.getMessage());
         }
     }
 }

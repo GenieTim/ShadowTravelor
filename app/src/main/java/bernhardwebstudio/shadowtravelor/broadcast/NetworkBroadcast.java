@@ -10,7 +10,10 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
 
+import bernhardwebstudio.shadowtravelor.MainActivity;
 import bernhardwebstudio.shadowtravelor.data.Container;
+import bernhardwebstudio.shadowtravelor.data.Route;
+import bernhardwebstudio.shadowtravelor.database.DBHelper;
 import bernhardwebstudio.shadowtravelor.service.PositionService;
 
 /**
@@ -34,6 +37,10 @@ public class NetworkBroadcast extends BroadcastReceiver{
                 container.addObserver(new PositionService(context));
                 if(name.equals(homeNetwork)){
                     container.stopTimer();
+                    DBHelper helper = new DBHelper(context, DBHelper.DB_NAME, null, DBHelper.currentVersion);
+                    helper.insertRoute(container.getRoute());
+                    // reset Route
+                    container.setRoute(new Route());
                 }else{
                     container.startTimer();
                 }
