@@ -20,6 +20,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,6 +47,7 @@ public class MainActivity extends ActionBarActivity {
     private ListView profileList;
     private DBHelper helper;
     private ArrayList<Route> allRoutes;
+    ArrayList<ProfileDay> profileDays;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +80,8 @@ public class MainActivity extends ActionBarActivity {
         }
         selectDateSpinner.setAdapter(dateSelection);
 
-        ArrayAdapter<ProfileDay> profileAdapter = new RowAdapter(MainActivity.this, R.layout.row_item);
+
+        profileDays = new ArrayList<ProfileDay>();
         for (int i = 0; i < 7; i++) {
             ProfileDay pd = new ProfileDay();
             pd.setWeekday(i);
@@ -87,8 +91,9 @@ public class MainActivity extends ActionBarActivity {
                 target.setLocation(new Location(495, 284));
                 pd.addTarget(target);
             }
-            profileAdapter.add(pd);
+            profileDays.add(pd);
         }
+        RowAdapter profileAdapter = new RowAdapter(this, R.layout.row_item, profileDays);
         profileList.setAdapter(profileAdapter);
         profileList.setOnItemClickListener(itemClickListener);
     }
@@ -149,6 +154,7 @@ public class MainActivity extends ActionBarActivity {
 
         }
     };
+
 
     private void drawRouteGraph(int i, GraphView graph) {
         graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.route_vertical_axis));

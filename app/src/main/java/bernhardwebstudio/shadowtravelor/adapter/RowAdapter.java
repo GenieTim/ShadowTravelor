@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import bernhardwebstudio.shadowtravelor.R;
@@ -23,23 +24,37 @@ import bernhardwebstudio.shadowtravelor.data.ProfileDay;
 
 public class RowAdapter extends ArrayAdapter<ProfileDay> {
 
+    private String[] weekdays = {"Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"};
+
     private ArrayList<ProfileDay> profileDays = new ArrayList<ProfileDay>();
+    private Context context;
+    private int resource;
 
     public RowAdapter(@NonNull Context context, @LayoutRes int resource) {
         super(context, resource);
+        this.context = context;
+        this.resource = resource;
     }
 
     public RowAdapter(@NonNull Context context, @LayoutRes int resource, @IdRes int textViewResourceId) {
         super(context, resource, textViewResourceId);
+        this.context = context;
+        this.resource = resource;
+
     }
 
     public RowAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull ArrayList<ProfileDay> objects) {
         super(context, resource, objects);
         profileDays = objects;
+        this.context = context;
+        this.resource = resource;
     }
 
-    public RowAdapter(@NonNull Context context, @LayoutRes int resource, @IdRes int textViewResourceId, @NonNull List objects) {
+    public RowAdapter(@NonNull Context context, @LayoutRes int resource, @IdRes int textViewResourceId, @NonNull ArrayList<ProfileDay> objects) {
         super(context, resource, textViewResourceId, objects);
+        this.context = context;
+        this.resource = resource;
+        this.profileDays = objects;
     }
 
     @Override
@@ -51,18 +66,25 @@ public class RowAdapter extends ArrayAdapter<ProfileDay> {
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView==null){
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.row_item, parent, false);
+            convertView = inflater.inflate(resource, parent, false);
         }
         TextView day = (TextView) convertView.findViewById(R.id.day_text_label);
         ListView pdl = (ListView) convertView.findViewById(R.id.profile_detail_list);
 
         ProfileDay pd = profileDays.get(position);
-        day.setText(pd.getWeekday());
-        day.setText("Hello");
+        day.setText(weekdays[pd.getWeekday()].toString());
 
         ArrayAdapter<String> profileAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1);
         for(int i=0; i<pd.getRoute().size(); i++){
-            profileAdapter.add(pd.getRoute().get(i).getTime() + " - " + pd.getRoute().get(i).getLocation().getLatitude());
+
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(pd.getRoute().get(i).getTime().getTimeInMillis());
+
+            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            int minute = calendar.get(Calendar.MINUTE);
+
+            profileAdapter.add(hour + ":" + minute + " - " + pd.getRoute().get(i).getLocation().getLatitude());
         }
         pdl.setAdapter(profileAdapter);
         return convertView;

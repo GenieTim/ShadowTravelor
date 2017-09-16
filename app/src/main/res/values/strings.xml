@@ -11,6 +11,10 @@
     <string name="route_history_horizontal_axis">DateTime</string>
     <string name="route_vertical_axis">Velocity</string>
     <string name="route_horizontal_axis">Time</string>
+<<<<<<< HEAD
+    <string name="profile">Bewegungsprofil</string>
+=======
     <string name="last_score">Last Score</string>
+>>>>>>> b3deff9a9ddadabdeb1553d7ed4074a55d6adae9
 
 </resources>
