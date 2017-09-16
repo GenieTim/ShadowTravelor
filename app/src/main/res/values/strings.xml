@@ -11,5 +11,6 @@
     <string name="route_history_horizontal_axis">Score</string>
     <string name="route_vertical_axis">Velocity</string>
     <string name="route_horizontal_axis">Time</string>
+    <string name="profile">Bewegungsprofil</string>
 
 </resources>

@@ -28,10 +28,19 @@
             />
 
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="@string/profile" />
+
         <ListView
             android:id="@+id/prof_list_view"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="600dp"
             android:layout_weight="3">
 
 
