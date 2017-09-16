@@ -82,17 +82,25 @@ public class MainActivity extends ActionBarActivity {
 
 
         profileDays = new ArrayList<ProfileDay>();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 1; i < 6; i++) {
             ProfileDay pd = new ProfileDay();
             pd.setWeekday(i);
-            for (int j = 0; j < 2; j++) {
+            for (int j = 0; j < 1; j++) {
                 ProfileTarget target = new ProfileTarget();
-                target.setTime(new GregorianCalendar(2017, 9, i, 7, 0));
+                target.setTime(new GregorianCalendar(2017, 9, i, 7+j, 0));
                 target.setLocation(new Location(495, 284));
                 pd.addTarget(target);
             }
+            for (int j = 0; j < 1; j++) {
+                ProfileTarget target = new ProfileTarget();
+                target.setTime(new GregorianCalendar(2017, 9, i, 16-j, 0));
+                target.setLocation(new Location(395, 251));
+                pd.addTarget(target);
+            }
             profileDays.add(pd);
+
         }
+
         RowAdapter profileAdapter = new RowAdapter(this, R.layout.row_item, profileDays);
         profileList.setAdapter(profileAdapter);
         profileList.setOnItemClickListener(itemClickListener);
@@ -127,10 +135,8 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            if (i == 0) {
-                Intent intent = new Intent(MainActivity.this, ImproveActivity.class);
-                startActivity(intent);
-            }
+            Intent intent = new Intent(MainActivity.this, ImproveActivity.class);
+            startActivity(intent);
         }
     };
 
