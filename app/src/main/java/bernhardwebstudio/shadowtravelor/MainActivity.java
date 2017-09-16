@@ -11,12 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 
 public class MainActivity extends ActionBarActivity {
 
     private Spinner selectDateSpinner;
+    private ListView profileList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +30,21 @@ public class MainActivity extends ActionBarActivity {
         }
         selectDateSpinner = (Spinner) findViewById(R.id.select_date_spinner);
         selectDateSpinner.setOnItemSelectedListener(selectedListener);
+
+        profileList = (ListView) findViewById(R.id.profile_list_view);
+        profileList.setOnItemClickListener(itemClickListener);
+
+
     }
+
+
+    AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener(){
+
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+        }
+    };
 
     AdapterView.OnItemSelectedListener selectedListener = new AdapterView.OnItemSelectedListener(){
 

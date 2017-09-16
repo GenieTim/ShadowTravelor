@@ -36,6 +36,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ID_ROUTE = "ID_Route";
     public static final String COLUMN_ID_POINT = "ID_Point";
 
+    public static final String TABLE_PROFILE = "Profil";
+
+    public static final String TABLE_DAY = "Day";
+
+
     public static String createTableLocation =
             "CREATE TABLE " + TABLE_LOCATION + "(" + COLUMN_ID + "Integer Primary Key ," + COLUMN_LAT +
                     "real," + COLUMN_LONG + "real);";
@@ -99,8 +104,8 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_SCORE, route.getScore());
         values.put(COLUMN_DATE, route.getDate().getTimeInMillis());
         long id = db.insert(TABLE_ROUTE, null, values);
-        for(int i=0; i<route.route.size(); i++){
-            LocationTimeConnection ltc = route.route.get(i);
+        for(int i=0; i<route.getRoute().size(); i++){
+            LocationTimeConnection ltc = route.getRoute().get(i);
             long ltcId = getLocTimeId(ltc);
             ContentValues cValues = new ContentValues();
             cValues.put(COLUMN_ID_ROUTE, id);

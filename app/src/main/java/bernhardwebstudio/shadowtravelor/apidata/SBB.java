@@ -26,7 +26,7 @@ public class SBB {
     }
 
     public void getStationNumber(String name){
-        
+
     }
 
     @TargetApi(19)
