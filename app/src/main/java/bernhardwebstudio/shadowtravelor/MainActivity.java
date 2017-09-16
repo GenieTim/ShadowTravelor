@@ -55,7 +55,12 @@ public class MainActivity extends ActionBarActivity {
         profileList = (ListView) findViewById(R.id.profile_list_view);
         profileList.setOnItemClickListener(itemClickListener);
 
-        // draw view history
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+
         View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
         GraphView graph = (GraphView) v.findViewById(R.id.graph);
         TextView title = (TextView) v.findViewById(R.id.graph_title);
