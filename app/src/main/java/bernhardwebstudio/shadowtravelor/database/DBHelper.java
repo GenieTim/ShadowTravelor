@@ -103,7 +103,7 @@ public class DBHelper extends SQLiteOpenHelper {
         for(int i=0; i<4; i++){
             ContentValues values = new ContentValues();
             values.put(COLUMN_SCORE, 100*i+1);
-            values.put(COLUMN_DATE, 13689*i);
+            values.put(COLUMN_DATE, 15689*i);
             db.insert(TABLE_ROUTE, null, values);
         }
         for(int i=0; i<20; i++){
