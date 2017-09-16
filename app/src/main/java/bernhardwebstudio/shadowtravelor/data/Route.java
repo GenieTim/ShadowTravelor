@@ -48,4 +48,8 @@ public class Route {
             }
         });
     }
+
+    public ArrayList<LocationTimeConnection> getRoute() {
+        return this.route;
+    }
 }

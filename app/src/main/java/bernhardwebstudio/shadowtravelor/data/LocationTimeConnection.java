@@ -7,6 +7,8 @@ import java.util.GregorianCalendar;
  */
 public class LocationTimeConnection {
 
+    private double score;
+
     public LocationTimeConnection () {
 
     }
@@ -20,6 +22,13 @@ public class LocationTimeConnection {
         this.location = location;
         this.datetime = datetime;
         this.velocity = velocity;
+    }
+
+    public LocationTimeConnection(Location location, GregorianCalendar datetime, double velocity, double score) {
+        this.location = location;
+        this.datetime = datetime;
+        this.velocity = velocity;
+        this.score = score;
     }
 
     private Location location;
@@ -38,6 +47,10 @@ public class LocationTimeConnection {
         this.velocity = velocity;
     }
 
+    public void setScore(double score) {
+        this.score = score;
+    }
+
     public GregorianCalendar getDatetime() {
         return datetime;
     }
@@ -48,5 +61,9 @@ public class LocationTimeConnection {
 
     public double getVelocity() {
         return velocity;
+    }
+
+    public double getScore() {
+        return score;
     }
 }
