@@ -1,5 +1,6 @@
 package bernhardwebstudio.shadowtravelor.data;
 
+import java.util.ArrayList;
 import java.util.Observable;
 
 /**
@@ -12,9 +13,14 @@ public class Container extends Observable{
     private Route route;
     public long timerStarted = 0;
     private boolean hasTimerStarted = false;
+    public ArrayList<Route> allRoutes = new ArrayList<Route>();
 
     private Container(){
+        new SampleData();
+    }
 
+    public ArrayList<Route> getAllRoutes(){
+        return allRoutes;
     }
 
     public static Container instance(){
