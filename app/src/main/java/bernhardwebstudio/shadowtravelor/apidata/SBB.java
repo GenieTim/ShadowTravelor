@@ -86,7 +86,7 @@ public class SBB {
             if (arrival) {
                 httprequest("arrival", station, datetime.toString());
             } else {
-                httprequest("departure", station, datetime.toString())
+                httprequest("departure", station, datetime.toString());
             }
         } catch(IOException e){
 
