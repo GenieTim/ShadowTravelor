@@ -64,7 +64,7 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            //lade Grafik zu gewähltem Tag
+            // load graphic of selected day
         }
 
         @Override
