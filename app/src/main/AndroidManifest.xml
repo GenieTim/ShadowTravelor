@@ -24,6 +24,11 @@
             android:label="@string/title_activity_improve" >
         </activity>
 
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
+
         <service
             android:name=".service.PositionService"
             android:enabled="true"

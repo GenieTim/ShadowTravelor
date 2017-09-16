@@ -55,7 +55,7 @@ public class MainActivity extends ActionBarActivity {
         ArrayAdapter<String> dateSelection = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item);
 
         DBHelper h = new DBHelper(MainActivity.this, DBHelper.DB_NAME, null, DBHelper.currentVersion);
-        h.resetDB();
+        //h.resetDB();
         new SampleData(h);
 
         this.helper = new DBHelper(MainActivity.this, DBHelper.DB_NAME, null, DBHelper.currentVersion);
@@ -67,7 +67,7 @@ public class MainActivity extends ActionBarActivity {
         selectDateSpinner.setOnItemSelectedListener(selectedListener);
 
         profileList = (ListView) findViewById(R.id.profile_list_view);
-        profileList.setOnItemClickListener(itemClickListener);
+        //profileList.setOnItemClickListener(itemClickListener);
 
         // draw Graph of RouteHistory
         View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
@@ -85,7 +85,7 @@ public class MainActivity extends ActionBarActivity {
         parent.addView(v);
     }
 
-
+/*
     AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener(){
 
         @Override
@@ -96,7 +96,7 @@ public class MainActivity extends ActionBarActivity {
             }
         }
     };
-
+*/
     AdapterView.OnItemSelectedListener selectedListener = new AdapterView.OnItemSelectedListener(){
 
         @Override
@@ -135,9 +135,12 @@ public class MainActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            //return true;
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

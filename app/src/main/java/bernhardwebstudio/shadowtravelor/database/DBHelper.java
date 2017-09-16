@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
@@ -50,20 +51,20 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     public static String createTableLocation =
-            "CREATE TABLE " + TABLE_LOCATION + "(" + COLUMN_ID + " Integer Primary Key ," + COLUMN_LAT +
+            "CREATE TABLE " + TABLE_LOCATION + "(" + COLUMN_ID + " Integer Primary Key Autoincrement," + COLUMN_LAT +
                     " real," + COLUMN_LONG + " real);";
     public static String createTableLocationTime =
-            "CREATE TABLE " + TABLE_LOC_TIME_CON + "(" + COLUMN_ID + " Integer Primary Key ," + COLUMN_LOC +
+            "CREATE TABLE " + TABLE_LOC_TIME_CON + "(" + COLUMN_ID + " Integer Primary Key Autoincrement," + COLUMN_LOC +
                     " Integer," + COLUMN_VOLUME + " Integer," + COLUMN_USAGE +
                     " Integer," + COLUMN_TIME + " Integer," + COLUMN_VELOCITY + " real, FOREIGN KEY(" + COLUMN_LOC + ") REFERENCES Location(ID));";
     public static String createTableRoute =
-            "CREATE TABLE " + TABLE_ROUTE + "(" + COLUMN_ID + " Integer Primary Key ," + COLUMN_SCORE +
+            "CREATE TABLE " + TABLE_ROUTE + "(" + COLUMN_ID + " Integer Primary Key Autoincrement," + COLUMN_SCORE +
                     " real," + COLUMN_DATE + " real);";
     public static String createTableRoutePoints =
             "CREATE TABLE " + TABLE_ROUTE_POINTS + "(" + COLUMN_ID_ROUTE + " Integer," + COLUMN_ID_POINT +
                     " Integer, FOREIGN KEY(" + COLUMN_ID_ROUTE + ") REFERENCES Route(ID), FOREIGN KEY(" + COLUMN_ID_POINT + ") REFERENCES LocationTime(ID));";
 
-    public int oldVersion = 0;
+    public static int oldVersion = 0;
     public static int currentVersion = 1;
 
     public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -72,11 +73,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
         db.execSQL(createTableLocation);
         db.execSQL(createTableLocationTime);
         db.execSQL(createTableRoute);
         db.execSQL(createTableRoutePoints);
-
+/*
         for(int i=0; i<10; i++){
             ContentValues values = new ContentValues();
             values.put("Latitude", 13.89*i);
@@ -112,7 +114,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 
-
+*/
     }
 
     @Override
@@ -141,7 +143,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void addVelocity(double velocity, long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("INSERT INTO LocationTime(" + COLUMN_VELOCITY + ") VALUES " + velocity + " WHERE ID = " + id + ";");
-        db.close();
+        this.close();
     }
 
     public void insertRoute(Route route) {
@@ -149,6 +151,7 @@ public class DBHelper extends SQLiteOpenHelper {
         route.calculateScore();
         SQLiteDatabase db = this.getWritableDatabase();
         // zero, insert Route
+        Log.d("TEST", "2");
         ContentValues route_value = new ContentValues();
         route_value.put(COLUMN_SCORE, route.getScore());
         route_value.put(COLUMN_DATE, route.getDate().getTimeInMillis());
@@ -162,7 +165,7 @@ public class DBHelper extends SQLiteOpenHelper {
             relation.put(COLUMN_ID_POINT, point_id);
             db.insert(TABLE_ROUTE_POINTS, null, relation);
         }
-        db.close();
+        this.close();
     }
 
     public LocationTimeConnection getLocationTimeConnectionByDate(GregorianCalendar cal) {
@@ -191,7 +194,7 @@ public class DBHelper extends SQLiteOpenHelper {
             route.setDate(date);
             rh.add(route);
         }
-        db.close();
+        this.close();
         return rh;
     }
 
@@ -220,7 +223,7 @@ public class DBHelper extends SQLiteOpenHelper {
             }
             allRoutes.add(r);
         }
-        db.close();
+        this.close();
         return allRoutes;
     }
 

@@ -1,5 +1,7 @@
 package bernhardwebstudio.shadowtravelor.data;
 
+import android.util.Log;
+
 import java.util.GregorianCalendar;
 
 import bernhardwebstudio.shadowtravelor.database.DBHelper;

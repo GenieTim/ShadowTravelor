@@ -22,7 +22,7 @@ public class SettingsActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
-        Context context = this;
+        Context context = this.getApplicationContext();
         Intent intent = getIntent();
         NetworkInfo netInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
         if (ConnectivityManager.TYPE_WIFI == netInfo.getType()) {
