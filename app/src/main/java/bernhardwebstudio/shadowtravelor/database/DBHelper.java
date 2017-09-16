@@ -88,14 +88,14 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         for(int i=0; i<10; i++){
             ContentValues values = new ContentValues();
-            values.put(COLUMN_TIME, 128438*i);
+            values.put(COLUMN_TIME, 2.56830112E17*i);
             values.put(COLUMN_LOC, i);
             values.put(COLUMN_VELOCITY, 9*i);
             db.insert(TABLE_LOC_TIME_CON, null, values);
         }
         for(int i=0; i<10; i++){
             ContentValues values = new ContentValues();
-            values.put(COLUMN_TIME, 228438*i);
+            values.put(COLUMN_TIME, 2.56830112E17*i);
             values.put(COLUMN_LOC, i+5);
             values.put(COLUMN_VELOCITY, 3*i);
             db.insert(TABLE_LOC_TIME_CON, null, values);

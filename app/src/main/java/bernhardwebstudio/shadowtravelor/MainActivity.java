@@ -164,7 +164,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         TextView last = (TextView) findViewById(R.id.last_score);
-        last.setText(getResources().getString(R.string.last_score) + ":" + String.valueOf(route.getScore()));
+        last.setText(getResources().getString(R.string.last_score) + ": " + String.valueOf(route.getScore()));
 
         //title.setText(String.valueOf(route.getScore()));
         Diagram diagram = new Diagram(route);

@@ -21,18 +21,21 @@
             android:id="@+id/select_date_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_margin="10dp"/>
 
         <com.jjoe64.graphview.GraphView
             android:layout_width="match_parent"
             android:layout_height="200dip"
             android:id="@+id/view_route_stats"
+            android:layout_margin="10dp"
             />
 
         <com.jjoe64.graphview.GraphView
             android:layout_width="match_parent"
             android:layout_height="200dip"
             android:id="@+id/view_route_history_stats"
+            android:layout_margin="10dp"
             />
 
 
