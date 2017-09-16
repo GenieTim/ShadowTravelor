@@ -11,6 +11,8 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -25,66 +27,18 @@ import static android.net.ConnectivityManager.*;
 /**
  * Created by lenovo on 16.09.2017.
  */
-@TargetApi(23)
-public class SettingsActivity extends Activity {
-
-    /**
-     *
-     * @param savedInstanceState
-     */
+public class SettingsActivity extends PreferenceFragment {
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preferences);
 
-    }
+        // Make sure default values are applied.  In a real app, you would
+        // want this in a shared function that is used to retrieve the
+        // SharedPreferences wherever they are needed.
+        PreferenceManager.setDefaultValues(getActivity(),
+                R.xml.preferences, false);
 
-    /**
-     * Saves SSID of used Wifi Hotspot in SharedPreferences
-     */
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Context context = this.getApplicationContext();
-        final SharedPreferences preferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
-        TextView tv = (TextView) this.findViewById(R.id.ssidInput);
-        tv.setText(preferences.getString("SSID", "HackZurich2017"));
-
-        //SharedPreferences.Editor editor = preferences.edit();
-        //editor.putString("ssid", "HackZurich2017");
-
-        tv.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                // If the event is a key-down event on the "enter" button
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    // Perform action on key press
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("ssid", "HackZurich2017");
-                    // TODO: navigate back
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
-
-    /**
-     * Resets SSID in SharedPreferences
-     */
-    protected void reset() {
-        Context context = this.getApplicationContext();
-        Intent intent = getIntent();
-        try {
-            WifiManager netManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-            WifiInfo info = netManager.getConnectionInfo();
-
-            SharedPreferences preferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferences.edit();
-
-            editor.putString("ssid", info.getSSID());
-        } catch (Exception e) {
-            Log.e("SHIT", e.getMessage());
-        }
+        // Load the preferences from an XML resource
+        addPreferencesFromResource(R.xml.preferences);
     }
 }

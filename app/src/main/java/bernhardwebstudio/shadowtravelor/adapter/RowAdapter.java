@@ -1,12 +1,14 @@
 package bernhardwebstudio.shadowtravelor.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import bernhardwebstudio.shadowtravelor.ImproveActivity;
+import bernhardwebstudio.shadowtravelor.MainActivity;
 import bernhardwebstudio.shadowtravelor.R;
 import bernhardwebstudio.shadowtravelor.data.ProfileDay;
 
@@ -70,6 +74,22 @@ public class RowAdapter extends ArrayAdapter<ProfileDay> {
         }
         TextView day = (TextView) convertView.findViewById(R.id.day_text_label);
         ListView pdl = (ListView) convertView.findViewById(R.id.profile_detail_list);
+
+        pdl.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getContext(), ImproveActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+
+        day.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View parent = (View) view.getParent();
+                parent.callOnClick();
+            }
+        });
 
         ProfileDay pd = profileDays.get(position);
         day.setText(weekdays[pd.getWeekday()].toString());

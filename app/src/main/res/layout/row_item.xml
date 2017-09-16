@@ -10,12 +10,10 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
-        android:clickable="false"/>
+        android:gravity="center_horizontal"/>
 
     <ListView
         android:id="@+id/profile_detail_list"
         android:layout_width="match_parent"
-        android:layout_height="85dp"
-        android:clickable="false"/>
+        android:layout_height="85dp"/>
 </LinearLayout>
