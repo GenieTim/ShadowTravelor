@@ -77,9 +77,13 @@ public class MainActivity extends ActionBarActivity {
         graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.route_history_vertical_axis));
         graph.getGridLabelRenderer().setHorizontalAxisTitle(getResources().getString(R.string.route_history_horizontal_axis));
         View oldView = findViewById(R.id.view_route_history_stats);
-        ViewGroup parent = (ViewGroup) oldView.getParent();
-        parent.removeView(oldView);
-        parent.addView(v);
+        if (oldView != null) {
+            ViewGroup parent = (ViewGroup) oldView.getParent();
+            parent.removeView(oldView);
+            parent.addView(v);
+        } else {
+            Log.e("SHIT", "No parent");
+        }
     }
 
 /*
