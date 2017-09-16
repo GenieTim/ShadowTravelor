@@ -60,7 +60,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        
+
         View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
         GraphView graph = (GraphView) v.findViewById(R.id.graph);
         TextView title = (TextView) v.findViewById(R.id.graph_title);

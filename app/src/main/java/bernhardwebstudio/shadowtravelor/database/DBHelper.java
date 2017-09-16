@@ -144,7 +144,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public LocationTimeConnection getLocationTimeConnectionByDate(GregorianCalendar cal){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM TABLE "+TABLE_LOC_TIME_CON+","+TABLE_LOCATION+
+        Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_LOC_TIME_CON+","+TABLE_LOCATION+
                 " WHERE LocationTime.Time = "+cal.getTimeInMillis()+" AND "+
                 "Location.ID = LocationTime.Col_Location;", null);
         LocationTimeConnection ltc = new LocationTimeConnection();
@@ -157,7 +157,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public RouteHistory getRouteHistory() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM TABLE "+TABLE_ROUTE+
+        Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_ROUTE+
                 " ORDER BY " + COLUMN_DATE + " DESC;", null);
         RouteHistory rh = new RouteHistory();
         while(cursor.moveToNext()) {
