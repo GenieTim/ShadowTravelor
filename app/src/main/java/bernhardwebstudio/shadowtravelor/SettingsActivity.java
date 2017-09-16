@@ -22,7 +22,10 @@ public class SettingsActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-
+        Context context = this.getApplicationContext();
+        SharedPreferences preferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("ssid", "HackZurich2017");
 
     }
 

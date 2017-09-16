@@ -22,11 +22,13 @@ import bernhardwebstudio.shadowtravelor.service.PositionService;
 
 public class NetworkBroadcast extends BroadcastReceiver{
 
-    private String homeNetwork = "HackZurichIoT Legacy";
-
     @TargetApi(23)
     @Override
     public void onReceive(Context context, Intent intent) {
+        SharedPreferences preferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
+        String homeNetwork = preferences.getString("ssid", "HackZurich2017");
+
+
         String action = intent.getAction();
         if (action.equals("android.net.conn.CONNECTIVITY_CHANGE")) {
             WifiManager wifiMgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
