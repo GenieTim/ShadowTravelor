@@ -24,6 +24,7 @@ public class SBB {
 
     public InputStream getPassangerAmount(String station) throws IOException {
         String url = "data.sbb.ch/";
+        String charset = "UTF-8";
         if(station != null){
             String query = "api/records/1.0/search/?dataset=passenger-frequence&q="+station;
 
@@ -86,7 +87,7 @@ public class SBB {
             if (arrival) {
                 httprequest("arrival", station, datetime.toString());
             } else {
-                httprequest("departure", station, datetime.toString())
+                httprequest("departure", station, datetime.toString());
             }
         } catch(IOException e){
 
