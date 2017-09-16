@@ -97,7 +97,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_USAGE, locTime.getUsedSmartphone());
         values.put(COLUMN_VOLUME, locTime.getVolume());
         long id = db.insert(TABLE_LOC_TIME_CON, null, values);
-        db.close();
+        //db.close();
         return id;
     }
 
@@ -117,7 +117,7 @@ public class DBHelper extends SQLiteOpenHelper {
         long id = db.insert(TABLE_ROUTE, null, values);
         for(int i=0; i<route.getRoute().size(); i++){
             LocationTimeConnection ltc = route.getRoute().get(i);
-            long ltcId = getLocTimeId(ltc);
+            long ltcId = insertLocationTimeConnection(ltc);
             ContentValues cValues = new ContentValues();
             cValues.put(COLUMN_ID_ROUTE, id);
             cValues.put(COLUMN_ID_POINT, ltcId);
@@ -130,7 +130,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT Col_Location, Time FROM "+TABLE_LOC_TIME_CON+","+TABLE_LOCATION+
                 " WHERE LocationTime.Time = "+locTime.getDatetime().getTimeInMillis()+" AND "+
-                "Location.ID = LocationTime.Col_Location AND Location.Longtitude = " +
+                "Location.ID = LocationTime.Col_Location AND Location.Longitude = " +
                 locTime.getLocation().getLongitude()+ " AND Location.Latitude = " +
                 locTime.getLocation().getLatitude() + ";", null);
         if(cursor.getCount() != 0) {
@@ -140,7 +140,7 @@ public class DBHelper extends SQLiteOpenHelper {
             return id;
         }
         db.close();
-        return Long.parseLong(null);
+        return 0;
     }
 
     public LocationTimeConnection getLocationTimeConnectionByDate(GregorianCalendar cal){
