@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -69,7 +70,11 @@ public class MainActivity extends ActionBarActivity {
 
         ArrayAdapter<String> dateSelection = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
         for(int i=0; i<allRoutes.size(); i++){
-            dateSelection.add(allRoutes.get(i).getDate().toString());
+            SimpleDateFormat fmt = new SimpleDateFormat("dd.MM.yyyy");
+            fmt.setCalendar(allRoutes.get(i).getDate());
+            String dateFormatted = fmt.format(allRoutes.get(i).getDate().getTime());
+
+            dateSelection.add(dateFormatted);
         }
         selectDateSpinner.setAdapter(dateSelection);
     }

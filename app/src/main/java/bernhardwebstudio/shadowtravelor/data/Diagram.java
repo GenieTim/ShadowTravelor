@@ -26,11 +26,12 @@ public class Diagram {
             datapoints = this.drawRoute();
         } else if (this.routeHistory != null) {
             datapoints = this.drawRouteHistory();
-            Log.d("TEST datapoints lenght", String.valueOf(datapoints.length));
         } else {
             Log.e("TEST", "both drawable null");
             //throw new RuntimeException();
         }
+
+        Log.d("TEST datapoints length", String.valueOf(datapoints.length));
 
         if (datapoints != null) {
             return new LineGraphSeries<>(datapoints);
@@ -43,7 +44,7 @@ public class Diagram {
         this.route.sort();
         DataPoint[] datapoints = new DataPoint[this.route.getRoute().size()];
         for (int i = 0; i < this.route.getRoute().size(); i++) {
-            datapoints[i] = new DataPoint(this.route.getRoute().get(i).getDatetime().getTimeInMillis(), this.route.getRoute().get(i).getVelocity());
+            datapoints[i] = new DataPoint(this.route.getRoute().get(i).getDatetime().getTimeInMillis() / 10000, this.route.getRoute().get(i).getVelocity());
         }
         return datapoints;
     }
@@ -51,7 +52,7 @@ public class Diagram {
     private DataPoint[] drawRouteHistory() {
         DataPoint[] datapoints = new DataPoint[this.routeHistory.getRoutes().size()];
         for (int i = 0; i < this.routeHistory.getRoutes().size(); i++) {
-            datapoints[i] = new DataPoint(this.routeHistory.getRoutes().get(i).getDate().getTimeInMillis(), this.routeHistory.getRoutes().get(i).getScore());
+            datapoints[i] = new DataPoint(this.routeHistory.getRoutes().get(i).getDate().getTimeInMillis() / 10000, this.routeHistory.getRoutes().get(i).getScore());
         }
         return datapoints;
 
