@@ -22,33 +22,22 @@
         </activity>
 
         <service
-            android:name=".service.NetworkChangedService"
-            android:exported="false" >
-        </service>
-        <service
             android:name=".service.PositionService"
             android:enabled="true"
             android:exported="true" >
         </service>
-        <service
-            android:name=".service.TimerService"
-            android:enabled="true"
-            android:exported="true" >
-        </service>
-		
-		
-		<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-        <service
-            android:name=".service.BootService"
-            android:enabled="true"
-            android:exported="true" >
-        </service>
-		<receiver android:name="bernhardwebstudio.shadowtravelor.service.BootService">  
-			<intent-filter>  
-				<action android:name="android.intent.action.BOOT_COMPLETED" />  
-			</intent-filter>  
-		</receiver>
+
+        <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+		<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+        <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+
+        <receiver android:name=".broadcast.NetworkBroadcast">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

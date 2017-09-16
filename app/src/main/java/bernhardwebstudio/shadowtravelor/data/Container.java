@@ -1,13 +1,17 @@
 package bernhardwebstudio.shadowtravelor.data;
 
+import java.util.Observable;
+
 /**
  * Created by Benedict on 16.09.2017.
  */
 
-public class Container {
+public class Container extends Observable{
 
     private static Container container = null;
     private Route route;
+    public long timerStarted = 0;
+    private boolean hasTimerStarted = false;
 
     private Container(){
 
@@ -26,5 +30,21 @@ public class Container {
 
     public Route getRoute(){
         return route;
+    }
+
+    public void startTimer(){
+        hasTimerStarted = true;
+        setChanged();
+        notifyObservers();
+    }
+
+    public void stopTimer(){
+        hasTimerStarted = false;
+        setChanged();
+        notifyObservers();
+    }
+
+    public boolean hasTimerStarted(){
+        return hasTimerStarted;
     }
 }

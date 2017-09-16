@@ -10,10 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 
 
 public class MainActivity extends ActionBarActivity {
 
+    private Spinner selectDateSpinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +26,22 @@ public class MainActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+        selectDateSpinner = (Spinner) findViewById(R.id.select_date_spinner);
+        selectDateSpinner.setOnItemSelectedListener(selectedListener);
     }
+
+    AdapterView.OnItemSelectedListener selectedListener = new AdapterView.OnItemSelectedListener(){
+
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            //lade Grafik zu gewähltem Tag
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+
+        }
+    };
 
 
     @Override
