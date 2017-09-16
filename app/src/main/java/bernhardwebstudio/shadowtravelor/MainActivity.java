@@ -74,8 +74,8 @@ public class MainActivity extends ActionBarActivity {
         RouteHistory rh = helper.getRouteHistory();
         Diagram diagram = new Diagram(rh);
         graph.addSeries(diagram.draw());
-        graph.getGridLabelRenderer().setVerticalAxisTitle(String.valueOf(R.string.route_history_vertical_axis));
-        graph.getGridLabelRenderer().setHorizontalAxisTitle(String.valueOf(R.string.route_history_horizontal_axis));
+        graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.route_history_title));
+        graph.getGridLabelRenderer().setHorizontalAxisTitle(getResources().getString(R.string.route_history_title));
         View oldView = findViewById(R.id.view_route_history_stats);
         ViewGroup parent = (ViewGroup) oldView.getParent();
         parent.removeView(oldView);
