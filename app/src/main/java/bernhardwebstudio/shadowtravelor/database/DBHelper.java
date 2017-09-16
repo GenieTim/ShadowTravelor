@@ -30,13 +30,13 @@ public class DBHelper extends SQLiteOpenHelper {
                     "real," + COLUMN_LONG + "real);";
     public static String createTableLocationTime =
             "CREATE TABLE " + TABLE_LOC_TIME_CON + "(" + COLUMN_ID + "Integer Primary Key ," + COLUMN_LOC +
-                    "real," + COLUMN_LONG + "real);";
+                    "Integer," + COLUMN_TIME + "Integer, FOREIGN KEY("+COLUMN_LOC+") REFERENCES artist(Location.ID));";
     public static String createTableRoute =
-            "CREATE TABLE " + TABLE_LOCATION + "(" + COLUMN_ID + "Integer Primary Key ," + COLUMN_LAT +
-                    "real," + COLUMN_LONG + "real);";
+            "CREATE TABLE " + TABLE_ROUTE + "(" + COLUMN_ID + "Integer Primary Key ," + COLUMN_SCORE +
+                    "real);";
     public static String createTableRoutePoints =
-            "CREATE TABLE " + TABLE_LOCATION + "(" + COLUMN_ID + "Integer Primary Key ," + COLUMN_LAT +
-                    "real," + COLUMN_LONG + "real);";
+            "CREATE TABLE " + TABLE_ROUTE_POINTS + "(" + COLUMN_ID_ROUTE + "Integer," + COLUMN_ID_POINT +
+                    "Integer, FOREIGN KEY("+COLUMN_ID_ROUTE+") REFERENCES artist(Route.ID), FOREIGN KEY("+COLUMN_ID_POINT+") REFERENCES artist(LocationTime.ID));";
 
     public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -44,7 +44,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        
     }
 
     @Override
