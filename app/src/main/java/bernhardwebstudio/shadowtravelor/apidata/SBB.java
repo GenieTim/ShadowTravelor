@@ -50,6 +50,8 @@ public class SBB {
         }
     }
 
+    public void getConnection(String )
+
     private InputStream httprequest(String type, String station, String timestamp) throws IOException {
         String url = "https://api.opentransportdata.swiss/trias";
         String charset = "UTF-8";

@@ -23,6 +23,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_LAT = "Latitude";
 
     public static final String TABLE_LOC_TIME_CON = "LocationTime";
+    public static final String COLUMN_VOLUME = "Volume";
+    public static final String COLUMN_USAGE = "SmartphoneUsage";
     public static final String COLUMN_TIME = "Time";
     public static final String COLUMN_LOC = "Location";
     public static final String COLUMN_VELOCITY = "Velocity";
@@ -36,7 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ID_ROUTE = "ID_Route";
     public static final String COLUMN_ID_POINT = "ID_Point";
 
-    public static final String TABLE_PROFILE = "Profil";
+    public static final String TABLE_PROFILE = "Profile";
 
     public static final String TABLE_DAY = "Day";
 
@@ -46,6 +48,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     "real," + COLUMN_LONG + "real);";
     public static String createTableLocationTime =
             "CREATE TABLE " + TABLE_LOC_TIME_CON + "(" + COLUMN_ID + "Integer Primary Key ," + COLUMN_LOC +
+                    "Integer," + COLUMN_VOLUME + "Integer," + COLUMN_USAGE +
                     "Integer," + COLUMN_TIME + "Integer," + COLUMN_VELOCITY + "real, FOREIGN KEY("+COLUMN_LOC+") REFERENCES artist(Location.ID));";
     public static String createTableRoute =
             "CREATE TABLE " + TABLE_ROUTE + "(" + COLUMN_ID + "Integer Primary Key ," + COLUMN_SCORE +
@@ -87,6 +90,8 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_TIME, locTime.getDatetime().getTimeInMillis());
         values.put(COLUMN_LOC, insertLocation(locTime.getLocation(), db));
+        values.put(COLUMN_USAGE, locTime.getUsedSmartphone());
+        values.put(COLUMN_VOLUME, locTime.getVolume());
         long id = db.insert(TABLE_LOC_TIME_CON, null, values);
         db.close();
         return id;
