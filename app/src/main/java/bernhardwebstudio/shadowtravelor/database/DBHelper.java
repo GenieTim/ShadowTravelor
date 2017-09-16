@@ -107,6 +107,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public void insertRoute(Route route){
+        route.calculateVelocity();
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_SCORE, route.getScore());
