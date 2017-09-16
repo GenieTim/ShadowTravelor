@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.GregorianCalendar;
+import java.util.Calendar;
 
 /**
  * Created by Tim on 16.09.2017.
@@ -75,12 +76,19 @@ public class Route {
 
         // loop places to adjust their score
         for (int i = 1; i < this.route.size() - 1; i++) {
-            double dT = (this.route.get(i + 1).getDatetime().getTimeInMillis() - this.route.get(i - 1).getDatetime().getTimeInMillis()) / 1000;
+            // dT is half the difference between the adjacent times. Use to interpolate tune spans
+            double dT = (this.route.get(i + 1).getDatetime().getTimeInMillis() - this.route.get(i - 1).getDatetime().getTimeInMillis()) / 2000;
             if (this.route.get(i).getVelocity() > 1 && this.route.get(i).getVelocity() < 10) {
                 // pedestrian -  don't use phone!
                 tmp_score -= this.route.get(i).getUsedSmartphone() * dT;
             } else if (this.route.get(i).getVelocity() >= 10) {
                 // driving - don't in rush hour
+                Integer hour = this.route.get(i).getDatetime().get(Calendar.HOUR_OF_DAY);
+                if (hour == 7 || hour == 17) {
+                    tmp_score -= dT * 2;
+                } else if ((hour > 6 && hour < 9) || (hour > 16 && hour < 19)) {
+                    tmp_score -= dT;
+                }
             }
 
             // get additional points removed for listening to music with high volume
