@@ -10,6 +10,7 @@ import android.location.LocationManager;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.RequiresApi;
 import android.view.Display;
 
 import java.util.GregorianCalendar;
@@ -21,6 +22,7 @@ import bernhardwebstudio.shadowtravelor.data.LocationTimeConnection;
 
 import static java.security.AccessController.getContext;
 
+@RequiresApi(20)
 public class PositionService implements Observer {
 
     Context context;
@@ -61,6 +63,7 @@ public class PositionService implements Observer {
                     AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
                     if (am.isMusicActive()) {
                         phoneUsage = LocationTimeConnection.MUSIC;
+                        point.setVolume(am.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
                     }
                     for (Display display : dm.getDisplays()) {
                         if (display.getState() != Display.STATE_OFF) {
@@ -83,7 +86,12 @@ public class PositionService implements Observer {
                 public void onProviderDisabled(String provider) {
                 }
             };
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+
+            try {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            } catch (SecurityException e) {
+
+            }
         }
     }
 }

@@ -52,12 +52,13 @@ public class LocationTimeConnection {
 
     public static final int NOT_USED = 0;
     public static final int MUSIC = 1;
-    public static final int SCREEN = 2;
+    public static final int SCREEN = 3;
 
     private double score;
     private Location location;
     private GregorianCalendar datetime;
     private int usedSmartphone = NOT_USED;
+    private double volume = 0;
     private double velocity = 0.0;
 
     public void setDatetime(GregorianCalendar datetime) {
@@ -74,6 +75,14 @@ public class LocationTimeConnection {
 
     public void setScore(double score) {
         this.score = score;
+    }
+
+    public void setUsedSmartphone(int usedSmartphone) {
+        this.usedSmartphone = usedSmartphone;
+    }
+
+    public void setVolume(double volume) {
+        this.volume = volume;
     }
 
     public GregorianCalendar getDatetime() {
@@ -96,7 +105,7 @@ public class LocationTimeConnection {
         return usedSmartphone;
     }
 
-    public void setUsedSmartphone(int usedSmartphone) {
-        this.usedSmartphone = usedSmartphone;
+    public double getVolume() {
+        return volume;
     }
 }

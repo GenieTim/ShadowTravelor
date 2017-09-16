@@ -67,8 +67,25 @@ public class Route {
     }
 
     public void calculateScore() {
-        // 1 point or every minute travelling
-        double tmp_score = (this.getRoute().get(this.getRoute().size() - 1).getDatetime().getTimeInMillis() - this.getRoute().get(0).getDatetime().getTimeInMillis()) / 60000;
+        this.calculateVelocity();
 
+        // 5 point or every minute travelling
+        double tmp_score = 5 * (this.getRoute().get(this.getRoute().size() - 1).getDatetime().getTimeInMillis() - this.getRoute().get(0).getDatetime().getTimeInMillis()) / 60000;
+
+
+        // loop places to adjust their score
+        for (int i = 1; i < this.route.size() - 1; i++) {
+            double dT = (this.route.get(i + 1).getDatetime().getTimeInMillis() - this.route.get(i - 1).getDatetime().getTimeInMillis()) / 1000;
+            if (this.route.get(i).getVelocity() > 1 && this.route.get(i).getVelocity() < 10) {
+                // pedestrian -  don't use phone!
+                tmp_score -= this.route.get(i).getUsedSmartphone() * dT;
+            } else if (this.route.get(i).getVelocity() >= 10) {
+                // driving - don't in rush hour
+            }
+
+            // get additional points removed for listening to music with high volume
+            tmp_score += dT * this.route.get(i).getVolume() / 25;
+        }
+        this.setScore(tmp_score);
     }
 }
