@@ -18,7 +18,14 @@
             android:layout_weight="1" />
 
         <ViewStub
-            android:id="@+id/viewStub"
+            android:id="@+id/view_route_stats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:layout="@layout/statistics_graphic" />
+
+        <ViewStub
+            android:id="@+id/view_route_history_stats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"

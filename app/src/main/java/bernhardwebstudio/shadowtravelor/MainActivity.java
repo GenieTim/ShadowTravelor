@@ -24,6 +24,7 @@ import java.util.GregorianCalendar;
 import bernhardwebstudio.shadowtravelor.data.Diagram;
 import bernhardwebstudio.shadowtravelor.data.LocationTimeConnection;
 import bernhardwebstudio.shadowtravelor.data.Route;
+import bernhardwebstudio.shadowtravelor.data.RouteHistory;
 import bernhardwebstudio.shadowtravelor.database.DBHelper;
 
 
@@ -53,7 +54,16 @@ public class MainActivity extends ActionBarActivity {
         profileList = (ListView) findViewById(R.id.profile_list_view);
         profileList.setOnItemClickListener(itemClickListener);
 
-
+        // draw view history
+        View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
+        GraphView graph = (GraphView) v.findViewById(R.id.graph);
+        RouteHistory rh = helper.getRouteHistory();
+        Diagram diagram = new Diagram(rh);
+        graph.addSeries(diagram.draw());
+        View oldView = findViewById(R.id.view_route_history_stats);
+        ViewGroup parent = (ViewGroup) oldView.getParent();
+        parent.removeView(oldView);
+        parent.addView(v);
     }
 
 
@@ -75,6 +85,10 @@ public class MainActivity extends ActionBarActivity {
             Route route = helper.getRouteById(i);
             Diagram diagram = new Diagram(route);
             graph.addSeries(diagram.draw());
+            View oldView = view.findViewById(R.id.view_route_stats);
+            ViewGroup parent = (ViewGroup) oldView.getParent();
+            parent.removeView(oldView);
+            parent.addView(v);
         }
 
         @Override
@@ -82,7 +96,6 @@ public class MainActivity extends ActionBarActivity {
 
         }
     };
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
