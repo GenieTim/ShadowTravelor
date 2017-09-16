@@ -48,18 +48,18 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     public static String createTableLocation =
-            "CREATE TABLE " + TABLE_LOCATION + "(" + COLUMN_ID + "Integer Primary Key ," + COLUMN_LAT +
-                    "real," + COLUMN_LONG + "real);";
+            "CREATE TABLE " + TABLE_LOCATION + "(" + COLUMN_ID + " Integer Primary Key ," + COLUMN_LAT +
+                    " real," + COLUMN_LONG + " real);";
     public static String createTableLocationTime =
-            "CREATE TABLE " + TABLE_LOC_TIME_CON + "(" + COLUMN_ID + "Integer Primary Key ," + COLUMN_LOC +
-                    "Integer," + COLUMN_VOLUME + "Integer," + COLUMN_USAGE +
-                    "Integer," + COLUMN_TIME + "Integer," + COLUMN_VELOCITY + "real, FOREIGN KEY("+COLUMN_LOC+") REFERENCES artist(Location.ID));";
+            "CREATE TABLE " + TABLE_LOC_TIME_CON + "(" + COLUMN_ID + " Integer Primary Key ," + COLUMN_LOC +
+                    " Integer," + COLUMN_VOLUME + " Integer," + COLUMN_USAGE +
+                    " Integer," + COLUMN_TIME + " Integer," + COLUMN_VELOCITY + " real, FOREIGN KEY("+COLUMN_LOC+") REFERENCES Location.ID);";
     public static String createTableRoute =
-            "CREATE TABLE " + TABLE_ROUTE + "(" + COLUMN_ID + "Integer Primary Key ," + COLUMN_SCORE +
-                    "real," + COLUMN_DATE + "real);";
+            "CREATE TABLE " + TABLE_ROUTE + "(" + COLUMN_ID + " Integer Primary Key ," + COLUMN_SCORE +
+                    " real," + COLUMN_DATE + " real);";
     public static String createTableRoutePoints =
-            "CREATE TABLE " + TABLE_ROUTE_POINTS + "(" + COLUMN_ID_ROUTE + "Integer," + COLUMN_ID_POINT +
-                    "Integer, FOREIGN KEY("+COLUMN_ID_ROUTE+") REFERENCES artist(Route.ID), FOREIGN KEY("+COLUMN_ID_POINT+") REFERENCES artist(LocationTime.ID));";
+            "CREATE TABLE " + TABLE_ROUTE_POINTS + "(" + COLUMN_ID_ROUTE + " Integer," + COLUMN_ID_POINT +
+                    " Integer, FOREIGN KEY("+COLUMN_ID_ROUTE+") REFERENCES Route.ID, FOREIGN KEY("+COLUMN_ID_POINT+") REFERENCES LocationTime.ID);";
 
     public int oldVersion = 0;
     public static int currentVersion = 1;
@@ -126,7 +126,6 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public long getLocTimeId(LocationTimeConnection locTime){
-        //finish implemetation
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT LocationTime FROM TABLE "+TABLE_LOC_TIME_CON+","+TABLE_LOCATION+
                 " WHERE LocationTime.Time = "+locTime.getDatetime().getTimeInMillis()+" AND "+
@@ -173,9 +172,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return rh;
     }
 
-    public ArrayList<LocationTimeConnection> getLocationTimeConnection() {
-        return new ArrayList<LocationTimeConnection>();
-    }
+
 
     public ArrayList<Route> getAllRoutes(){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -205,8 +202,4 @@ public class DBHelper extends SQLiteOpenHelper {
         return allRoutes;
     }
 
-    public Route getRouteById(int id){
-
-        return new Route();
-    }
 }
