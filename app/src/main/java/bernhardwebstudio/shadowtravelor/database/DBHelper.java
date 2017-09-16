@@ -166,7 +166,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<Route> allRoutes = new ArrayList<Route>();
         for (int i = 0; i < allRoutes.size(); i++) {
             Route r = new Route();
-            int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+            int id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
             GregorianCalendar date = new GregorianCalendar();
             date.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
             r.setDate(date);
