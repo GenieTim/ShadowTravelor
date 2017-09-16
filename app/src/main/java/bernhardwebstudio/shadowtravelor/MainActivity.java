@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
 
@@ -57,6 +58,8 @@ public class MainActivity extends ActionBarActivity {
         // draw view history
         View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
         GraphView graph = (GraphView) v.findViewById(R.id.graph);
+        TextView title = (TextView) v.findViewById(R.id.graph_title);
+        title.setText(R.string.route_history_title);
         RouteHistory rh = helper.getRouteHistory();
         Diagram diagram = new Diagram(rh);
         graph.addSeries(diagram.draw());
@@ -82,7 +85,9 @@ public class MainActivity extends ActionBarActivity {
             // load graphic of selected day
             View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
             GraphView graph = (GraphView) v.findViewById(R.id.graph);
+            TextView title = (TextView) v.findViewById(R.id.graph_title);
             Route route = allRoutes.get(i);
+            title.setText(String.valueOf(route.getScore()));
             Diagram diagram = new Diagram(route);
             graph.addSeries(diagram.draw());
             View oldView = view.findViewById(R.id.view_route_stats);
