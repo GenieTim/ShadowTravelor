@@ -1,5 +1,7 @@
 package bernhardwebstudio.shadowtravelor.data;
 
+import android.util.Log;
+
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -19,16 +21,22 @@ public class Diagram {
     }
 
     public LineGraphSeries draw() {
-        DataPoint[] datapoints;
+        DataPoint[] datapoints = null;
         if (this.route != null) {
             datapoints = this.drawRoute();
         } else if (this.routeHistory != null) {
             datapoints = this.drawRouteHistory();
+            Log.d("TEST datapoints lenght", String.valueOf(datapoints.length));
         } else {
+            Log.e("TEST", "both drawable null");
             //throw new RuntimeException();
         }
 
-        return new LineGraphSeries<>();
+        if (datapoints != null) {
+            return new LineGraphSeries<>(datapoints);
+        } else {
+            return new LineGraphSeries<>();
+        }
     }
 
     private DataPoint[] drawRoute() {

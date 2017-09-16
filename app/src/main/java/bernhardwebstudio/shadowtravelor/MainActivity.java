@@ -33,6 +33,7 @@ import bernhardwebstudio.shadowtravelor.data.ProfileTarget;
 import bernhardwebstudio.shadowtravelor.data.Route;
 import bernhardwebstudio.shadowtravelor.data.RouteHistory;
 import bernhardwebstudio.shadowtravelor.data.SampleData;
+import bernhardwebstudio.shadowtravelor.data.SampleRoute;
 import bernhardwebstudio.shadowtravelor.database.DBHelper;
 
 
@@ -61,6 +62,7 @@ public class MainActivity extends ActionBarActivity {
 
         this.helper = new DBHelper(MainActivity.this, DBHelper.DB_NAME, null, DBHelper.currentVersion);
         allRoutes = helper.getAllRoutes();
+        Log.d("TEST allRoutes size", String.valueOf(allRoutes.size()));
         for (int i = 0; i < allRoutes.size(); i++) {
             dateSelection.add(allRoutes.get(i).getDate().toString());
         }
@@ -93,6 +95,9 @@ public class MainActivity extends ActionBarActivity {
         graph.addSeries(diagram.draw());
         graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.route_history_vertical_axis));
         graph.getGridLabelRenderer().setHorizontalAxisTitle(getResources().getString(R.string.route_history_horizontal_axis));
+        // activate horizontal zooming and scrolling
+        graph.getViewport().setScalable(true);
+
         View oldView = findViewById(R.id.view_route_history_stats);
         if (oldView != null) {
             ViewGroup parent = (ViewGroup) oldView.getParent();
@@ -134,7 +139,10 @@ public class MainActivity extends ActionBarActivity {
             GraphView graph = (GraphView) v.findViewById(R.id.graph);
             TextView title = (TextView) v.findViewById(R.id.graph_title);
             Route route = allRoutes.get(i);
-            if (route != null) {
+            if (route == null) {
+                route = new SampleRoute();
+            }
+
                 title.setText(String.valueOf(route.getScore()));
                 Diagram diagram = new Diagram(route);
                 graph.addSeries(diagram.draw());
@@ -146,7 +154,6 @@ public class MainActivity extends ActionBarActivity {
                 } else {
                     Log.d("SHIT", "nop old view");
                 }
-            }
         }
     };
 

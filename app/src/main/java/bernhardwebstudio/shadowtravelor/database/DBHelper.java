@@ -80,33 +80,33 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(createTableRoute);
         db.execSQL(createTableRoutePoints);
 
-        for(int i=0; i<10; i++){
+        for(int i=0; i<20; i++){
             ContentValues values = new ContentValues();
             values.put(COLUMN_LAT, 13.89*i);
             values.put(COLUMN_LONG, 13.89*i);
             db.insert(TABLE_LOCATION, null, values);
         }
-        for(int i=0; i<5; i++){
+        for(int i=0; i<10; i++){
             ContentValues values = new ContentValues();
             values.put(COLUMN_TIME, 128438*i);
             values.put(COLUMN_LOC, i);
             values.put(COLUMN_VELOCITY, 9*i);
             db.insert(TABLE_LOC_TIME_CON, null, values);
         }
-        for(int i=0; i<5; i++){
+        for(int i=0; i<10; i++){
             ContentValues values = new ContentValues();
             values.put(COLUMN_TIME, 228438*i);
             values.put(COLUMN_LOC, i+5);
             values.put(COLUMN_VELOCITY, 3*i);
             db.insert(TABLE_LOC_TIME_CON, null, values);
         }
-        for(int i=0; i<2; i++){
+        for(int i=0; i<4; i++){
             ContentValues values = new ContentValues();
             values.put(COLUMN_SCORE, 100*i+1);
             values.put(COLUMN_DATE, 13689*i);
             db.insert(TABLE_ROUTE, null, values);
         }
-        for(int i=0; i<10; i++){
+        for(int i=0; i<20; i++){
             ContentValues values = new ContentValues();
             values.put(COLUMN_ID_ROUTE, i%5);
             values.put(COLUMN_ID_POINT, i);
@@ -186,15 +186,22 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_ROUTE +
                 " ORDER BY " + COLUMN_DATE + " DESC;", null);
         RouteHistory rh = new RouteHistory();
-        while (cursor.moveToNext()) {
-            Route route = new Route();
-            route.setScore(cursor.getDouble(cursor.getColumnIndex(COLUMN_SCORE)));
-            GregorianCalendar date = new GregorianCalendar();
-            date.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
-            route.setDate(date);
-            rh.add(route);
+        Log.d("TEST", String.valueOf(cursor.getCount()));
+        cursor.moveToFirst();
+        if (cursor != null) {
+            do {
+                Route route = new Route();
+                route.setScore(cursor.getDouble(cursor.getColumnIndex(COLUMN_SCORE)));
+                Log.d("TEST Score", String.valueOf(route.getScore()));
+                GregorianCalendar date = new GregorianCalendar();
+                date.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
+                route.setDate(date);
+                rh.add(route);
+                Log.d("rh lenght", String.valueOf(rh.getRoutes().size()));
+            } while (cursor.moveToNext());
         }
         this.close();
+        Log.d("rh lenght", String.valueOf(rh.getRoutes().size()));
         return rh;
     }
 
@@ -204,24 +211,28 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM Route", null);
         cursor.moveToFirst();
         ArrayList<Route> allRoutes = new ArrayList<Route>();
-        for (int i = 0; i < allRoutes.size(); i++) {
-            Route r = new Route();
-            long id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
-            GregorianCalendar date = new GregorianCalendar();
-            date.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
-            r.setDate(date);
-            r.setScore(cursor.getDouble(cursor.getColumnIndex(COLUMN_SCORE)));
-            Cursor cursor2 = db.rawQuery("SELECT " + COLUMN_TIME + ", "+ COLUMN_VELOCITY+" FROM "+ TABLE_LOC_TIME_CON +" WHERE LocationTime.ID In (SELECT * FROM "  + TABLE_ROUTE_POINTS + " WHERE ID_Route = " + id + ");", null);
-            cursor2.moveToFirst();
-            for (int j = 0; j < cursor2.getCount(); j++) {
-                GregorianCalendar gC = new GregorianCalendar();
-                gC.setTimeInMillis(cursor2.getLong(cursor2.getColumnIndex(COLUMN_DATE)));
-                LocationTimeConnection ltc = new LocationTimeConnection();
-                ltc.setDatetime(gC);
-                ltc.setVelocity(cursor2.getDouble(cursor2.getColumnIndex(COLUMN_VELOCITY)));
-                r.add(ltc);
+        if (cursor.getCount() > 0) {
+            for (int i = 0; i < cursor.getCount(); i++) {
+                Route r = new Route();
+                long id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
+                GregorianCalendar date = new GregorianCalendar();
+                date.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
+                r.setDate(date);
+                r.setScore(cursor.getDouble(cursor.getColumnIndex(COLUMN_SCORE)));
+                Cursor cursor2 = db.rawQuery("SELECT " + COLUMN_TIME + ", " + COLUMN_VELOCITY + " FROM " + TABLE_LOC_TIME_CON + " WHERE LocationTime.ID In (SELECT " + COLUMN_ID_POINT + " FROM " + TABLE_ROUTE_POINTS + " WHERE ID_Route = " + id + ");", null);
+                cursor2.moveToFirst();
+                if (cursor2.getCount() > 0) {
+                    for (int j = 0; j < cursor2.getCount(); j++) {
+                        GregorianCalendar gC = new GregorianCalendar();
+                        gC.setTimeInMillis(cursor2.getLong(cursor2.getColumnIndex(COLUMN_TIME)));
+                        LocationTimeConnection ltc = new LocationTimeConnection();
+                        ltc.setDatetime(gC);
+                        ltc.setVelocity(cursor2.getDouble(cursor2.getColumnIndex(COLUMN_VELOCITY)));
+                        r.add(ltc);
+                    }
+                }
+                allRoutes.add(r);
             }
-            allRoutes.add(r);
         }
         this.close();
         return allRoutes;
