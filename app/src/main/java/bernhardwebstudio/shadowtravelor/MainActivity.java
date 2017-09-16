@@ -61,6 +61,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onStart(){
         super.onStart();
 
+        // draw Graph of RouteHistory
         View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
         GraphView graph = (GraphView) v.findViewById(R.id.graph);
         TextView title = (TextView) v.findViewById(R.id.graph_title);
@@ -68,6 +69,8 @@ public class MainActivity extends ActionBarActivity {
         RouteHistory rh = helper.getRouteHistory();
         Diagram diagram = new Diagram(rh);
         graph.addSeries(diagram.draw());
+        graph.getGridLabelRenderer().setVerticalAxisTitle(String.valueOf(R.string.route_history_vertical_axis));
+        graph.getGridLabelRenderer().setHorizontalAxisTitle(String.valueOf(R.string.route_history_horizontal_axis));
         View oldView = findViewById(R.id.view_route_history_stats);
         ViewGroup parent = (ViewGroup) oldView.getParent();
         parent.removeView(oldView);
