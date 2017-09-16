@@ -88,14 +88,14 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         for(int i=0; i<10; i++){
             ContentValues values = new ContentValues();
-            values.put(COLUMN_TIME, 2.56830112E17+i*12000);
+            values.put(COLUMN_TIME, 1505590419784f-i*12000f);
             values.put(COLUMN_LOC, i);
             values.put(COLUMN_VELOCITY, 9*i);
             db.insert(TABLE_LOC_TIME_CON, null, values);
         }
         for(int i=0; i<10; i++){
             ContentValues values = new ContentValues();
-            values.put(COLUMN_TIME, 2.56830000E17+i*18000);
+            values.put(COLUMN_TIME, 1505590419784f-i*18000f);
             values.put(COLUMN_LOC, i+5);
             values.put(COLUMN_VELOCITY, 3*i);
             db.insert(TABLE_LOC_TIME_CON, null, values);
@@ -103,7 +103,7 @@ public class DBHelper extends SQLiteOpenHelper {
         for(int i=0; i<4; i++){
             ContentValues values = new ContentValues();
             values.put(COLUMN_SCORE, 100*i+1);
-            values.put(COLUMN_DATE, 15689*i);
+            values.put(COLUMN_DATE, 1505590419784f-180000f*i);
             db.insert(TABLE_ROUTE, null, values);
         }
         for(int i=0; i<20; i++){

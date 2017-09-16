@@ -106,6 +106,8 @@ public class MainActivity extends ActionBarActivity {
         Diagram diagram = new Diagram(rh);
         graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.route_history_vertical_axis));
         graph.getGridLabelRenderer().setHorizontalAxisTitle(getResources().getString(R.string.route_history_horizontal_axis));
+        graph.setTitle(getResources().getString(R.string.route_history_title));
+
         // activate horizontal zooming and scrolling
         graph.getViewport().setScalable(true);
         graph.addSeries(diagram.draw());
@@ -153,20 +155,11 @@ public class MainActivity extends ActionBarActivity {
         graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.route_vertical_axis));
         graph.getGridLabelRenderer().setHorizontalAxisTitle(getResources().getString(R.string.route_horizontal_axis));
 
-        //TextView title = (TextView) v.findViewById(R.id.graph_title);
         Route route = allRoutes.get(i);
-        if (route == null) {
-            Log.e("TEST", "route null");
-            return;
-        } else {
-            Log.d("AllRoute length", String.valueOf(allRoutes.size()));
-            Log.d("Route length", String.valueOf(route.getRoute().size()));
-        }
 
         TextView last = (TextView) findViewById(R.id.last_score);
         last.setText(getResources().getString(R.string.last_score) + ": " + String.valueOf(route.getScore()));
 
-        //title.setText(String.valueOf(route.getScore()));
         Diagram diagram = new Diagram(route);
         graph.addSeries(diagram.draw());
         //View oldView = view.findViewById(R.id.view_route_stats);

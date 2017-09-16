@@ -1,5 +1,6 @@
 package bernhardwebstudio.shadowtravelor.data;
 
+import android.graphics.Color;
 import android.util.Log;
 
 import com.jjoe64.graphview.series.DataPoint;
@@ -46,7 +47,10 @@ public class Diagram {
         Log.d("TEST datapoints length", String.valueOf(datapoints.length));
 
         if (datapoints != null) {
-            return new LineGraphSeries<>(datapoints);
+            LineGraphSeries<DataPoint> serie = new LineGraphSeries<>(datapoints);
+            serie.setDrawBackground(true);
+            serie.setBackgroundColor(Color.BLUE);
+            return serie;
         } else {
             return new LineGraphSeries<>();
         }
