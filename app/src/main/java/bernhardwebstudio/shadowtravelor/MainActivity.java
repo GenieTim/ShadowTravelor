@@ -44,12 +44,17 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         selectDateSpinner = (Spinner) findViewById(R.id.select_date_spinner);
+
+
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+
         ArrayAdapter<String> dateSelection = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item);
 
         this.helper = new DBHelper(MainActivity.this, DBHelper.DB_NAME, null, DBHelper.currentVersion);
-
-        new SampleData(this.helper);
-
         allRoutes = helper.getAllRoutes();
         for(int i=0; i<allRoutes.size(); i++){
             dateSelection.add(allRoutes.get(i).getDate().toString());
@@ -59,12 +64,6 @@ public class MainActivity extends ActionBarActivity {
 
         profileList = (ListView) findViewById(R.id.profile_list_view);
         profileList.setOnItemClickListener(itemClickListener);
-
-    }
-
-    @Override
-    protected void onStart(){
-        super.onStart();
 
         // draw Graph of RouteHistory
         View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
