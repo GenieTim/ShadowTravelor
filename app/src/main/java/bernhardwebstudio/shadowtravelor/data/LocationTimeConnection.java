@@ -7,8 +7,6 @@ import java.util.GregorianCalendar;
  */
 public class LocationTimeConnection {
 
-    private double score;
-
     public LocationTimeConnection () {
 
     }
@@ -31,9 +29,10 @@ public class LocationTimeConnection {
         this.score = score;
     }
 
+    private double score;
     private Location location;
     private GregorianCalendar datetime;
-    private double velocity;
+    private double velocity = 0.0;
 
     public void setDatetime(GregorianCalendar datetime) {
         this.datetime = datetime;

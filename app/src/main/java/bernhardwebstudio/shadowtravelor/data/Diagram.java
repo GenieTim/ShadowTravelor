@@ -32,6 +32,7 @@ public class Diagram {
     }
 
     private DataPoint[] drawRoute() {
+        this.route.sort();
         DataPoint[] datapoints = new DataPoint[this.route.getRoute().size()];
         for (int i = 0; i < this.route.getRoute().size(); i++) {
             datapoints[i] = new DataPoint(this.route.getRoute().get(i).getDatetime().getTimeInMillis(), this.route.getRoute().get(i).getVelocity());

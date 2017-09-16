@@ -52,4 +52,17 @@ public class Route {
     public ArrayList<LocationTimeConnection> getRoute() {
         return this.route;
     }
+
+    public void calculateVelocity() {
+        double velocity = 0;
+        // set velocity for every except the last point (0 anyway)
+        for (int i = 1; i < this.route.size() - 1; i++) {
+            Location target = this.route.get(i + 1).getLocation();
+            double dS1 = this.route.get(i - 1).getLocation().getDistanceTo(target) ;
+            double dT1 = this.route.get(i + 1).getDatetime().getTimeInMillis() - this.route.get(i - 1).getDatetime().getTimeInMillis();
+            double y1 = dS1/dT1;
+            velocity = y1 * (this.route.get(i).getDatetime().getTimeInMillis() - this.route.get(i - 1).getDatetime().getTimeInMillis()) / dT1;
+            this.route.get(i).setVelocity(velocity);
+        }
+    }
 }
