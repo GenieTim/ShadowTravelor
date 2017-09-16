@@ -76,38 +76,43 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(createTableLocationTime);
         db.execSQL(createTableRoute);
         db.execSQL(createTableRoutePoints);
-        db.close();
+
+        for(int i=0; i<10; i++){
+            ContentValues values = new ContentValues();
+            values.put("Latitude", 13.89*i);
+            values.put("Longitude", 13.89*i);
+            db.insert("Location", null, values);
+        }
+        for(int i=0; i<5; i++){
+            ContentValues values = new ContentValues();
+            values.put("Time", 128438*i);
+            values.put("Location", i);
+            values.put("Velocity", 9*i);
+            db.insert("LocationTime", null, values);
+        }
+        for(int i=0; i<5; i++){
+            ContentValues values = new ContentValues();
+            values.put("Time", 228438*i);
+            values.put("Location", i+5);
+            values.put("Velocity", 3*i);
+            db.insert("LocationTime", null, values);
+        }
+        for(int i=0; i<2; i++){
+            ContentValues values = new ContentValues();
+            values.put("Score", 100*i+1);
+            values.put("Date", 13689*i);
+            db.insert("Route", null, values);
+        }
+        for(int i=0; i<10; i++){
+            ContentValues values = new ContentValues();
+            values.put("ID_Route", i%5);
+            values.put("ID_Point", i);
+            db.insert("RoutePoints", null, values);
+        }
 
 
-        Route rotas = new Route();
-
-        Location technoPark = new Location(47.389161, 8.5150677);
-        Location zurichHB = new Location(47.3783, 8.52);
-        Location zurichAirport = new Location(47.4504, 8.5619);
-        Location zurichLindenhof = new Location(47.3721811, 8.5413182);
-        Location zurichZoo = new Location(47.3845, 8.5747);
 
 
-        GregorianCalendar Morning = new GregorianCalendar(2017, 9, 16, 8, 00);
-        GregorianCalendar Noon = new GregorianCalendar(2017, 9, 16, 13, 00);
-        GregorianCalendar afterNoon = new GregorianCalendar(2017, 9, 16, 16, 00);
-        GregorianCalendar Evening = new GregorianCalendar(2017, 9, 16, 19, 00);
-        GregorianCalendar Midnight = new GregorianCalendar(2017, 9, 16, 23, 00);
-
-
-        LocationTimeConnection lct1 = new LocationTimeConnection(technoPark, Morning);
-        LocationTimeConnection lct2 = new LocationTimeConnection(zurichHB, Noon);
-        LocationTimeConnection lct3 = new LocationTimeConnection(zurichAirport, afterNoon);
-        LocationTimeConnection lct4 = new LocationTimeConnection(zurichLindenhof, Evening);
-        LocationTimeConnection lct5 = new LocationTimeConnection(zurichZoo, Midnight);
-
-        rotas.add(lct1);
-        rotas.add(lct2);
-        rotas.add(lct3);
-        rotas.add(lct4);
-        rotas.add(lct4);
-        rotas.add(lct5);
-        insertRoute(rotas);
     }
 
     @Override
@@ -186,7 +191,7 @@ public class DBHelper extends SQLiteOpenHelper {
             route.setDate(date);
             rh.add(route);
         }
-        cursor.close();
+        db.close();
         return rh;
     }
 

@@ -19,7 +19,7 @@ import bernhardwebstudio.shadowtravelor.service.PositionService;
 
 public class NetworkBroadcast extends BroadcastReceiver{
 
-    private String homeNetwork = "MeinNetzwerk";
+    private String homeNetwork = "HackZurichIoT Legacy";
 
     @TargetApi(23)
     @Override
