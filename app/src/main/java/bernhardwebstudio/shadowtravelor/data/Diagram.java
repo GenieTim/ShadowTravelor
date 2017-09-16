@@ -12,14 +12,26 @@ public class Diagram {
     private Route route;
     private RouteHistory routeHistory;
 
+    /**
+     * Diagram Constructor with a single route
+     * @param route
+     */
     public Diagram(Route route) {
         this.route = route;
     }
 
+    /**
+     * Diagram Constructor for multiple routes, a route history
+     * @param routeHistory
+     */
     public Diagram(RouteHistory routeHistory) {
         this.routeHistory = routeHistory;
     }
 
+    /**
+     * translates route data in a format that is easier to work with Graphview
+     * @return
+     */
     public LineGraphSeries draw() {
         DataPoint[] datapoints = null;
         if (this.route != null) {
@@ -40,6 +52,10 @@ public class Diagram {
         }
     }
 
+    /**
+     * Translates each entry in route into a DataPoint
+     * @return
+     */
     private DataPoint[] drawRoute() {
         this.route.sort();
         DataPoint[] datapoints = new DataPoint[this.route.getRoute().size()];
@@ -49,6 +65,10 @@ public class Diagram {
         return datapoints;
     }
 
+    /**
+     * Does the same as drawRoute but with route history
+     * @return
+     */
     private DataPoint[] drawRouteHistory() {
         DataPoint[] datapoints = new DataPoint[this.routeHistory.getRoutes().size()];
         for (int i = 0; i < this.routeHistory.getRoutes().size(); i++) {
