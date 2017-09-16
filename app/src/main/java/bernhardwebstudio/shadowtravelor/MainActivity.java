@@ -63,10 +63,9 @@ public class MainActivity extends ActionBarActivity {
     public void setSpinnerAdapter(){
         //for final version
         this.helper = new DBHelper(MainActivity.this, DBHelper.DB_NAME, null, DBHelper.currentVersion);
-        allRoutes = helper.getAllRoutes();
+        this.allRoutes = helper.getAllRoutes();
         Log.d("TEST allRoutes size", String.valueOf(allRoutes.size()));
         //for testing and demo
-        allRoutes = Container.instance().getAllRoutes();
 
         ArrayAdapter<String> dateSelection = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
         for(int i=0; i<allRoutes.size(); i++){
@@ -99,19 +98,17 @@ public class MainActivity extends ActionBarActivity {
     protected void onStart(){
         super.onStart();
 
-
         // draw Graph of RouteHistory
-        View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
-        GraphView graph = (GraphView) v.findViewById(R.id.graph);
-        TextView title = (TextView) v.findViewById(R.id.graph_title);
-        title.setText(R.string.route_history_title);
+        GraphView graph = (GraphView) findViewById(R.id.view_route_history_stats);
+        //TextView title = (TextView) v.findViewById(R.id.graph_title);
+        //title.setText(R.string.route_history_title);
         RouteHistory rh = helper.getRouteHistory();
         Diagram diagram = new Diagram(rh);
-        graph.addSeries(diagram.draw());
         graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.route_history_vertical_axis));
         graph.getGridLabelRenderer().setHorizontalAxisTitle(getResources().getString(R.string.route_history_horizontal_axis));
         // activate horizontal zooming and scrolling
         graph.getViewport().setScalable(true);
+        graph.addSeries(diagram.draw());
 
         /*View oldView = findViewById(R.id.view_route_history_stats);
         if (oldView != null) {
@@ -179,20 +176,21 @@ public class MainActivity extends ActionBarActivity {
     };
 
     private void drawRouteGraph(int i, View view) {
-        View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
-        GraphView graph = (GraphView) v.findViewById(R.id.graph);
-        TextView title = (TextView) v.findViewById(R.id.graph_title);
-        if (allRoutes.size() == 0) {
-            return;
-        }
+        //View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
+        GraphView graph = (GraphView) findViewById(R.id.view_route_stats);
+        //TextView title = (TextView) v.findViewById(R.id.graph_title);
         Route route = allRoutes.get(i);
         if (route == null) {
+            Log.e("TEST", "route null");
             return;
+        } else {
+            Log.d("AllRoute lenght", String.valueOf(allRoutes.size()));
+            Log.d("Route length", String.valueOf(route.getRoute().size()));
         }
-        title.setText(String.valueOf(route.getScore()));
+        //title.setText(String.valueOf(route.getScore()));
         Diagram diagram = new Diagram(route);
         graph.addSeries(diagram.draw());
-        View oldView = view.findViewById(R.id.view_route_stats);
+        //View oldView = view.findViewById(R.id.view_route_stats);
         
         /*
         if (oldView != null) {
