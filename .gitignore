@@ -5,6 +5,7 @@
 .DS_Store
 /build
 /build/
+/app/app.iml
 
 # Ignore Gradle GUI config
 gradle-app.setting
