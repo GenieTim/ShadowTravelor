@@ -53,13 +53,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public static String createTableLocationTime =
             "CREATE TABLE " + TABLE_LOC_TIME_CON + "(" + COLUMN_ID + " Integer Primary Key ," + COLUMN_LOC +
                     " Integer," + COLUMN_VOLUME + " Integer," + COLUMN_USAGE +
-                    " Integer," + COLUMN_TIME + " Integer," + COLUMN_VELOCITY + " real, FOREIGN KEY("+COLUMN_LOC+") REFERENCES artist(Location.ID));";
+                    " Integer," + COLUMN_TIME + " Integer," + COLUMN_VELOCITY + " real, FOREIGN KEY("+COLUMN_LOC+") REFERENCES Location.ID);";
     public static String createTableRoute =
             "CREATE TABLE " + TABLE_ROUTE + "(" + COLUMN_ID + " Integer Primary Key ," + COLUMN_SCORE +
                     " real," + COLUMN_DATE + " real);";
     public static String createTableRoutePoints =
             "CREATE TABLE " + TABLE_ROUTE_POINTS + "(" + COLUMN_ID_ROUTE + " Integer," + COLUMN_ID_POINT +
-                    " Integer, FOREIGN KEY("+COLUMN_ID_ROUTE+") REFERENCES artist(Route.ID), FOREIGN KEY("+COLUMN_ID_POINT+") REFERENCES artist(LocationTime.ID));";
+                    " Integer, FOREIGN KEY("+COLUMN_ID_ROUTE+") REFERENCES Route.ID, FOREIGN KEY("+COLUMN_ID_POINT+") REFERENCES LocationTime.ID);";
 
     public int oldVersion = 0;
     public static int currentVersion = 1;
