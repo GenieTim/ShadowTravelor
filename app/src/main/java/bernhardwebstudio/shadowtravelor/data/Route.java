@@ -65,4 +65,8 @@ public class Route {
             this.route.get(i).setVelocity(velocity);
         }
     }
+
+    public void calculateScore() {
+
+    }
 }

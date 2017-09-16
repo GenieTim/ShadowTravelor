@@ -5,5 +5,4 @@ package bernhardwebstudio.shadowtravelor.management;
  */
 public class DataProcessManager {
 
-
 }
