@@ -30,7 +30,7 @@
             android:layout="@layout/statistics_graphic" />
 
         <ListView
-            android:id="@+id/profile_list_view"
+            android:id="@+id/prof_list_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3">

@@ -16,7 +16,11 @@ public class Container extends Observable{
     public ArrayList<Route> allRoutes = new ArrayList<Route>();
 
     private Container(){
-        
+        fillWithData();
+    }
+
+    public void fillWithData(){
+        allRoutes.add(new Route());
     }
 
     public ArrayList<Route> getAllRoutes(){
