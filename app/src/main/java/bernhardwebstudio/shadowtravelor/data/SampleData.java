@@ -41,7 +41,7 @@ public class SampleData {
         rotas.add(lct4);
         rotas.add(lct4);
         rotas.add(lct5);
-        Container.instance().allRoutes.add(rotas);
+        //Container.instance().allRoutes.add(rotas);
     }
 
     public SampleData(DBHelper helper) {
