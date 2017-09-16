@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import bernhardwebstudio.shadowtravelor.adapter.RowAdapter;
+import bernhardwebstudio.shadowtravelor.data.Container;
 import bernhardwebstudio.shadowtravelor.data.Diagram;
 import bernhardwebstudio.shadowtravelor.data.Location;
 import bernhardwebstudio.shadowtravelor.data.LocationTimeConnection;
@@ -50,26 +51,33 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         selectDateSpinner = (Spinner) findViewById(R.id.select_date_spinner);
-
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        ArrayAdapter<String> dateSelection = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item);
-
-        this.helper = new DBHelper(MainActivity.this, DBHelper.DB_NAME, null, DBHelper.currentVersion);
-        allRoutes = helper.getAllRoutes();
-        Log.d("TEST allRoutes size", String.valueOf(allRoutes.size()));
-        for (int i = 0; i < allRoutes.size(); i++) {
-            dateSelection.add(allRoutes.get(i).getDate().toString());
-        }
-        selectDateSpinner.setAdapter(dateSelection);
+        setSpinnerAdapter();
         selectDateSpinner.setOnItemSelectedListener(selectedListener);
 
         profileList = (ListView) findViewById(R.id.profile_list_view);
+
+    }
+
+
+    public void setSpinnerAdapter(){
+        //for final version
+        this.helper = new DBHelper(MainActivity.this, DBHelper.DB_NAME, null, DBHelper.currentVersion);
+        allRoutes = helper.getAllRoutes();
+        Log.d("TEST allRoutes size", String.valueOf(allRoutes.size()));
+        //for testing and demo
+        allRoutes = Container.instance().getAllRoutes();
+
+        ArrayAdapter<String> dateSelection = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+        for(int i=0; i<allRoutes.size(); i++){
+            dateSelection.add(allRoutes.get(i).getDate().toString());
+        }
+        selectDateSpinner.setAdapter(dateSelection);
+    }
+
+
+    @Override
+    protected void onStart(){
+        super.onStart();
         ArrayAdapter<ProfileDay> profileAdapter = new RowAdapter(MainActivity.this, R.layout.row_item);
         for (int i = 0; i < 7; i++) {
             ProfileDay pd = new ProfileDay();
@@ -126,7 +134,13 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             // load graphic of selected day
-            this.drawRouteGraph(i, view);
+            if (allRoutes.size() > 0) {
+                View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
+                GraphView graph = (GraphView) v.findViewById(R.id.graph);
+                TextView title = (TextView) v.findViewById(R.id.graph_title);
+                Route route = allRoutes.get(i);
+                this.drawRouteGraph(i, view);
+            }
         }
 
         @Override
@@ -143,17 +157,17 @@ public class MainActivity extends ActionBarActivity {
                 route = new SampleRoute();
             }
 
-                title.setText(String.valueOf(route.getScore()));
-                Diagram diagram = new Diagram(route);
-                graph.addSeries(diagram.draw());
-                View oldView = view.findViewById(R.id.view_route_stats);
-                if (oldView != null) {
-                    ViewGroup parent = (ViewGroup) oldView.getParent();
-                    parent.removeView(oldView);
-                    parent.addView(v);
-                } else {
-                    Log.d("SHIT", "nop old view");
-                }
+            title.setText(String.valueOf(route.getScore()));
+            Diagram diagram = new Diagram(route);
+            graph.addSeries(diagram.draw());
+            View oldView = view.findViewById(R.id.view_route_stats);
+            if (oldView != null) {
+                ViewGroup parent = (ViewGroup) oldView.getParent();
+                parent.removeView(oldView);
+                parent.addView(v);
+            } else {
+                Log.d("SHIT", "nop old view");
+            }
         }
     };
 
