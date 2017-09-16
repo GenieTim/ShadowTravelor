@@ -23,8 +23,12 @@ import com.jjoe64.graphview.GraphView;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+import bernhardwebstudio.shadowtravelor.adapter.RowAdapter;
 import bernhardwebstudio.shadowtravelor.data.Diagram;
+import bernhardwebstudio.shadowtravelor.data.Location;
 import bernhardwebstudio.shadowtravelor.data.LocationTimeConnection;
+import bernhardwebstudio.shadowtravelor.data.ProfileDay;
+import bernhardwebstudio.shadowtravelor.data.ProfileTarget;
 import bernhardwebstudio.shadowtravelor.data.Route;
 import bernhardwebstudio.shadowtravelor.data.RouteHistory;
 import bernhardwebstudio.shadowtravelor.data.SampleData;
@@ -67,7 +71,20 @@ public class MainActivity extends ActionBarActivity {
         selectDateSpinner.setOnItemSelectedListener(selectedListener);
 
         profileList = (ListView) findViewById(R.id.profile_list_view);
-        //profileList.setOnItemClickListener(itemClickListener);
+        ArrayAdapter<ProfileDay> profileAdapter = new RowAdapter(MainActivity.this, R.layout.row_item);
+        for(int i=0;i<7; i++){
+            ProfileDay pd = new ProfileDay();
+            pd.setWeekday(i);
+            for(int j=0; j<2;j++){
+                ProfileTarget target = new ProfileTarget();
+                target.setTime(new GregorianCalendar(2017, 9, i, 7, 0));
+                target.setLocation(new Location(495,284));
+                pd.addTarget(target);
+            }
+            profileAdapter.add(pd);
+        }
+        profileList.setAdapter(profileAdapter);
+        profileList.setOnItemClickListener(itemClickListener);
 
         // draw Graph of RouteHistory
         View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
@@ -79,24 +96,24 @@ public class MainActivity extends ActionBarActivity {
         graph.addSeries(diagram.draw());
         graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.route_history_vertical_axis));
         graph.getGridLabelRenderer().setHorizontalAxisTitle(getResources().getString(R.string.route_history_horizontal_axis));
-        View oldView = findViewById(R.id.view_route_history_stats);
+        /*View oldView = findViewById(R.id.view_route_history_stats);
         ViewGroup parent = (ViewGroup) oldView.getParent();
         parent.removeView(oldView);
-        parent.addView(v);
+        parent.addView(v);*/
     }
 
-/*
+
     AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener(){
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             if(i==0){
-                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                Intent intent = new Intent(MainActivity.this, ImproveActivity.class);
                 startActivity(intent);
             }
         }
     };
-*/
+
     AdapterView.OnItemSelectedListener selectedListener = new AdapterView.OnItemSelectedListener(){
 
         @Override

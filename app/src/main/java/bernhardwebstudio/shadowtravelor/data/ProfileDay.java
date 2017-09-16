@@ -8,9 +8,13 @@ import java.util.ArrayList;
 
 public class ProfileDay {
 
+    public ProfileDay(){
+
+    }
+
     private int weekday;
 
-    private ArrayList<ProfileTarget> route;
+    private ArrayList<ProfileTarget> route = new ArrayList<ProfileTarget>();
 
     public void addTarget(ProfileTarget target) {
         this.route.add(target);

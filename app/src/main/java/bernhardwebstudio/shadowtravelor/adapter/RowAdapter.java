@@ -21,9 +21,9 @@ import bernhardwebstudio.shadowtravelor.data.ProfileDay;
  * Created by Benedict on 16.09.2017.
  */
 
-public class RowAdapter extends ArrayAdapter {
+public class RowAdapter extends ArrayAdapter<ProfileDay> {
 
-    private ArrayList<ProfileDay> profileDays;
+    private ArrayList<ProfileDay> profileDays = new ArrayList<ProfileDay>();
 
     public RowAdapter(@NonNull Context context, @LayoutRes int resource) {
         super(context, resource);
@@ -33,14 +33,6 @@ public class RowAdapter extends ArrayAdapter {
         super(context, resource, textViewResourceId);
     }
 
-    public RowAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull Object[] objects) {
-        super(context, resource, objects);
-    }
-
-    public RowAdapter(@NonNull Context context, @LayoutRes int resource, @IdRes int textViewResourceId, @NonNull Object[] objects) {
-        super(context, resource, textViewResourceId, objects);
-    }
-
     public RowAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull ArrayList<ProfileDay> objects) {
         super(context, resource, objects);
         profileDays = objects;
@@ -48,6 +40,11 @@ public class RowAdapter extends ArrayAdapter {
 
     public RowAdapter(@NonNull Context context, @LayoutRes int resource, @IdRes int textViewResourceId, @NonNull List objects) {
         super(context, resource, textViewResourceId, objects);
+    }
+
+    @Override
+    public void add(ProfileDay pd){
+        profileDays.add(pd);
     }
 
     @Override
@@ -61,6 +58,7 @@ public class RowAdapter extends ArrayAdapter {
 
         ProfileDay pd = profileDays.get(position);
         day.setText(pd.getWeekday());
+        day.setText("Hello");
 
         ArrayAdapter<String> profileAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1);
         for(int i=0; i<pd.getRoute().size(); i++){
