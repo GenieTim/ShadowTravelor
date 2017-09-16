@@ -24,7 +24,7 @@ import bernhardwebstudio.shadowtravelor.data.ProfileDay;
 
 public class RowAdapter extends ArrayAdapter<ProfileDay> {
 
-    private String[] weekdays = {"Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"};
+    private String[] weekdays = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
     private ArrayList<ProfileDay> profileDays = new ArrayList<ProfileDay>();
     private Context context;
@@ -83,8 +83,13 @@ public class RowAdapter extends ArrayAdapter<ProfileDay> {
 
             int hour = calendar.get(Calendar.HOUR_OF_DAY);
             int minute = calendar.get(Calendar.MINUTE);
-
-            profileAdapter.add(hour + ":" + minute + " - " + pd.getRoute().get(i).getLocation().getLatitude());
+            String time = hour + ":";
+            if(minute<10){
+                time = time + "0" + minute;
+            }else{
+                time = time + minute;
+            }
+            profileAdapter.add(time + " Uhr - " + pd.getRoute().get(i).getLocation().getLatitude());
         }
         pdl.setAdapter(profileAdapter);
         return convertView;
