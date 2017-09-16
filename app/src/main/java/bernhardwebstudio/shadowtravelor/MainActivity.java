@@ -113,7 +113,8 @@ public class MainActivity extends ActionBarActivity {
         graph.getViewport().setScalable(true);
         graph.addSeries(diagram.draw());
 
-        drawRouteGraph(0, (GraphView) findViewById(R.id.view_route_stats));
+        GraphView dayGraph = (GraphView) findViewById(R.id.view_route_stats);
+        drawRouteGraph(0, dayGraph);
     }
 
 
@@ -137,7 +138,9 @@ public class MainActivity extends ActionBarActivity {
                 //View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
                 GraphView graph = (GraphView) view.findViewById(R.id.view_route_stats);
 
-                drawRouteGraph(i, graph);
+                if (graph != null) {
+                    drawRouteGraph(i, graph);
+                }
             }
         }
 
@@ -147,10 +150,11 @@ public class MainActivity extends ActionBarActivity {
         }
     };
 
-    private void drawRouteGraph(int i, GraphView graph) {        graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.route_vertical_axis));
+    private void drawRouteGraph(int i, GraphView graph) {
+        graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.route_vertical_axis));
         graph.getGridLabelRenderer().setHorizontalAxisTitle(getResources().getString(R.string.route_horizontal_axis));
 
-        Route route = allRoutes.get(i);
+        Route route = this.allRoutes.get(i);
 
         TextView last = (TextView) findViewById(R.id.last_score);
         last.setText(getResources().getString(R.string.last_score) + ": " + String.valueOf(route.getScore()));
