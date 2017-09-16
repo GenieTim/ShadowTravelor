@@ -50,8 +50,32 @@ public class SBB {
         return null;
     }
 
-    public void getStationNumber(String name) {
+    public InputStream getStationNumber(String name) throws IOException {
+        String url = "data.sbb.ch/";
+        String charset = "UTF-8";
+        if(name != null){
+            String query = "api/records/1.0/search/?dataset=haltestelle-visuell-taktile-sicherheitslinie&q="+name;
 
+            URLConnection urlConnection = new URL(url).openConnection();
+            urlConnection.setUseCaches(false);
+            urlConnection.setDoOutput(true); // Triggers POST.
+            urlConnection.setRequestProperty("accept-charset", charset);
+            urlConnection.setRequestProperty("content-type", "application/x-www-form-urlencoded");
+
+            OutputStreamWriter writer = null;
+            try {
+                writer = new OutputStreamWriter(urlConnection.getOutputStream(), charset);
+                writer.write(query); // Write POST query string (if any needed).
+            } finally {
+                if (writer != null) try {
+                    writer.close();
+                } catch (IOException logOrIgnore) {
+                }
+            }
+
+            return urlConnection.getInputStream();
+        }
+        return null;
     }
 
     @TargetApi(19)
