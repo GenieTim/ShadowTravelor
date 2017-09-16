@@ -60,7 +60,7 @@ public class Diagram {
         this.route.sort();
         DataPoint[] datapoints = new DataPoint[this.route.getRoute().size()];
         for (int i = 0; i < this.route.getRoute().size(); i++) {
-            datapoints[i] = new DataPoint(this.route.getRoute().get(i).getDatetime().getTimeInMillis() / 10000, this.route.getRoute().get(i).getVelocity());
+            datapoints[i] = new DataPoint(this.route.getRoute().get(i).getDatetime().getTimeInMillis() / 1000, this.route.getRoute().get(i).getVelocity());
         }
         return datapoints;
     }
@@ -72,7 +72,7 @@ public class Diagram {
     private DataPoint[] drawRouteHistory() {
         DataPoint[] datapoints = new DataPoint[this.routeHistory.getRoutes().size()];
         for (int i = 0; i < this.routeHistory.getRoutes().size(); i++) {
-            datapoints[i] = new DataPoint(this.routeHistory.getRoutes().get(i).getScore(), this.routeHistory.getRoutes().get(i).getDate().getTimeInMillis() / 10000);
+            datapoints[i] = new DataPoint(this.routeHistory.getRoutes().get(i).getDate().getTimeInMillis() / 1000, this.routeHistory.getRoutes().get(i).getScore());
         }
         return datapoints;
 
