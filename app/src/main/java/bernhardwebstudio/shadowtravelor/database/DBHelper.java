@@ -178,8 +178,31 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Route> getAllRoutes(){
-
-        return new ArrayList<Route>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Route", null);
+        cursor.moveToFirst();
+        ArrayList<Route> allRoutes = new ArrayList<Route>();
+        for(int i=0; i<allRoutes.size(); i++){
+            Route r = new Route();
+            int id = cursor.getInt(0);
+            GregorianCalendar date = new GregorianCalendar();
+            date.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
+            r.setDate(date);
+            r.setScore(cursor.getDouble(1));
+            Cursor cursor2 = db.rawQuery("SELECT Time, Geschwindigkeit FROM LocationTime WHERE LocationTime.ID In (SELECT * FROM RoutePoints WHERE ID_Route = "+id+");", null);
+            cursor2.moveToFirst();
+            for(int j=0; j<cursor2.getCount(); j++){
+                GregorianCalendar gC = new GregorianCalendar();
+                gC.setTimeInMillis(cursor2.getLong(cursor2.getColumnIndex(COLUMN_DATE)));
+                LocationTimeConnection ltc = new LocationTimeConnection();
+                ltc.setDatetime(gC);
+                ltc.setVelocity(cursor2.getDouble(1));
+                r.add(ltc);
+            }
+            allRoutes.add(r);
+        }
+        db.close();
+        return allRoutes;
     }
 
     public Route getRouteById(int id){

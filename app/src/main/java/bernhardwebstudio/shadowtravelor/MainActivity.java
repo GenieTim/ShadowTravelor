@@ -33,7 +33,7 @@ public class MainActivity extends ActionBarActivity {
     private Spinner selectDateSpinner;
     private ListView profileList;
     private DBHelper helper;
-    private ArrayList<GregorianCalendar> dates;
+    private ArrayList<Route> allRoutes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +44,9 @@ public class MainActivity extends ActionBarActivity {
         ArrayAdapter<String> dateSelection = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item);
 
         this.helper = new DBHelper(MainActivity.this, DBHelper.DB_NAME, null, DBHelper.currentVersion);
-        ArrayList<LocationTimeConnection> al = helper.getLocationTimeConnection();
-        for(int i=0; i<al.size(); i++){
-            dateSelection.add(al.get(i).getDatetime().toString());
+        allRoutes = helper.getAllRoutes();
+        for(int i=0; i<allRoutes.size(); i++){
+            dateSelection.add(allRoutes.get(i).getDate().toString());
         }
         selectDateSpinner.setAdapter(dateSelection);
         selectDateSpinner.setOnItemSelectedListener(selectedListener);
@@ -82,7 +82,7 @@ public class MainActivity extends ActionBarActivity {
             // load graphic of selected day
             View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
             GraphView graph = (GraphView) v.findViewById(R.id.graph);
-            Route route = helper.getRouteById(i);
+            Route route = allRoutes.get(i);
             Diagram diagram = new Diagram(route);
             graph.addSeries(diagram.draw());
             View oldView = view.findViewById(R.id.view_route_stats);
