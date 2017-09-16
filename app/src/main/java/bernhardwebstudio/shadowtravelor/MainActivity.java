@@ -110,14 +110,6 @@ public class MainActivity extends ActionBarActivity {
         graph.getViewport().setScalable(true);
         graph.addSeries(diagram.draw());
 
-        /*View oldView = findViewById(R.id.view_route_history_stats);
-        if (oldView != null) {
-            ViewGroup parent = (ViewGroup) oldView.getParent();
-            parent.removeView(oldView);
-            parent.addView(v);
-        } else {
-            Log.e("SHIT", "No parent");
-        }*/
         drawRouteGraph(0, findViewById(android.R.id.content));
     }
 
@@ -151,33 +143,15 @@ public class MainActivity extends ActionBarActivity {
         public void onNothingSelected(AdapterView<?> adapterView) {
 
         }
-
-        /*private void drawRouteGraph(int i, View view) {
-            View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
-            GraphView graph = (GraphView) v.findViewById(R.id.graph);
-            TextView title = (TextView) v.findViewById(R.id.graph_title);
-            Route route = allRoutes.get(i);
-            if (route == null) {
-                route = new SampleRoute();
-            }
-
-            title.setText(String.valueOf(route.getScore()));
-            Diagram diagram = new Diagram(route);
-            graph.addSeries(diagram.draw());
-            View oldView = view.findViewById(R.id.view_route_stats);
-            if (oldView != null) {
-                ViewGroup parent = (ViewGroup) oldView.getParent();
-                parent.removeView(oldView);
-                parent.addView(v);
-            } else {
-                Log.d("SHIT", "nop old view");
-            }
-        }*/
     };
 
     private void drawRouteGraph(int i, View view) {
         //View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
         GraphView graph = (GraphView) findViewById(R.id.view_route_stats);
+        graph.getViewport().setScalable(true);
+        graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.route_vertical_axis));
+        graph.getGridLabelRenderer().setHorizontalAxisTitle(getResources().getString(R.string.route_horizontal_axis));
+
         //TextView title = (TextView) v.findViewById(R.id.graph_title);
         Route route = allRoutes.get(i);
         if (route == null) {
