@@ -58,7 +58,16 @@ public class SBB {
 
     // TODO!
     public void getConnection(String start, String stop, GregorianCalendar datetime, boolean arrival) {
+        String station = start + ", " + stop;
+        try {
+            if (arrival) {
+                httprequest("arrival", station, datetime.toString());
+            } else {
+                httprequest("departure", station, datetime.toString())
+            }
+        } catch(IOException e){
 
+        }
     }
 
     private InputStream httprequest(String type, String station, String timestamp) throws IOException {
