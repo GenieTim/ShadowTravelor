@@ -11,6 +11,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.GregorianCalendar;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONArray;
 
 /**
  * Created by Benedict on 16.09.2017.
@@ -22,7 +25,7 @@ public class SBB {
 
     }
 
-    public InputStream getPassangerAmount(String station) throws IOException {
+    public int getPassangerAmount(String station) throws IOException, JSONException {
         String url = "data.sbb.ch/";
         String charset = "UTF-8";
         if(station != null){
@@ -45,12 +48,16 @@ public class SBB {
                 }
             }
 
-            return urlConnection.getInputStream();
+            JSONObject obj = new JSONObject(urlConnection.getInputStream().toString());
+            JSONArray records = obj.getJSONArray("records");
+            JSONObject fields = records.getJSONObject(2);
+
+            return fields.getInt("dtv");
         }
-        return null;
+        return Integer.parseInt(null);
     }
 
-    public InputStream getStationNumber(String name) throws IOException {
+    public double getStationNumber(String name) throws IOException, JSONException {
         String url = "data.sbb.ch/";
         String charset = "UTF-8";
         if(name != null){
@@ -73,9 +80,13 @@ public class SBB {
                 }
             }
 
-            return urlConnection.getInputStream();
+            JSONObject obj = new JSONObject(urlConnection.getInputStream().toString());
+            JSONArray records = obj.getJSONArray("records");
+            JSONObject fields = records.getJSONObject(2);
+
+            return fields.getDouble("didok_nummer");
         }
-        return null;
+        return Double.parseDouble(null);
     }
 
     @TargetApi(19)
