@@ -128,10 +128,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public long getLocTimeId(LocationTimeConnection locTime){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT LocationTime FROM TABLE "+TABLE_LOC_TIME_CON+","+TABLE_LOCATION+
+        Cursor cursor = db.rawQuery("SELECT Col_Location, Time FROM "+TABLE_LOC_TIME_CON+","+TABLE_LOCATION+
                 " WHERE LocationTime.Time = "+locTime.getDatetime().getTimeInMillis()+" AND "+
                 "Location.ID = LocationTime.Col_Location AND Location.Longtitude = " +
-                locTime.getLocation().getLongitude()+ "AND Location.Latitude = " +
+                locTime.getLocation().getLongitude()+ " AND Location.Latitude = " +
                 locTime.getLocation().getLatitude() + ";", null);
         if(cursor.getCount() != 0) {
             cursor.moveToFirst();
