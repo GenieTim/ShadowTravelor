@@ -11,7 +11,7 @@
     <string name="route_history_horizontal_axis">DateTime</string>
     <string name="route_vertical_axis">Velocity</string>
     <string name="route_horizontal_axis">Time</string>
-    <string name="profile">Bewegungsprofil</string>
+    <string name="profile">Your Travel-Profile</string>
     <string name="last_score">Last Score</string>
 
 </resources>

@@ -14,8 +14,17 @@
             android:layout_height="wrap_content"
             android:id="@+id/last_score"
             android:textAlignment="center"
-            android:textSize="25dp"
+            android:textSize="30dp"
             android:padding="50dp"
+            android:textColor="@color/sbb_red"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:backgroundTint="@color/sbb_red"
+            android:foregroundTint="@color/sbb_red"
+            android:foreground="@color/sbb_red"
             />
 
         <Spinner
@@ -23,13 +32,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp"
+            android:padding="10dp" />
 
         <com.jjoe64.graphview.GraphView
             android:layout_width="match_parent"
             android:layout_height="200dip"
             android:id="@+id/view_route_stats"
             android:layout_margin="10dp"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:backgroundTint="@color/sbb_red"
+            android:foregroundTint="@color/sbb_red"
+            android:foreground="@color/sbb_red"
             />
 
         <com.jjoe64.graphview.GraphView
@@ -39,6 +57,13 @@
             android:layout_margin="10dp"
             />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:backgroundTint="@color/sbb_red"
+            android:foregroundTint="@color/sbb_red"
+            android:foreground="@color/sbb_red"
+            />
 
         <TextView
             android:id="@+id/textView"
@@ -47,7 +72,8 @@
             android:textSize="20dp"
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
-            android:text="@string/profile" />
+            android:text="@string/profile"
+            android:layout_margin="10dp"/>
 
         <ListView
             android:id="@+id/prof_list_view"

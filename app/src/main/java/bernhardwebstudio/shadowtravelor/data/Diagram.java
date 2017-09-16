@@ -7,6 +7,9 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.Calendar;
+import java.util.Map;
+
+import bernhardwebstudio.shadowtravelor.R;
 
 /**
  * Created by Tim on 16.09.2017.
@@ -51,7 +54,7 @@ public class Diagram {
         if (datapoints != null) {
             LineGraphSeries<DataPoint> serie = new LineGraphSeries<>(datapoints);
             serie.setDrawBackground(true);
-            serie.setBackgroundColor(Color.BLUE);
+            serie.setBackgroundColor(R.color.sbb_red);
             return serie;
         } else {
             return new LineGraphSeries<>();
@@ -64,9 +67,13 @@ public class Diagram {
      */
     private DataPoint[] drawRoute() {
         this.route.sort();
-        DataPoint[] datapoints = new DataPoint[this.route.getRoute().size()];
+        /*DataPoint[] datapoints = new DataPoint[this.route.getRoute().size()];
         for (int i = 0; i < this.route.getRoute().size(); i++) {
-            datapoints[i] = new DataPoint(Math.round(this.route.getRoute().get(i).getDatetime().get(Calendar.MINUTE) / 100), this.route.getRoute().get(i).getVelocity());
+           datapoints[i] = new DataPoint(Math.round(this.route.getRoute().get(i).getDatetime().get(Calendar.MINUTE) / 100), this.route.getRoute().get(i).getVelocity());
+        }*/
+        DataPoint[] datapoints = new DataPoint[10];
+        for (int i = 0; i < 10; i++) {
+            datapoints[i] = new DataPoint(i, i*i % 3 + 0.5 + Math.round(Math.random() * 10));
         }
         return datapoints;
     }
