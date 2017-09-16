@@ -23,7 +23,7 @@ import bernhardwebstudio.shadowtravelor.data.SampleData;
  */
 public class DBHelper extends SQLiteOpenHelper {
 
-    public static final String DB_NAME = "ShadowTravelorDB";
+    public static final String DB_NAME = "ShadowTravelorDB2.db";
 
     public static final String TABLE_LOCATION = "Location";
     public static final String COLUMN_LONG = "Longitude";
@@ -73,48 +73,47 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.d("TEST", "creating database");
 
         db.execSQL(createTableLocation);
         db.execSQL(createTableLocationTime);
         db.execSQL(createTableRoute);
         db.execSQL(createTableRoutePoints);
-/*
+
         for(int i=0; i<10; i++){
             ContentValues values = new ContentValues();
-            values.put("Latitude", 13.89*i);
-            values.put("Longitude", 13.89*i);
-            db.insert("Location", null, values);
+            values.put(COLUMN_LAT, 13.89*i);
+            values.put(COLUMN_LONG, 13.89*i);
+            db.insert(TABLE_LOCATION, null, values);
         }
         for(int i=0; i<5; i++){
             ContentValues values = new ContentValues();
-            values.put("Time", 128438*i);
-            values.put("Location", i);
-            values.put("Velocity", 9*i);
-            db.insert("LocationTime", null, values);
+            values.put(COLUMN_TIME, 128438*i);
+            values.put(COLUMN_LOC, i);
+            values.put(COLUMN_VELOCITY, 9*i);
+            db.insert(TABLE_LOC_TIME_CON, null, values);
         }
         for(int i=0; i<5; i++){
             ContentValues values = new ContentValues();
-            values.put("Time", 228438*i);
-            values.put("Location", i+5);
-            values.put("Velocity", 3*i);
-            db.insert("LocationTime", null, values);
+            values.put(COLUMN_TIME, 228438*i);
+            values.put(COLUMN_LOC, i+5);
+            values.put(COLUMN_VELOCITY, 3*i);
+            db.insert(TABLE_LOC_TIME_CON, null, values);
         }
         for(int i=0; i<2; i++){
             ContentValues values = new ContentValues();
-            values.put("Score", 100*i+1);
-            values.put("Date", 13689*i);
-            db.insert("Route", null, values);
+            values.put(COLUMN_SCORE, 100*i+1);
+            values.put(COLUMN_DATE, 13689*i);
+            db.insert(TABLE_ROUTE, null, values);
         }
         for(int i=0; i<10; i++){
             ContentValues values = new ContentValues();
-            values.put("ID_Route", i%5);
-            values.put("ID_Point", i);
-            db.insert("RoutePoints", null, values);
+            values.put(COLUMN_ID_ROUTE, i%5);
+            values.put(COLUMN_ID_POINT, i);
+            if (0 > db.insert(TABLE_ROUTE_POINTS, null, values)) {
+                Log.e("ERROR", "Failed to insert");
+            }
         }
-
-
-
-*/
     }
 
     @Override
@@ -168,6 +167,7 @@ public class DBHelper extends SQLiteOpenHelper {
         this.close();
     }
 
+    // TODO: improve & implement
     public LocationTimeConnection getLocationTimeConnectionByDate(GregorianCalendar cal) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_LOC_TIME_CON + "," + TABLE_LOCATION +
@@ -211,7 +211,7 @@ public class DBHelper extends SQLiteOpenHelper {
             date.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
             r.setDate(date);
             r.setScore(cursor.getDouble(cursor.getColumnIndex(COLUMN_SCORE)));
-            Cursor cursor2 = db.rawQuery("SELECT Time, Velocity FROM LocationTime WHERE LocationTime.ID In (SELECT * FROM RoutePoints WHERE ID_Route = " + id + ");", null);
+            Cursor cursor2 = db.rawQuery("SELECT " + COLUMN_TIME + ", "+ COLUMN_VELOCITY+" FROM "+ TABLE_LOC_TIME_CON +" WHERE LocationTime.ID In (SELECT * FROM "  + TABLE_ROUTE_POINTS + " WHERE ID_Route = " + id + ");", null);
             cursor2.moveToFirst();
             for (int j = 0; j < cursor2.getCount(); j++) {
                 GregorianCalendar gC = new GregorianCalendar();
