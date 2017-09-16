@@ -104,6 +104,7 @@ public class MainActivity extends ActionBarActivity {
         //title.setText(R.string.route_history_title);
         RouteHistory rh = helper.getRouteHistory();
         Diagram diagram = new Diagram(rh);
+        graph.setTitleTextSize(75);
         graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.route_history_vertical_axis));
         graph.getGridLabelRenderer().setHorizontalAxisTitle(getResources().getString(R.string.route_history_horizontal_axis));
         graph.setTitle(getResources().getString(R.string.route_history_title));
@@ -112,7 +113,7 @@ public class MainActivity extends ActionBarActivity {
         graph.getViewport().setScalable(true);
         graph.addSeries(diagram.draw());
 
-        drawRouteGraph(0, findViewById(android.R.id.content));
+        drawRouteGraph(0, (GraphView) findViewById(R.id.view_route_stats));
     }
 
 
@@ -133,11 +134,10 @@ public class MainActivity extends ActionBarActivity {
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             // load graphic of selected day
             if (allRoutes.size() > 0) {
-                View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
-                GraphView graph = (GraphView) v.findViewById(R.id.graph);
-                TextView title = (TextView) v.findViewById(R.id.graph_title);
-                Route route = allRoutes.get(i);
-                drawRouteGraph(i, view);
+                //View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
+                GraphView graph = (GraphView) view.findViewById(R.id.view_route_stats);
+
+                drawRouteGraph(i, graph);
             }
         }
 
@@ -147,12 +147,7 @@ public class MainActivity extends ActionBarActivity {
         }
     };
 
-    private void drawRouteGraph(int i, View view) {
-
-        //View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
-        GraphView graph = (GraphView) findViewById(R.id.view_route_stats);
-        graph.getViewport().setScalable(true);
-        graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.route_vertical_axis));
+    private void drawRouteGraph(int i, GraphView graph) {        graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.route_vertical_axis));
         graph.getGridLabelRenderer().setHorizontalAxisTitle(getResources().getString(R.string.route_horizontal_axis));
 
         Route route = allRoutes.get(i);
@@ -161,18 +156,9 @@ public class MainActivity extends ActionBarActivity {
         last.setText(getResources().getString(R.string.last_score) + ": " + String.valueOf(route.getScore()));
 
         Diagram diagram = new Diagram(route);
-        graph.addSeries(diagram.draw());
-        //View oldView = view.findViewById(R.id.view_route_stats);
-        
-        /*
-        if (oldView != null) {
-            ViewGroup parent = (ViewGroup) oldView.getParent();
-            parent.removeView(oldView);
-            parent.addView(v);
-        } else {
-            Log.d("SHIT", "nop old view");
+        graph.getViewport().setScalable(true);
 
-        }*/
+        graph.addSeries(diagram.draw());
     }
 
     @Override
