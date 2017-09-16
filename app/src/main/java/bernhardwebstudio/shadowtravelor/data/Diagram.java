@@ -6,6 +6,8 @@ import android.util.Log;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import java.util.Calendar;
+
 /**
  * Created by Tim on 16.09.2017.
  */
@@ -64,7 +66,7 @@ public class Diagram {
         this.route.sort();
         DataPoint[] datapoints = new DataPoint[this.route.getRoute().size()];
         for (int i = 0; i < this.route.getRoute().size(); i++) {
-            datapoints[i] = new DataPoint(this.route.getRoute().get(i).getDatetime().getTimeInMillis() / 1000, this.route.getRoute().get(i).getVelocity());
+            datapoints[i] = new DataPoint(Math.round(this.route.getRoute().get(i).getDatetime().get(Calendar.MINUTE) / 100), this.route.getRoute().get(i).getVelocity());
         }
         return datapoints;
     }

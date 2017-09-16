@@ -71,8 +71,8 @@ public class MainActivity extends ActionBarActivity {
         for(int i=0; i<allRoutes.size(); i++){
             SimpleDateFormat fmt = new SimpleDateFormat("dd.MM.yyyy");
             fmt.setCalendar(allRoutes.get(i).getDate());
+            Log.d("DATETIME", String.valueOf(allRoutes.get(i).getDate().getTime()));
             String dateFormatted = fmt.format(allRoutes.get(i).getDate().getTime());
-
             dateSelection.add(dateFormatted);
         }
         selectDateSpinner.setAdapter(dateSelection);

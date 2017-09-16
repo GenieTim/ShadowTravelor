@@ -88,28 +88,29 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         for(int i=0; i<10; i++){
             ContentValues values = new ContentValues();
-            values.put(COLUMN_TIME, 1505590419784f-i*2e+5f);
+            values.put(COLUMN_TIME, 1505590419784f-i*200000f);
             values.put(COLUMN_LOC, i);
             values.put(COLUMN_VELOCITY, 9*i+Math.round(Math.random()*10));
             db.insert(TABLE_LOC_TIME_CON, null, values);
         }
         for(int i=0; i<10; i++){
             ContentValues values = new ContentValues();
-            values.put(COLUMN_TIME, 1505590419784f-i*1.8e+6f);
-            values.put(COLUMN_LOC, i+5);
+            values.put(COLUMN_TIME, 1505590419784f-i*18000000f);
+            values.put(COLUMN_LOC, i+10);
             values.put(COLUMN_VELOCITY, 5*i+Math.round(Math.random()*15));
             db.insert(TABLE_LOC_TIME_CON, null, values);
         }
-        for(int i=0; i<4; i++){
+        for(int i=0; i<5; i++){
             ContentValues values = new ContentValues();
             values.put(COLUMN_SCORE, 100*i%2+15+i%3+Math.round(Math.random()*20));
-            values.put(COLUMN_DATE, 1505590419784f-9e+7f*i);
+            float date = 1505590419784f - 900000000f*i;
+            values.put(COLUMN_DATE, date);
             db.insert(TABLE_ROUTE, null, values);
         }
         for(int i=0; i<20; i++){
             ContentValues values = new ContentValues();
-            values.put(COLUMN_ID_ROUTE, i%10);
-            values.put(COLUMN_ID_POINT, i%10);
+            values.put(COLUMN_ID_ROUTE, Math.round(i/5));
+            values.put(COLUMN_ID_POINT, i);
             if (0 > db.insert(TABLE_ROUTE_POINTS, null, values)) {
                 Log.e("ERROR", "Failed to insert");
             }
