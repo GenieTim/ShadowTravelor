@@ -158,7 +158,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public RouteHistory getRouteHistory() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM TABLE "+TABLE_ROUTE+
-                " ORDER BY date DESC;", null);
+                " ORDER BY " + COLUMN_DATE + " DESC;", null);
         RouteHistory rh = new RouteHistory();
         while(cursor.moveToNext()) {
             Route route = new Route();
