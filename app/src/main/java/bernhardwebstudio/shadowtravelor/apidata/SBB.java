@@ -115,7 +115,7 @@ public class SBB {
         this.getConnection(start, stop, datetime, false);
     }
 
-    // TODO!
+
     public void getConnection(String start, String stop, GregorianCalendar datetime, boolean arrival) {
         String station = start + ", " + stop;
         try {

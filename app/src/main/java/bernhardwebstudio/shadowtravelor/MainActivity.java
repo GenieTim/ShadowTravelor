@@ -55,13 +55,14 @@ public class MainActivity extends ActionBarActivity {
 
         profileList = (ListView) findViewById(R.id.profile_list_view);
 
-
     }
+
 
     public void setSpinnerAdapter(){
         //for final version
         this.helper = new DBHelper(MainActivity.this, DBHelper.DB_NAME, null, DBHelper.currentVersion);
         allRoutes = helper.getAllRoutes();
+
         //for testing and demo
         allRoutes = Container.instance().getAllRoutes();
 
@@ -77,13 +78,13 @@ public class MainActivity extends ActionBarActivity {
     protected void onStart(){
         super.onStart();
         ArrayAdapter<ProfileDay> profileAdapter = new RowAdapter(MainActivity.this, R.layout.row_item);
-        for(int i=0;i<7; i++){
+        for (int i = 0; i < 7; i++) {
             ProfileDay pd = new ProfileDay();
             pd.setWeekday(i);
-            for(int j=0; j<2;j++){
+            for (int j = 0; j < 2; j++) {
                 ProfileTarget target = new ProfileTarget();
                 target.setTime(new GregorianCalendar(2017, 9, i, 7, 0));
-                target.setLocation(new Location(495,284));
+                target.setLocation(new Location(495, 284));
                 pd.addTarget(target);
             }
             profileAdapter.add(pd);
@@ -109,30 +110,46 @@ public class MainActivity extends ActionBarActivity {
         } else {
             Log.e("SHIT", "No parent");
         }
+        this.drawRouteGraph(0, findViewById(android.R.id.content));
     }
 
 
-    AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener(){
+    AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            if(i==0){
+            if (i == 0) {
                 Intent intent = new Intent(MainActivity.this, ImproveActivity.class);
                 startActivity(intent);
             }
         }
     };
 
-    AdapterView.OnItemSelectedListener selectedListener = new AdapterView.OnItemSelectedListener(){
+    AdapterView.OnItemSelectedListener selectedListener = new AdapterView.OnItemSelectedListener() {
 
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             // load graphic of selected day
-            if(allRoutes.size()>0){
+            if (allRoutes.size() > 0) {
                 View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
                 GraphView graph = (GraphView) v.findViewById(R.id.graph);
                 TextView title = (TextView) v.findViewById(R.id.graph_title);
                 Route route = allRoutes.get(i);
+                this.drawRouteGraph(i, view);
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+
+        }
+
+        private void drawRouteGraph(int i, View view) {
+            View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
+            GraphView graph = (GraphView) v.findViewById(R.id.graph);
+            TextView title = (TextView) v.findViewById(R.id.graph_title);
+            Route route = allRoutes.get(i);
+            if (route != null) {
                 title.setText(String.valueOf(route.getScore()));
                 Diagram diagram = new Diagram(route);
                 graph.addSeries(diagram.draw());
@@ -147,12 +164,32 @@ public class MainActivity extends ActionBarActivity {
             }
 
         }
+    };
 
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {
+    private void drawRouteGraph(int i, View view) {
+        View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
+        GraphView graph = (GraphView) v.findViewById(R.id.graph);
+        TextView title = (TextView) v.findViewById(R.id.graph_title);
+        if (allRoutes.size() == 0) {
+            return;
+        }
+        Route route = allRoutes.get(i);
+        if (route == null) {
+            return;
+        }
+        title.setText(String.valueOf(route.getScore()));
+        Diagram diagram = new Diagram(route);
+        graph.addSeries(diagram.draw());
+        View oldView = view.findViewById(R.id.view_route_stats);
+        if (oldView != null) {
+            ViewGroup parent = (ViewGroup) oldView.getParent();
+            parent.removeView(oldView);
+            parent.addView(v);
+        } else {
+            Log.d("SHIT", "nop old view");
 
         }
-    };
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
