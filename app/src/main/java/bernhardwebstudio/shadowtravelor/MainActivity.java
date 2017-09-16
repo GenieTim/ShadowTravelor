@@ -27,6 +27,7 @@ import bernhardwebstudio.shadowtravelor.data.Diagram;
 import bernhardwebstudio.shadowtravelor.data.LocationTimeConnection;
 import bernhardwebstudio.shadowtravelor.data.Route;
 import bernhardwebstudio.shadowtravelor.data.RouteHistory;
+import bernhardwebstudio.shadowtravelor.data.SampleData;
 import bernhardwebstudio.shadowtravelor.database.DBHelper;
 
 
@@ -46,6 +47,9 @@ public class MainActivity extends ActionBarActivity {
         ArrayAdapter<String> dateSelection = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item);
 
         this.helper = new DBHelper(MainActivity.this, DBHelper.DB_NAME, null, DBHelper.currentVersion);
+
+        new SampleData(this.helper);
+
         allRoutes = helper.getAllRoutes();
         for(int i=0; i<allRoutes.size(); i++){
             dateSelection.add(allRoutes.get(i).getDate().toString());
