@@ -7,9 +7,10 @@
     <string name="title_activity_improve">ImproveActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="route_history_title">History</string>
-    <string name="route_history_vertical_axis">DateTime</string>
-    <string name="route_history_horizontal_axis">Score</string>
+    <string name="route_history_vertical_axis">Score</string>
+    <string name="route_history_horizontal_axis">DateTime</string>
     <string name="route_vertical_axis">Velocity</string>
     <string name="route_horizontal_axis">Time</string>
+    <string name="last_score">Last Score</string>
 
 </resources>

@@ -52,7 +52,7 @@ public class Diagram {
     private DataPoint[] drawRouteHistory() {
         DataPoint[] datapoints = new DataPoint[this.routeHistory.getRoutes().size()];
         for (int i = 0; i < this.routeHistory.getRoutes().size(); i++) {
-            datapoints[i] = new DataPoint(this.routeHistory.getRoutes().get(i).getDate().getTimeInMillis() / 10000, this.routeHistory.getRoutes().get(i).getScore());
+            datapoints[i] = new DataPoint(this.routeHistory.getRoutes().get(i).getScore(), this.routeHistory.getRoutes().get(i).getDate().getTimeInMillis() / 10000);
         }
         return datapoints;
 

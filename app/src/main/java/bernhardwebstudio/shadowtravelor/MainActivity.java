@@ -146,6 +146,7 @@ public class MainActivity extends ActionBarActivity {
     };
 
     private void drawRouteGraph(int i, View view) {
+
         //View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
         GraphView graph = (GraphView) findViewById(R.id.view_route_stats);
         graph.getViewport().setScalable(true);
@@ -158,9 +159,13 @@ public class MainActivity extends ActionBarActivity {
             Log.e("TEST", "route null");
             return;
         } else {
-            Log.d("AllRoute lenght", String.valueOf(allRoutes.size()));
+            Log.d("AllRoute length", String.valueOf(allRoutes.size()));
             Log.d("Route length", String.valueOf(route.getRoute().size()));
         }
+
+        TextView last = (TextView) findViewById(R.id.last_score);
+        last.setText(getResources().getString(R.string.last_score) + ":" + String.valueOf(route.getScore()));
+
         //title.setText(String.valueOf(route.getScore()));
         Diagram diagram = new Diagram(route);
         graph.addSeries(diagram.draw());

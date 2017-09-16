@@ -9,10 +9,18 @@
         android:orientation="vertical"
         android:weightSum="10">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/last_score"
+            android:textAlignment="center"
+            android:padding="50dp"
+            />
+
         <Spinner
             android:id="@+id/select_date_spinner"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <com.jjoe64.graphview.GraphView
