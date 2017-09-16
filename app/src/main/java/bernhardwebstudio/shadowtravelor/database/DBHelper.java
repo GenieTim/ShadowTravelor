@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import bernhardwebstudio.shadowtravelor.data.Location;
@@ -17,6 +18,8 @@ import bernhardwebstudio.shadowtravelor.data.Route;
  * Created by Tim on 16.09.2017.
  */
 public class DBHelper extends SQLiteOpenHelper {
+
+    public static final String DB_NAME = "ShadowTravelorDB";
 
     public static final String TABLE_LOCATION = "Location";
     public static final String COLUMN_LONG = "Longitude";
@@ -58,7 +61,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     "Integer, FOREIGN KEY("+COLUMN_ID_ROUTE+") REFERENCES artist(Route.ID), FOREIGN KEY("+COLUMN_ID_POINT+") REFERENCES artist(LocationTime.ID));";
 
     public int oldVersion = 0;
-    public int currentVersion = 1;
+    public static int currentVersion = 1;
 
     public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -136,5 +139,9 @@ public class DBHelper extends SQLiteOpenHelper {
             return ltc;
         }
         return null;
+    }
+
+    public ArrayList<LocationTimeConnection> getLocationTimeConnection() {
+        return new ArrayList<LocationTimeConnection>();
     }
 }

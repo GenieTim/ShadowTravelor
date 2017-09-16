@@ -11,8 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+
+import java.util.ArrayList;
+
+import bernhardwebstudio.shadowtravelor.data.LocationTimeConnection;
+import bernhardwebstudio.shadowtravelor.database.DBHelper;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -29,6 +35,14 @@ public class MainActivity extends ActionBarActivity {
                     .commit();
         }
         selectDateSpinner = (Spinner) findViewById(R.id.select_date_spinner);
+        ArrayAdapter<String> dateSelection = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item);
+
+        DBHelper helper = new DBHelper(MainActivity.this, DBHelper.DB_NAME, null, DBHelper.currentVersion);
+        ArrayList<LocationTimeConnection> al = helper.getLocationTimeConnection();
+        for(int i=0; i<al.size(); i++){
+            dateSelection.add(al.get(i).getDatetime().toString());
+        }
+        selectDateSpinner.setAdapter(dateSelection);
         selectDateSpinner.setOnItemSelectedListener(selectedListener);
 
         profileList = (ListView) findViewById(R.id.profile_list_view);
