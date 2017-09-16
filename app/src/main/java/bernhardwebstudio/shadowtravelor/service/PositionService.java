@@ -3,11 +3,14 @@ package bernhardwebstudio.shadowtravelor.service;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.display.DisplayManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.Display;
 
 import java.util.GregorianCalendar;
 import java.util.Observable;
@@ -30,36 +33,55 @@ public class PositionService implements Observer {
 
     @Override
     public void update(Observable observable, Object o) {
-        if(Container.instance().hasTimerStarted()){
+        if (Container.instance().hasTimerStarted()) {
             t = new LocationThread(context);
             t.start();
-        }else{
+        } else {
             t.interrupt();
         }
     }
 
-    public class LocationThread extends Thread{
+    public class LocationThread extends Thread {
 
         Context context;
 
-        public LocationThread(Context context){
+        public LocationThread(Context context) {
             this.context = context;
         }
 
         @Override
-        public void run(){
+        public void run() {
             LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
             LocationListener locationListener = new LocationListener() {
                 public void onLocationChanged(Location location) {
+                    LocationTimeConnection point = new LocationTimeConnection(new bernhardwebstudio.shadowtravelor.data.Location(location.getLatitude(), location.getLongitude()), new GregorianCalendar());
+
+                    int phoneUsage = LocationTimeConnection.NOT_USED;
+                    DisplayManager dm = (DisplayManager) context.getSystemService(Context.DISPLAY_SERVICE);
+                    AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+                    if (am.isMusicActive()) {
+                        phoneUsage = LocationTimeConnection.MUSIC;
+                    }
+                    for (Display display : dm.getDisplays()) {
+                        if (display.getState() != Display.STATE_OFF) {
+                            phoneUsage = LocationTimeConnection.SCREEN;
+                        }
+                    }
+
+                    point.setUsedSmartphone(phoneUsage);
                     Container.instance().getRoute().
-                            add(new LocationTimeConnection(new bernhardwebstudio.shadowtravelor.data.Location(location.getLatitude(), location.getLongitude()), new GregorianCalendar()));
+                            add(point);
+
                 }
 
-                public void onStatusChanged(String provider, int status, Bundle extras) {}
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+                }
 
-                public void onProviderEnabled(String provider) {}
+                public void onProviderEnabled(String provider) {
+                }
 
-                public void onProviderDisabled(String provider) {}
+                public void onProviderDisabled(String provider) {
+                }
             };
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         }

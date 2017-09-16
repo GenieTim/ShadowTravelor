@@ -67,6 +67,8 @@ public class Route {
     }
 
     public void calculateScore() {
+        // 1 point or every minute travelling
+        double tmp_score = (this.getRoute().get(this.getRoute().size() - 1).getDatetime().getTimeInMillis() - this.getRoute().get(0).getDatetime().getTimeInMillis()) / 60000;
 
     }
 }

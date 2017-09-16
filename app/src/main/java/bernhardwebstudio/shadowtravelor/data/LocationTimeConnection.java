@@ -16,9 +16,22 @@ public class LocationTimeConnection {
         this.datetime = datetime;
     }
 
+    public LocationTimeConnection(Location location, GregorianCalendar datetime, int usage) {
+        this.usedSmartphone = usage;
+        this.location = location;
+        this.datetime = datetime;
+    }
+
     public LocationTimeConnection(Location location, GregorianCalendar datetime, double velocity) {
         this.location = location;
         this.datetime = datetime;
+        this.velocity = velocity;
+    }
+
+    public LocationTimeConnection(Location location, GregorianCalendar datetime, int usage, double velocity) {
+        this.location = location;
+        this.datetime = datetime;
+        this.usedSmartphone = usage;
         this.velocity = velocity;
     }
 
@@ -29,9 +42,22 @@ public class LocationTimeConnection {
         this.score = score;
     }
 
+    public LocationTimeConnection(Location location, GregorianCalendar datetime, int usage, double velocity, double score) {
+        this.location = location;
+        this.datetime = datetime;
+        this.usedSmartphone = usage;
+        this.velocity = velocity;
+        this.score = score;
+    }
+
+    public static final int NOT_USED = 0;
+    public static final int MUSIC = 1;
+    public static final int SCREEN = 2;
+
     private double score;
     private Location location;
     private GregorianCalendar datetime;
+    private int usedSmartphone = NOT_USED;
     private double velocity = 0.0;
 
     public void setDatetime(GregorianCalendar datetime) {
@@ -64,5 +90,13 @@ public class LocationTimeConnection {
 
     public double getScore() {
         return score;
+    }
+
+    public int getUsedSmartphone() {
+        return usedSmartphone;
+    }
+
+    public void setUsedSmartphone(int usedSmartphone) {
+        this.usedSmartphone = usedSmartphone;
     }
 }
