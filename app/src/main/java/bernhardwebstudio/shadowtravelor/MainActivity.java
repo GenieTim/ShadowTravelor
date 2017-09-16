@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,10 +59,6 @@ public class MainActivity extends ActionBarActivity {
 
         ArrayAdapter<String> dateSelection = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item);
 
-        DBHelper h = new DBHelper(MainActivity.this, DBHelper.DB_NAME, null, DBHelper.currentVersion);
-        //h.resetDB();
-        new SampleData(h);
-
         this.helper = new DBHelper(MainActivity.this, DBHelper.DB_NAME, null, DBHelper.currentVersion);
         allRoutes = helper.getAllRoutes();
         for(int i=0; i<allRoutes.size(); i++){
@@ -96,10 +93,14 @@ public class MainActivity extends ActionBarActivity {
         graph.addSeries(diagram.draw());
         graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.route_history_vertical_axis));
         graph.getGridLabelRenderer().setHorizontalAxisTitle(getResources().getString(R.string.route_history_horizontal_axis));
-        /*View oldView = findViewById(R.id.view_route_history_stats);
-        ViewGroup parent = (ViewGroup) oldView.getParent();
-        parent.removeView(oldView);
-        parent.addView(v);*/
+        View oldView = findViewById(R.id.view_route_history_stats);
+        if (oldView != null) {
+            ViewGroup parent = (ViewGroup) oldView.getParent();
+            parent.removeView(oldView);
+            parent.addView(v);
+        } else {
+            Log.e("SHIT", "No parent");
+        }
     }
 
 
@@ -127,9 +128,13 @@ public class MainActivity extends ActionBarActivity {
             Diagram diagram = new Diagram(route);
             graph.addSeries(diagram.draw());
             View oldView = view.findViewById(R.id.view_route_stats);
-            ViewGroup parent = (ViewGroup) oldView.getParent();
-            parent.removeView(oldView);
-            parent.addView(v);
+            if (oldView != null) {
+                ViewGroup parent = (ViewGroup) oldView.getParent();
+                parent.removeView(oldView);
+                parent.addView(v);
+            } else {
+                Log.d("SHIT", "nop old view");
+            }
         }
 
         @Override
@@ -156,7 +161,8 @@ public class MainActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             //return true;
-            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            Intent intent = new Intent(getBaseContext(), SettingsActivity.class);
+
             startActivity(intent);
         }
 
