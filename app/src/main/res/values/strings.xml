@@ -4,6 +4,7 @@
     <string name="app_name">ShadowTravelor</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_share">Share Highscore</string>
     <string name="title_activity_improve">ImproveActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="route_history_title">History</string>
@@ -18,5 +19,6 @@
     <string name="wifi">WLAN SSID</string>
     <string name="sendData">Share Information</string>
     <string name="night">Night mode</string>
+    <string name="best_score">Best Score: 113</string>
 
 </resources>

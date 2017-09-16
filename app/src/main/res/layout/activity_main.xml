@@ -9,15 +9,28 @@
         android:orientation="vertical"
         android:weightSum="10">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="50dp"
+            android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/last_score"
             android:textAlignment="center"
             android:textSize="30dp"
-            android:padding="50dp"
             android:textColor="@color/sbb_red"
             />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/best_score"
+            android:textAlignment="center"
+            android:text="@string/best_score"
+            />
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"

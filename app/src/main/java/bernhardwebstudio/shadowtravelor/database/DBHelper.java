@@ -92,7 +92,7 @@ public class DBHelper extends SQLiteOpenHelper {
             Log.d("DATETIME gener 0", String.valueOf(date));
             values.put(COLUMN_TIME, date);
             values.put(COLUMN_LOC, i);
-            values.put(COLUMN_VELOCITY, 9*i+Math.round(Math.random()*10));
+            values.put(COLUMN_VELOCITY, 9*i+Math.round(Math.random()*50));
             db.insert(TABLE_LOC_TIME_CON, null, values);
         }
         for(int i=0; i<10; i++){

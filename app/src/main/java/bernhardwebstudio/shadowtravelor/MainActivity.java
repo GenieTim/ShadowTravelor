@@ -3,6 +3,8 @@ package bernhardwebstudio.shadowtravelor;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -47,6 +49,7 @@ public class MainActivity extends ActionBarActivity {
     private ListView profileList;
     private DBHelper helper;
     private ArrayList<Route> allRoutes;
+    private ShareActionProvider mShareActionProvider;
     ArrayList<ProfileDay> profileDays;
 
     @Override
@@ -63,7 +66,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    public void setSpinnerAdapter(){
+    public void setSpinnerAdapter() {
         //for final version
         this.helper = new DBHelper(MainActivity.this, DBHelper.DB_NAME, null, DBHelper.currentVersion);
         this.allRoutes = helper.getAllRoutes();
@@ -71,7 +74,7 @@ public class MainActivity extends ActionBarActivity {
         //for testing and demo
 
         ArrayAdapter<String> dateSelection = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
-        for(int i=0; i<allRoutes.size(); i++){
+        for (int i = 0; i < allRoutes.size(); i++) {
             SimpleDateFormat fmt = new SimpleDateFormat("dd.MM.yyyy");
             fmt.setCalendar(allRoutes.get(i).getDate());
             Log.d("DATETIME", String.valueOf(allRoutes.get(i).getDate().getTime()));
@@ -108,7 +111,7 @@ public class MainActivity extends ActionBarActivity {
 
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
 
         // draw Graph of RouteHistory
@@ -185,6 +188,14 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        // Locate MenuItem with ShareActionProvider
+        MenuItem item = menu.findItem(R.id.action_share);
+
+        // Fetch and store ShareActionProvider
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+
+        // Return true to display menu
         return true;
     }
 
@@ -202,6 +213,10 @@ public class MainActivity extends ActionBarActivity {
             Intent intent = new Intent(getBaseContext(), SettingsActivity.class);
 
             startActivity(intent);
+        } else if (id == R.id.action_share) {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+
+            mShareActionProvider.setShareIntent(intent);
         }
 
         return super.onOptionsItemSelected(item);

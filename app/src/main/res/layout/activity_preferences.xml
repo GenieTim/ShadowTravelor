@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
     android:layout_height="wrap_content"
@@ -31,3 +32,4 @@
 
     </PreferenceCategory>
 </PreferenceScreen>
+
