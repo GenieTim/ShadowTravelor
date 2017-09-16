@@ -20,6 +20,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -179,9 +181,9 @@ public class MainActivity extends ActionBarActivity {
     };
 
     private void drawRouteGraph(int i, View view) {
-        View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
-        GraphView graph = (GraphView) v.findViewById(R.id.graph);
-        TextView title = (TextView) v.findViewById(R.id.graph_title);
+        //View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
+        GraphView graph = (GraphView) findViewById(R.id.graph);
+        //TextView title = (TextView) v.findViewById(R.id.graph_title);
         if (allRoutes.size() == 0) {
             return;
         }
@@ -189,10 +191,16 @@ public class MainActivity extends ActionBarActivity {
         if (route == null) {
             return;
         }
-        title.setText(String.valueOf(route.getScore()));
-        Diagram diagram = new Diagram(route);
-        graph.addSeries(diagram.draw());
-        View oldView = view.findViewById(R.id.view_route_stats);
+        DataPoint[] dataPoint = new DataPoint[route.getRoute().size()];
+        for(int k=0; k<route.getRoute().size(); k++){
+            LocationTimeConnection ltc = route.getRoute().get(k);
+            dataPoint[k] = new DataPoint(ltc.getDatetime().getTimeInMillis(), ltc.getVelocity());
+        }
+        //title.setText(String.valueOf(route.getScore()));
+        //Diagram diagram = new Diagram(route);
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPoint);
+        graph.addSeries(series);
+        //View oldView = view.findViewById(R.id.view_route_stats);
         
         /*
         if (oldView != null) {
