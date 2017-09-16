@@ -13,6 +13,7 @@ import java.util.GregorianCalendar;
 import bernhardwebstudio.shadowtravelor.data.Location;
 import bernhardwebstudio.shadowtravelor.data.LocationTimeConnection;
 import bernhardwebstudio.shadowtravelor.data.Route;
+import bernhardwebstudio.shadowtravelor.data.RouteHistory;
 
 /**
  * Created by Tim on 16.09.2017.
@@ -107,6 +108,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public void insertRoute(Route route){
+        route.calculateVelocity();
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_SCORE, route.getScore());
@@ -125,7 +127,20 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public long getLocTimeId(LocationTimeConnection locTime){
         //finish implemetation
-        return 0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT LocationTime FROM TABLE "+TABLE_LOC_TIME_CON+","+TABLE_LOCATION+
+                " WHERE LocationTime.Time = "+locTime.getDatetime().getTimeInMillis()+" AND "+
+                "Location.ID = LocationTime.Location AND Location.Longtitude = " +
+                locTime.getLocation().getLongitude()+ "AND Location.Latitude = " +
+                locTime.getLocation().getLatitude() + ";", null);
+        if(cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            long id = cursor.getLong(0);
+            db.close;
+            return id;
+        }
+        db.close();
+        return Long.parseLong(null);
     }
 
     public LocationTimeConnection getLocationTimeConnectionByDate(GregorianCalendar cal){
@@ -139,6 +154,23 @@ public class DBHelper extends SQLiteOpenHelper {
             return ltc;
         }
         return null;
+    }
+
+    public RouteHistory getRouteHistory() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM TABLE "+TABLE_ROUTE+
+                " ORDER BY date DESC;", null);
+        RouteHistory rh = new RouteHistory();
+        while(cursor.moveToNext()) {
+            Route route = new Route();
+            route.setScore(cursor.getDouble(cursor.getColumnIndex(COLUMN_SCORE)));
+            GregorianCalendar date = new GregorianCalendar();
+            date.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
+            route.setDate(date);
+            rh.add(route);
+        }
+        cursor.close();
+        return rh;
     }
 
     public ArrayList<LocationTimeConnection> getLocationTimeConnection() {
