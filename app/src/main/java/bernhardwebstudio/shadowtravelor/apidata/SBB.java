@@ -22,8 +22,31 @@ public class SBB {
 
     }
 
-    public void getPassangerAmount(String time, String station) {
+    public InputStream getPassangerAmount(String station) throws IOException {
+        String url = "data.sbb.ch/";
+        if(station != null){
+            String query = "api/records/1.0/search/?dataset=passenger-frequence&q="+station;
 
+            URLConnection urlConnection = new URL(url).openConnection();
+            urlConnection.setUseCaches(false);
+            urlConnection.setDoOutput(true); // Triggers POST.
+            urlConnection.setRequestProperty("accept-charset", charset);
+            urlConnection.setRequestProperty("content-type", "application/x-www-form-urlencoded");
+
+            OutputStreamWriter writer = null;
+            try {
+                writer = new OutputStreamWriter(urlConnection.getOutputStream(), charset);
+                writer.write(query); // Write POST query string (if any needed).
+            } finally {
+                if (writer != null) try {
+                    writer.close();
+                } catch (IOException logOrIgnore) {
+                }
+            }
+
+            return urlConnection.getInputStream();
+        }
+        return null;
     }
 
     public void getStationNumber(String name) {
