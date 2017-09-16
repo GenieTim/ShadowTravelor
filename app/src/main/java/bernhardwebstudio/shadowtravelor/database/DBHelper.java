@@ -178,7 +178,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 gC.setTimeInMillis(cursor2.getLong(cursor2.getColumnIndex(COLUMN_DATE)));
                 LocationTimeConnection ltc = new LocationTimeConnection();
                 ltc.setDatetime(gC);
-                ltc.setVelocity(cursor2.getDouble(1));
+                ltc.setVelocity(cursor2.getDouble(cursor2.getColumnIndex(COLUMN_VELOCITY)));
                 r.add(ltc);
             }
             allRoutes.add(r);
