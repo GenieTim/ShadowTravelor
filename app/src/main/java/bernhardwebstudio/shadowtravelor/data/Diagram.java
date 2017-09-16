@@ -9,6 +9,8 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.util.Calendar;
 import java.util.Map;
 
+import bernhardwebstudio.shadowtravelor.R;
+
 /**
  * Created by Tim on 16.09.2017.
  */
@@ -52,7 +54,7 @@ public class Diagram {
         if (datapoints != null) {
             LineGraphSeries<DataPoint> serie = new LineGraphSeries<>(datapoints);
             serie.setDrawBackground(true);
-            serie.setBackgroundColor(Color.BLUE);
+            serie.setBackgroundColor(R.color.sbb_red);
             return serie;
         } else {
             return new LineGraphSeries<>();

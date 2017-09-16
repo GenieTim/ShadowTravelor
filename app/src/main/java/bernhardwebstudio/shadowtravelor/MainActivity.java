@@ -138,13 +138,16 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            Log.d("TEST", "Something selected");
             // load graphic of selected day
             if (allRoutes.size() > 0) {
                 //View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
-                GraphView graph = (GraphView) view.findViewById(R.id.view_route_stats);
+                GraphView graph = (GraphView) findViewById(R.id.view_route_stats);
 
                 if (graph != null) {
                     drawRouteGraph(i, graph);
+                } else {
+                    Log.e("TEST", "NO Graph");
                 }
             }
         }
@@ -168,6 +171,7 @@ public class MainActivity extends ActionBarActivity {
         Diagram diagram = new Diagram(route);
         graph.getViewport().setScalable(true);
 
+        graph.removeAllSeries();
         graph.addSeries(diagram.draw());
     }
 
