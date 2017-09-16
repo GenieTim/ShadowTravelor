@@ -146,6 +146,15 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Route> getAllRoutes(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Route", null);
+        cursor.moveToFirst();
+        ArrayList<Route> allRoutes = new ArrayList<Route>();
+        for(int i=0; i<allRoutes.size(); i++){
+            Route r = new Route();
+            int id = cursor.getInt(0);
+            r.setDate(cursor.getDouble());
+        }
 
         return new ArrayList<Route>();
     }
