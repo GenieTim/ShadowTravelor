@@ -28,6 +28,10 @@ import static android.net.ConnectivityManager.*;
 @TargetApi(23)
 public class SettingsActivity extends Activity {
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +39,9 @@ public class SettingsActivity extends Activity {
 
     }
 
+    /**
+     * Saves SSID of used Wifi Hotspot in SharedPreferences
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -62,6 +69,9 @@ public class SettingsActivity extends Activity {
         });
     }
 
+    /**
+     * Resets SSID in SharedPreferences
+     */
     protected void reset() {
         Context context = this.getApplicationContext();
         Intent intent = getIntent();
