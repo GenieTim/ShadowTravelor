@@ -65,14 +65,14 @@ public class Diagram {
      */
     private DataPoint[] drawRoute() {
         this.route.sort();
-        DataPoint[] datapoints = new DataPoint[this.route.getRoute().size()];
+        /*DataPoint[] datapoints = new DataPoint[this.route.getRoute().size()];
         for (int i = 0; i < this.route.getRoute().size(); i++) {
            datapoints[i] = new DataPoint(Math.round(this.route.getRoute().get(i).getDatetime().get(Calendar.MINUTE) / 100), this.route.getRoute().get(i).getVelocity());
-        }
-        /*
+        }*/
+        DataPoint[] datapoints = new DataPoint[10];
         for (int i = 0; i < 10; i++) {
             datapoints[i] = new DataPoint(i, i*i % 3 + 0.5 + Math.round(Math.random() * 10));
-        }*/
+        }
         return datapoints;
     }
 
