@@ -108,15 +108,15 @@ public class MainActivity extends ActionBarActivity {
         // activate horizontal zooming and scrolling
         graph.getViewport().setScalable(true);
 
-        View oldView = findViewById(R.id.view_route_history_stats);
+        /*View oldView = findViewById(R.id.view_route_history_stats);
         if (oldView != null) {
             ViewGroup parent = (ViewGroup) oldView.getParent();
             parent.removeView(oldView);
             parent.addView(v);
         } else {
             Log.e("SHIT", "No parent");
-        }
-        this.drawRouteGraph(0, findViewById(android.R.id.content));
+        }*/
+        drawRouteGraph(0, findViewById(android.R.id.content));
     }
 
 
@@ -141,7 +141,7 @@ public class MainActivity extends ActionBarActivity {
                 GraphView graph = (GraphView) v.findViewById(R.id.graph);
                 TextView title = (TextView) v.findViewById(R.id.graph_title);
                 Route route = allRoutes.get(i);
-                this.drawRouteGraph(i, view);
+                drawRouteGraph(i, view);
             }
         }
 
@@ -150,7 +150,7 @@ public class MainActivity extends ActionBarActivity {
 
         }
 
-        private void drawRouteGraph(int i, View view) {
+        /*private void drawRouteGraph(int i, View view) {
             View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
             GraphView graph = (GraphView) v.findViewById(R.id.graph);
             TextView title = (TextView) v.findViewById(R.id.graph_title);
@@ -170,7 +170,7 @@ public class MainActivity extends ActionBarActivity {
             } else {
                 Log.d("SHIT", "nop old view");
             }
-        }
+        }*/
     };
 
     private void drawRouteGraph(int i, View view) {
@@ -188,6 +188,8 @@ public class MainActivity extends ActionBarActivity {
         Diagram diagram = new Diagram(route);
         graph.addSeries(diagram.draw());
         View oldView = view.findViewById(R.id.view_route_stats);
+        
+        /*
         if (oldView != null) {
             ViewGroup parent = (ViewGroup) oldView.getParent();
             parent.removeView(oldView);
@@ -195,7 +197,7 @@ public class MainActivity extends ActionBarActivity {
         } else {
             Log.d("SHIT", "nop old view");
 
-        }
+        }*/
     }
 
     @Override
