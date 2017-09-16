@@ -17,17 +17,17 @@ public class SampleData {
     Location zurichZoo = new Location(47.3845,8.5747);
 
 
-    GregorianCalendar Morning = new GregorianCalendar(2017,9,16,08,00);
+    GregorianCalendar Morning = new GregorianCalendar(2017,9,16,8,00);
     GregorianCalendar Noon = new GregorianCalendar(2017,9,16,13,00);
     GregorianCalendar afterNoon = new GregorianCalendar(2017,9,16,16,00);
     GregorianCalendar Evening = new GregorianCalendar(2017,9,16,19,00);
     GregorianCalendar Midnight = new GregorianCalendar(2017,9,16,23,00);
 
 
-    LocationTimeConnection techParkNow = new LocationTimeConnection(technoPark, Morning );
-    LocationTimeConnection techParkNow = new LocationTimeConnection(zurichHB, Noon );
-    LocationTimeConnection techParkNow = new LocationTimeConnection(zurichAirport, afterNoon );
-    LocationTimeConnection techParkNow = new LocationTimeConnection(zurichLindenhof, Evening );
-    LocationTimeConnection techParkNow = new LocationTimeConnection(zurichZoo, Midnight );
+    LocationTimeConnection lct1= new LocationTimeConnection(technoPark, Morning );
+    LocationTimeConnection lct2 = new LocationTimeConnection(zurichHB, Noon );
+    LocationTimeConnection lct3 = new LocationTimeConnection(zurichAirport, afterNoon );
+    LocationTimeConnection lct4 = new LocationTimeConnection(zurichLindenhof, Evening );
+    LocationTimeConnection lct5 = new LocationTimeConnection(zurichZoo, Midnight );
 
 }
