@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.GregorianCalendar;
 
 /**
  * Created by Benedict on 16.09.2017.
@@ -17,40 +18,48 @@ import java.net.URLEncoder;
 
 public class SBB {
 
-    public SBB(){
+    public SBB() {
 
     }
 
-    public void getPassangerAmount(String time, String station){
+    public void getPassangerAmount(String time, String station) {
 
     }
 
-    public void getStationNumber(String name){
+    public void getStationNumber(String name) {
 
     }
 
     @TargetApi(19)
-    public void getDepartures(String station){
+    public void getDepartures(String station) {
         InputStream is = null;
         try {
             is = httprequest("departure", station, "");
 
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
     }
 
-    public void getArrivals(String station){
+    public void getArrivals(String station) {
         InputStream is = null;
         try {
             is = httprequest("arrival", station, "");
 
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
     }
 
-    public void getConnection(String )
+
+    public void getConnection(String start, String stop, GregorianCalendar datetime) {
+        this.getConnection(start, stop, datetime, false);
+    }
+
+    // TODO!
+    public void getConnection(String start, String stop, GregorianCalendar datetime, boolean arrival) {
+
+    }
 
     private InputStream httprequest(String type, String station, String timestamp) throws IOException {
         String url = "https://api.opentransportdata.swiss/trias";
@@ -93,7 +102,10 @@ public class SBB {
             writer = new OutputStreamWriter(urlConnection.getOutputStream(), charset);
             writer.write(query); // Write POST query string (if any needed).
         } finally {
-            if (writer != null) try { writer.close(); } catch (IOException logOrIgnore) {}
+            if (writer != null) try {
+                writer.close();
+            } catch (IOException logOrIgnore) {
+            }
         }
 
         return urlConnection.getInputStream();
