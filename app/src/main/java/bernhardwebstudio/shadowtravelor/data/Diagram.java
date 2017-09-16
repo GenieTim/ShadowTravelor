@@ -1,9 +1,12 @@
 package bernhardwebstudio.shadowtravelor.data;
 
+import android.graphics.Color;
 import android.util.Log;
 
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+
+import java.util.Calendar;
 
 /**
  * Created by Tim on 16.09.2017.
@@ -46,7 +49,10 @@ public class Diagram {
         Log.d("TEST datapoints length", String.valueOf(datapoints.length));
 
         if (datapoints != null) {
-            return new LineGraphSeries<>(datapoints);
+            LineGraphSeries<DataPoint> serie = new LineGraphSeries<>(datapoints);
+            serie.setDrawBackground(true);
+            serie.setBackgroundColor(Color.BLUE);
+            return serie;
         } else {
             return new LineGraphSeries<>();
         }
@@ -60,7 +66,7 @@ public class Diagram {
         this.route.sort();
         DataPoint[] datapoints = new DataPoint[this.route.getRoute().size()];
         for (int i = 0; i < this.route.getRoute().size(); i++) {
-            datapoints[i] = new DataPoint(this.route.getRoute().get(i).getDatetime().getTimeInMillis() / 10000, this.route.getRoute().get(i).getVelocity());
+            datapoints[i] = new DataPoint(Math.round(this.route.getRoute().get(i).getDatetime().get(Calendar.MINUTE) / 100), this.route.getRoute().get(i).getVelocity());
         }
         return datapoints;
     }
@@ -72,7 +78,7 @@ public class Diagram {
     private DataPoint[] drawRouteHistory() {
         DataPoint[] datapoints = new DataPoint[this.routeHistory.getRoutes().size()];
         for (int i = 0; i < this.routeHistory.getRoutes().size(); i++) {
-            datapoints[i] = new DataPoint(this.routeHistory.getRoutes().get(i).getDate().getTimeInMillis() / 10000, this.routeHistory.getRoutes().get(i).getScore());
+            datapoints[i] = new DataPoint(this.routeHistory.getRoutes().get(i).getDate().getTimeInMillis() / 1000, this.routeHistory.getRoutes().get(i).getScore());
         }
         return datapoints;
 

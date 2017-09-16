@@ -74,8 +74,8 @@ public class MainActivity extends ActionBarActivity {
         for(int i=0; i<allRoutes.size(); i++){
             SimpleDateFormat fmt = new SimpleDateFormat("dd.MM.yyyy");
             fmt.setCalendar(allRoutes.get(i).getDate());
+            Log.d("DATETIME", String.valueOf(allRoutes.get(i).getDate().getTime()));
             String dateFormatted = fmt.format(allRoutes.get(i).getDate().getTime());
-
             dateSelection.add(dateFormatted);
         }
         selectDateSpinner.setAdapter(dateSelection);
@@ -109,13 +109,17 @@ public class MainActivity extends ActionBarActivity {
         //title.setText(R.string.route_history_title);
         RouteHistory rh = helper.getRouteHistory();
         Diagram diagram = new Diagram(rh);
+        graph.setTitleTextSize(75);
         graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.route_history_vertical_axis));
         graph.getGridLabelRenderer().setHorizontalAxisTitle(getResources().getString(R.string.route_history_horizontal_axis));
+        graph.setTitle(getResources().getString(R.string.route_history_title));
+
         // activate horizontal zooming and scrolling
         graph.getViewport().setScalable(true);
         graph.addSeries(diagram.draw());
 
-        drawRouteGraph(0, findViewById(android.R.id.content));
+        GraphView dayGraph = (GraphView) findViewById(R.id.view_route_stats);
+        drawRouteGraph(0, dayGraph);
     }
 
 
@@ -136,11 +140,12 @@ public class MainActivity extends ActionBarActivity {
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             // load graphic of selected day
             if (allRoutes.size() > 0) {
-                View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
-                GraphView graph = (GraphView) v.findViewById(R.id.graph);
-                TextView title = (TextView) v.findViewById(R.id.graph_title);
-                Route route = allRoutes.get(i);
-                drawRouteGraph(i, view);
+                //View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
+                GraphView graph = (GraphView) view.findViewById(R.id.view_route_stats);
+
+                if (graph != null) {
+                    drawRouteGraph(i, graph);
+                }
             }
         }
 
@@ -150,38 +155,20 @@ public class MainActivity extends ActionBarActivity {
         }
     };
 
-    private void drawRouteGraph(int i, View view) {
-        //View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
 
-        GraphView graph = (GraphView) findViewById(R.id.view_route_stats);
-        graph.getViewport().setScalable(true);
+    private void drawRouteGraph(int i, GraphView graph) {
         graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.route_vertical_axis));
         graph.getGridLabelRenderer().setHorizontalAxisTitle(getResources().getString(R.string.route_horizontal_axis));
 
-        //TextView title = (TextView) v.findViewById(R.id.graph_title);
-        Route route = allRoutes.get(i);
-        if (route == null) {
-            Log.e("TEST", "route null");
-            return;
-        } else {
-            Log.d("AllRoute lenght", String.valueOf(allRoutes.size()));
-            Log.d("Route length", String.valueOf(route.getRoute().size()));
-        }
+        Route route = this.allRoutes.get(i);
 
-        //title.setText(String.valueOf(route.getScore()));
+        TextView last = (TextView) findViewById(R.id.last_score);
+        last.setText(getResources().getString(R.string.last_score) + ": " + String.valueOf(route.getScore()));
+
         Diagram diagram = new Diagram(route);
-        graph.addSeries(diagram.draw());
-        //View oldView = view.findViewById(R.id.view_route_stats);
-        
-        /*
-        if (oldView != null) {
-            ViewGroup parent = (ViewGroup) oldView.getParent();
-            parent.removeView(oldView);
-            parent.addView(v);
-        } else {
-            Log.d("SHIT", "nop old view");
+        graph.getViewport().setScalable(true);
 
-        }*/
+        graph.addSeries(diagram.draw());
     }
 
     @Override
