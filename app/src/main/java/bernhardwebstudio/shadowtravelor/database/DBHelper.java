@@ -198,11 +198,11 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<Route> allRoutes = new ArrayList<Route>();
         for (int i = 0; i < allRoutes.size(); i++) {
             Route r = new Route();
-            int id = cursor.getInt(0);
+            long id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
             GregorianCalendar date = new GregorianCalendar();
             date.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
             r.setDate(date);
-            r.setScore(cursor.getDouble(1));
+            r.setScore(cursor.getDouble(cursor.getColumnIndex(COLUMN_SCORE)));
             Cursor cursor2 = db.rawQuery("SELECT Time, Velocity FROM LocationTime WHERE LocationTime.ID In (SELECT * FROM RoutePoints WHERE ID_Route = " + id + ");", null);
             cursor2.moveToFirst();
             for (int j = 0; j < cursor2.getCount(); j++) {
@@ -210,7 +210,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 gC.setTimeInMillis(cursor2.getLong(cursor2.getColumnIndex(COLUMN_DATE)));
                 LocationTimeConnection ltc = new LocationTimeConnection();
                 ltc.setDatetime(gC);
-                ltc.setVelocity(cursor2.getDouble(1));
+                ltc.setVelocity(cursor2.getDouble(cursor2.getColumnIndex(COLUMN_VELOCITY)));
                 r.add(ltc);
             }
             allRoutes.add(r);
@@ -225,12 +225,12 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
         List<String> tables = new ArrayList<>();
 
-// iterate over the result set, adding every table name to a list
+        // iterate over the result set, adding every table name to a list
         while (c.moveToNext()) {
             tables.add(c.getString(0));
         }
 
-// call DROP TABLE on every table name
+        // call DROP TABLE on every table name
         for (String table : tables) {
             String dropQuery = "DROP TABLE IF EXISTS " + table;
             db.execSQL(dropQuery);
