@@ -11,9 +11,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import bernhardwebstudio.shadowtravelor.R;
+import bernhardwebstudio.shadowtravelor.data.ProfileDay;
 
 /**
  * Created by Benedict on 16.09.2017.
@@ -21,6 +23,7 @@ import bernhardwebstudio.shadowtravelor.R;
 
 public class RowAdapter extends ArrayAdapter {
 
+    private ArrayList<ProfileDay> profileDays;
 
     public RowAdapter(@NonNull Context context, @LayoutRes int resource) {
         super(context, resource);
@@ -38,8 +41,9 @@ public class RowAdapter extends ArrayAdapter {
         super(context, resource, textViewResourceId, objects);
     }
 
-    public RowAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List objects) {
+    public RowAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull ArrayList<ProfileDay> objects) {
         super(context, resource, objects);
+        profileDays = objects;
     }
 
     public RowAdapter(@NonNull Context context, @LayoutRes int resource, @IdRes int textViewResourceId, @NonNull List objects) {
@@ -54,8 +58,15 @@ public class RowAdapter extends ArrayAdapter {
         }
         TextView day = (TextView) convertView.findViewById(R.id.day_text_label);
         ListView pdl = (ListView) convertView.findViewById(R.id.profile_detail_list);
-        
 
+        ProfileDay pd = profileDays.get(position);
+        day.setText(pd.getWeekday());
+
+        ArrayAdapter<String> profileAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1);
+        for(int i=0; i<pd.getRoute().size(); i++){
+            profileAdapter.add(pd.getRoute().get(i).getTime() + " - " + pd.getRoute().get(i).getLocation().getLatitude());
+        }
+        pdl.setAdapter(profileAdapter);
         return convertView;
     }
 }

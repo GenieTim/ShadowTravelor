@@ -9,15 +9,11 @@ import java.util.GregorianCalendar;
 public class ProfileTarget {
 
     private Location location;
-    private int weekday;
+
     private GregorianCalendar time;
 
     public GregorianCalendar getTime() {
         return time;
-    }
-
-    public int getWeekday() {
-        return weekday;
     }
 
     public Location getLocation() {
@@ -32,7 +28,4 @@ public class ProfileTarget {
         this.time = time;
     }
 
-    public void setWeekday(int weekday) {
-        this.weekday = weekday;
-    }
 }

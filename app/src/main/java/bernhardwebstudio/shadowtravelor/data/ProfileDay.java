@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class ProfileDay {
 
+    private int weekday;
+
     private ArrayList<ProfileTarget> route;
 
     public void addTarget(ProfileTarget target) {
@@ -16,5 +18,13 @@ public class ProfileDay {
 
     public ArrayList<ProfileTarget> getRoute() {
         return route;
+    }
+
+    public int getWeekday() {
+        return weekday;
+    }
+
+    public void setWeekday(int weekday) {
+        this.weekday = weekday;
     }
 }
