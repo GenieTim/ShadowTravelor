@@ -88,14 +88,18 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         for(int i=0; i<10; i++){
             ContentValues values = new ContentValues();
-            values.put(COLUMN_TIME, 1505590419784f-i*200000f);
+            float date = 1505590419784f-i*2000000f+Math.round(Math.random()*200);
+            Log.d("DATETIME gener 0", String.valueOf(date));
+            values.put(COLUMN_TIME, date);
             values.put(COLUMN_LOC, i);
             values.put(COLUMN_VELOCITY, 9*i+Math.round(Math.random()*10));
             db.insert(TABLE_LOC_TIME_CON, null, values);
         }
         for(int i=0; i<10; i++){
             ContentValues values = new ContentValues();
-            values.put(COLUMN_TIME, 1505590419784f-i*18000000f);
+            float date = 1505590419784f-i*180000000;
+            Log.d("DATETIME gener 1", String.valueOf(date));
+            values.put(COLUMN_TIME, date);
             values.put(COLUMN_LOC, i+10);
             values.put(COLUMN_VELOCITY, 5*i+Math.round(Math.random()*15));
             db.insert(TABLE_LOC_TIME_CON, null, values);
@@ -103,13 +107,14 @@ public class DBHelper extends SQLiteOpenHelper {
         for(int i=0; i<5; i++){
             ContentValues values = new ContentValues();
             values.put(COLUMN_SCORE, 100*i%2+15+i%3+Math.round(Math.random()*20));
-            float date = 1505590419784f - 900000000f*i;
+            float date = 1505590419784f - 9000000000f*i;
+            Log.d("DATETIME gener 2", String.valueOf(date));
             values.put(COLUMN_DATE, date);
             db.insert(TABLE_ROUTE, null, values);
         }
         for(int i=0; i<20; i++){
             ContentValues values = new ContentValues();
-            values.put(COLUMN_ID_ROUTE, Math.round(i/5));
+            values.put(COLUMN_ID_ROUTE, Math.round(i/4));
             values.put(COLUMN_ID_POINT, i);
             if (0 > db.insert(TABLE_ROUTE_POINTS, null, values)) {
                 Log.e("ERROR", "Failed to insert");
@@ -212,7 +217,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
         ArrayList<Route> allRoutes = new ArrayList<Route>();
         if (cursor.getCount() > 0) {
-            for (int i = 0; i < cursor.getCount(); i++) {
+            do {
                 Route r = new Route();
                 long id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
                 GregorianCalendar date = new GregorianCalendar();
@@ -220,10 +225,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 r.setDate(date);
                 r.setScore(cursor.getDouble(cursor.getColumnIndex(COLUMN_SCORE)));
                 Cursor cursor2 = db.rawQuery("SELECT * FROM " + TABLE_LOC_TIME_CON + " WHERE " + TABLE_LOC_TIME_CON + ".ID In (SELECT " + COLUMN_ID_POINT + " FROM " + TABLE_ROUTE_POINTS + " WHERE ID_Route = " + id + ");", null);
-                Log.d("cursor2 COUNT", String.valueOf(cursor2.getCount()));
+                Log.d("cursor2 date", String.valueOf(date.getTimeInMillis()));
                 cursor2.moveToFirst();
                 if (cursor2.getCount() > 0) {
-                    for (int j = 0; j < cursor2.getCount(); j++) {
+                    do {
                         GregorianCalendar gC = new GregorianCalendar();
                         gC.setTimeInMillis(cursor2.getLong(cursor2.getColumnIndex(COLUMN_TIME)));
                         LocationTimeConnection ltc = new LocationTimeConnection();
@@ -232,12 +237,12 @@ public class DBHelper extends SQLiteOpenHelper {
                         ltc.setVolume(cursor2.getDouble(cursor2.getColumnIndex(COLUMN_VOLUME)));
                         r.add(ltc);
                         Log.i("LTC ADDED", String.valueOf(r.getRoute().size()));
-                    }
+                    } while (cursor2.moveToNext());
                 }
 
                 Log.d("r COUNT", String.valueOf(r.getRoute().size()));
                 allRoutes.add(r);
-            }
+            } while (cursor.moveToNext());
         }
         this.close();
         return allRoutes;
