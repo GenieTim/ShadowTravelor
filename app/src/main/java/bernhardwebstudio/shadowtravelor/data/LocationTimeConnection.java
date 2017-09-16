@@ -35,26 +35,10 @@ public class LocationTimeConnection {
         this.velocity = velocity;
     }
 
-    public LocationTimeConnection(Location location, GregorianCalendar datetime, double velocity, double score) {
-        this.location = location;
-        this.datetime = datetime;
-        this.velocity = velocity;
-        this.score = score;
-    }
-
-    public LocationTimeConnection(Location location, GregorianCalendar datetime, int usage, double velocity, double score) {
-        this.location = location;
-        this.datetime = datetime;
-        this.usedSmartphone = usage;
-        this.velocity = velocity;
-        this.score = score;
-    }
-
     public static final int NOT_USED = 0;
     public static final int MUSIC = 1;
     public static final int SCREEN = 3;
 
-    private double score;
     private Location location;
     private GregorianCalendar datetime;
     private int usedSmartphone = NOT_USED;
@@ -71,10 +55,6 @@ public class LocationTimeConnection {
 
     public void setVelocity(double velocity) {
         this.velocity = velocity;
-    }
-
-    public void setScore(double score) {
-        this.score = score;
     }
 
     public void setUsedSmartphone(int usedSmartphone) {
@@ -95,10 +75,6 @@ public class LocationTimeConnection {
 
     public double getVelocity() {
         return velocity;
-    }
-
-    public double getScore() {
-        return score;
     }
 
     public int getUsedSmartphone() {

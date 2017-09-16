@@ -18,27 +18,15 @@
         <com.jjoe64.graphview.GraphView
             android:layout_width="match_parent"
             android:layout_height="200dip"
-            android:id="@+id/graph"
+            android:id="@+id/view_route_stats"
             />
+
         <com.jjoe64.graphview.GraphView
             android:layout_width="match_parent"
             android:layout_height="200dip"
-            android:id="@+id/historygraph"
+            android:id="@+id/view_route_history_stats"
             />
 
-        <ViewStub
-            android:id="@+id/view_route_stats"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"
-            android:layout="@layout/statistics_graphic" />
-
-        <ViewStub
-            android:id="@+id/view_route_history_stats"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"
-            android:layout="@layout/statistics_graphic" />
 
         <ListView
             android:id="@+id/prof_list_view"

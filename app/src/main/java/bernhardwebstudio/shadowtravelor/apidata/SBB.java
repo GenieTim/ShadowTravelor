@@ -25,12 +25,21 @@ public class SBB {
 
     }
 
+    /**
+     *
+     * @param station
+     * @return average daily traffic
+     * @throws IOException
+     * @throws JSONException
+     */
     public int getPassangerAmount(String station) throws IOException, JSONException {
+        // set the base url for the api to connect
         String url = "data.sbb.ch/";
         String charset = "UTF-8";
         if(station != null){
+            //create the api request with the name of the station
             String query = "api/records/1.0/search/?dataset=passenger-frequence&q="+station;
-
+            //opern connection threw the url
             URLConnection urlConnection = new URL(url).openConnection();
             urlConnection.setUseCaches(false);
             urlConnection.setDoOutput(true); // Triggers POST.
@@ -47,22 +56,32 @@ public class SBB {
                 } catch (IOException logOrIgnore) {
                 }
             }
-
+            //response from the server hast to parsed from JSON into a workable format
             JSONObject obj = new JSONObject(urlConnection.getInputStream().toString());
             JSONArray records = obj.getJSONArray("records");
+            //the information we look for is another JSON object which is inside the array
             JSONObject fields = records.getJSONObject(2);
-
+            //dtv is the average daily traffic
             return fields.getInt("dtv");
         }
         return Integer.parseInt(null);
     }
 
+    /**
+     *
+     * @param name
+     * @return didok number/station id
+     * @throws IOException
+     * @throws JSONException
+     */
     public double getStationNumber(String name) throws IOException, JSONException {
+        //set the url for the connection later
         String url = "data.sbb.ch/";
         String charset = "UTF-8";
         if(name != null){
+            //create the api call with the given station name
             String query = "api/records/1.0/search/?dataset=haltestelle-visuell-taktile-sicherheitslinie&q="+name;
-
+            //open connection with api service
             URLConnection urlConnection = new URL(url).openConnection();
             urlConnection.setUseCaches(false);
             urlConnection.setDoOutput(true); // Triggers POST.
@@ -79,20 +98,26 @@ public class SBB {
                 } catch (IOException logOrIgnore) {
                 }
             }
-
+            //response from the server is being parsed from JSON into workable format
             JSONObject obj = new JSONObject(urlConnection.getInputStream().toString());
             JSONArray records = obj.getJSONArray("records");
+            //Pulling another JSON object out of the JSON array
             JSONObject fields = records.getJSONObject(2);
-
+            //inside the second JSON object is the didok number/station id
             return fields.getDouble("didok_nummer");
         }
         return Double.parseDouble(null);
     }
 
+    /**
+     *
+     * @param station
+     */
     @TargetApi(19)
     public void getDepartures(String station) {
         InputStream is = null;
         try {
+            //sends a request for all departing trains from @station
             is = httprequest("departure", station, "");
 
         } catch (Exception e) {
@@ -100,9 +125,14 @@ public class SBB {
         }
     }
 
+    /**
+     *
+     * @param station
+     */
     public void getArrivals(String station) {
         InputStream is = null;
         try {
+            //sends a request for all arriving trains in @station
             is = httprequest("arrival", station, "");
 
         } catch (Exception e) {
@@ -115,7 +145,13 @@ public class SBB {
         this.getConnection(start, stop, datetime, false);
     }
 
-
+    /**
+     *
+     * @param start
+     * @param stop
+     * @param datetime
+     * @param arrival
+     */
     public void getConnection(String start, String stop, GregorianCalendar datetime, boolean arrival) {
         String station = start + ", " + stop;
         try {
@@ -129,11 +165,21 @@ public class SBB {
         }
     }
 
+    /**
+     *
+     * @param type
+     * @param station
+     * @param timestamp
+     * @return
+     * @throws IOException
+     */
     private InputStream httprequest(String type, String station, String timestamp) throws IOException {
+        //url for a connection with the api later
         String url = "https://api.opentransportdata.swiss/trias";
         String charset = "UTF-8";
         String param1 = URLEncoder.encode("param1", charset);
         String param2 = URLEncoder.encode("param2", charset);
+        //the build for the request query
         String query = String.format("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<Trias version=\"1.1\" xmlns=\"http://www.vdv.de/trias\" xmlns:siri=\"http://www.siri.org.uk/siri\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
                 "    <ServiceRequest>\n" +
@@ -159,6 +205,7 @@ public class SBB {
                 "    </ServiceRequest>\n" +
                 "</Trias>", station, timestamp, type);
 
+        //open connection threw url
         URLConnection urlConnection = new URL(url).openConnection();
         urlConnection.setUseCaches(false);
         urlConnection.setDoOutput(true); // Triggers POST.
@@ -175,7 +222,7 @@ public class SBB {
             } catch (IOException logOrIgnore) {
             }
         }
-
+        //return content in InputStream
         return urlConnection.getInputStream();
     }
 

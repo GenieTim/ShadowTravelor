@@ -108,7 +108,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         for(int i=0; i<20; i++){
             ContentValues values = new ContentValues();
-            values.put(COLUMN_ID_ROUTE, i%5);
+            values.put(COLUMN_ID_ROUTE, i%10);
             values.put(COLUMN_ID_POINT, i);
             if (0 > db.insert(TABLE_ROUTE_POINTS, null, values)) {
                 Log.e("ERROR", "Failed to insert");
@@ -150,7 +150,6 @@ public class DBHelper extends SQLiteOpenHelper {
         route.calculateScore();
         SQLiteDatabase db = this.getWritableDatabase();
         // zero, insert Route
-        Log.d("TEST", "2");
         ContentValues route_value = new ContentValues();
         route_value.put(COLUMN_SCORE, route.getScore());
         route_value.put(COLUMN_DATE, route.getDate().getTimeInMillis());
@@ -219,7 +218,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 date.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
                 r.setDate(date);
                 r.setScore(cursor.getDouble(cursor.getColumnIndex(COLUMN_SCORE)));
-                Cursor cursor2 = db.rawQuery("SELECT " + COLUMN_TIME + ", " + COLUMN_VELOCITY + " FROM " + TABLE_LOC_TIME_CON + " WHERE LocationTime.ID In (SELECT " + COLUMN_ID_POINT + " FROM " + TABLE_ROUTE_POINTS + " WHERE ID_Route = " + id + ");", null);
+                Cursor cursor2 = db.rawQuery("SELECT * FROM " + TABLE_LOC_TIME_CON + " WHERE " + TABLE_LOC_TIME_CON + ".ID In (SELECT " + COLUMN_ID_POINT + " FROM " + TABLE_ROUTE_POINTS + " WHERE ID_Route = " + id + ");", null);
+                Log.d("cursor2 COUNT", String.valueOf(cursor2.getCount()));
                 cursor2.moveToFirst();
                 if (cursor2.getCount() > 0) {
                     for (int j = 0; j < cursor2.getCount(); j++) {
@@ -228,9 +228,13 @@ public class DBHelper extends SQLiteOpenHelper {
                         LocationTimeConnection ltc = new LocationTimeConnection();
                         ltc.setDatetime(gC);
                         ltc.setVelocity(cursor2.getDouble(cursor2.getColumnIndex(COLUMN_VELOCITY)));
+                        ltc.setVolume(cursor2.getDouble(cursor2.getColumnIndex(COLUMN_VOLUME)));
                         r.add(ltc);
+                        Log.i("LTC ADDED", String.valueOf(r.getRoute().size()));
                     }
                 }
+
+                Log.d("r COUNT", String.valueOf(r.getRoute().size()));
                 allRoutes.add(r);
             }
         }
