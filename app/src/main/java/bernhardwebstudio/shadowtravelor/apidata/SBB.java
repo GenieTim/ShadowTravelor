@@ -22,8 +22,32 @@ public class SBB {
 
     }
 
-    public void getPassangerAmount(String time, String station) {
+    public InputStream getPassangerAmount(String station) throws IOException {
+        String url = "data.sbb.ch/";
+        String charset = "UTF-8";
+        if(station != null){
+            String query = "api/records/1.0/search/?dataset=passenger-frequence&q="+station;
 
+            URLConnection urlConnection = new URL(url).openConnection();
+            urlConnection.setUseCaches(false);
+            urlConnection.setDoOutput(true); // Triggers POST.
+            urlConnection.setRequestProperty("accept-charset", charset);
+            urlConnection.setRequestProperty("content-type", "application/x-www-form-urlencoded");
+
+            OutputStreamWriter writer = null;
+            try {
+                writer = new OutputStreamWriter(urlConnection.getOutputStream(), charset);
+                writer.write(query); // Write POST query string (if any needed).
+            } finally {
+                if (writer != null) try {
+                    writer.close();
+                } catch (IOException logOrIgnore) {
+                }
+            }
+
+            return urlConnection.getInputStream();
+        }
+        return null;
     }
 
     public void getStationNumber(String name) {
@@ -58,7 +82,16 @@ public class SBB {
 
     // TODO!
     public void getConnection(String start, String stop, GregorianCalendar datetime, boolean arrival) {
+        String station = start + ", " + stop;
+        try {
+            if (arrival) {
+                httprequest("arrival", station, datetime.toString());
+            } else {
+                httprequest("departure", station, datetime.toString());
+            }
+        } catch(IOException e){
 
+        }
     }
 
     private InputStream httprequest(String type, String station, String timestamp) throws IOException {

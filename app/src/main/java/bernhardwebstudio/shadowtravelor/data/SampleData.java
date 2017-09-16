@@ -3,7 +3,7 @@ package bernhardwebstudio.shadowtravelor.data;
 import java.util.GregorianCalendar;
 
 /**
- * Created by root on 16.09.17.
+ * Created by Cihad on 16.09.17.
  */
 
 public class SampleData {
@@ -11,6 +11,23 @@ public class SampleData {
     Route rotas = new Route();
 
     Location technoPark = new Location(47.389161,8.5150677);
-    GregorianCalendar now = new GregorianCalendar(2017,9,16,13,38);
-    LocationTimeConnection sampLtc = new LocationTimeConnection(technoPark,now );
+    Location zurichHB = new Location(47.3783,8.52);
+    Location zurichAirport = new Location(47.4504,8.5619);
+    Location zurichLindenhof = new Location(47.3721811,8.5413182);
+    Location zurichZoo = new Location(47.3845,8.5747);
+
+
+    GregorianCalendar Morning = new GregorianCalendar(2017,9,16,8,00);
+    GregorianCalendar Noon = new GregorianCalendar(2017,9,16,13,00);
+    GregorianCalendar afterNoon = new GregorianCalendar(2017,9,16,16,00);
+    GregorianCalendar Evening = new GregorianCalendar(2017,9,16,19,00);
+    GregorianCalendar Midnight = new GregorianCalendar(2017,9,16,23,00);
+
+
+    LocationTimeConnection lct1= new LocationTimeConnection(technoPark, Morning );
+    LocationTimeConnection lct2 = new LocationTimeConnection(zurichHB, Noon );
+    LocationTimeConnection lct3 = new LocationTimeConnection(zurichAirport, afterNoon );
+    LocationTimeConnection lct4 = new LocationTimeConnection(zurichLindenhof, Evening );
+    LocationTimeConnection lct5 = new LocationTimeConnection(zurichZoo, Midnight );
+
 }
