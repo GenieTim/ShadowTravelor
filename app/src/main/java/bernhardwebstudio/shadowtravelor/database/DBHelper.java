@@ -156,4 +156,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<LocationTimeConnection> getLocationTimeConnection() {
         return new ArrayList<LocationTimeConnection>();
     }
+
+    public ArrayList<Route> getAllRoutes(){
+
+        return new ArrayList<Route>();
+    }
+
+    public Route getRouteById(int id){
+
+        return new Route();
+    }
 }
