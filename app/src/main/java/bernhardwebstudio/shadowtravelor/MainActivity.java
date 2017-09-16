@@ -54,6 +54,10 @@ public class MainActivity extends ActionBarActivity {
 
         ArrayAdapter<String> dateSelection = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item);
 
+        DBHelper h = new DBHelper(MainActivity.this, DBHelper.DB_NAME, null, DBHelper.currentVersion);
+        h.resetDB();
+        new SampleData(h);
+
         this.helper = new DBHelper(MainActivity.this, DBHelper.DB_NAME, null, DBHelper.currentVersion);
         allRoutes = helper.getAllRoutes();
         for(int i=0; i<allRoutes.size(); i++){
