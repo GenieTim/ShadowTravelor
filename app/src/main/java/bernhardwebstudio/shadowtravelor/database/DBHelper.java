@@ -13,6 +13,7 @@ import java.util.GregorianCalendar;
 import bernhardwebstudio.shadowtravelor.data.Location;
 import bernhardwebstudio.shadowtravelor.data.LocationTimeConnection;
 import bernhardwebstudio.shadowtravelor.data.Route;
+import bernhardwebstudio.shadowtravelor.data.RouteHistory;
 
 /**
  * Created by Tim on 16.09.2017.
@@ -152,6 +153,22 @@ public class DBHelper extends SQLiteOpenHelper {
             return ltc;
         }
         return null;
+    }
+
+    public RouteHistory getRouteHistory() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM TABLE "+TABLE_ROUTE+
+                " ORDER BY date;", null);
+        RouteHistory rh = new RouteHistory();
+        while(cursor.moveToNext()) {
+            Route route = new Route();
+            route.setScore(cursor.getDouble(cursor.getColumnIndex(COLUMN_SCORE)));
+            GregorianCalendar date = new GregorianCalendar();
+            date.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
+            route.setDate(date);
+            rh.add(route);
+        }
+        return rh;
     }
 
     public ArrayList<LocationTimeConnection> getLocationTimeConnection() {
