@@ -30,7 +30,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_VOLUME = "Volume";
     public static final String COLUMN_USAGE = "SmartphoneUsage";
     public static final String COLUMN_TIME = "Time";
-    public static final String COLUMN_LOC = "Location";
+    public static final String COLUMN_LOC = "Col_Location";
     public static final String COLUMN_VELOCITY = "Velocity";
 
     public static final String TABLE_ROUTE = "Route";
@@ -129,7 +129,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT LocationTime FROM TABLE "+TABLE_LOC_TIME_CON+","+TABLE_LOCATION+
                 " WHERE LocationTime.Time = "+locTime.getDatetime().getTimeInMillis()+" AND "+
-                "Location.ID = LocationTime.Location AND Location.Longtitude = " +
+                "Location.ID = LocationTime.Col_Location AND Location.Longtitude = " +
                 locTime.getLocation().getLongitude()+ "AND Location.Latitude = " +
                 locTime.getLocation().getLatitude() + ";", null);
         if(cursor.getCount() != 0) {
@@ -146,7 +146,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM TABLE "+TABLE_LOC_TIME_CON+","+TABLE_LOCATION+
                 " WHERE LocationTime.Time = "+cal.getTimeInMillis()+" AND "+
-                "Location.ID = LocationTime.Location;", null);
+                "Location.ID = LocationTime.Col_Location;", null);
         LocationTimeConnection ltc = new LocationTimeConnection();
         while(cursor.moveToNext()){
 
@@ -186,7 +186,7 @@ public class DBHelper extends SQLiteOpenHelper {
             date.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
             r.setDate(date);
             r.setScore(cursor.getDouble(1));
-            Cursor cursor2 = db.rawQuery("SELECT Time, Geschwindigkeit FROM LocationTime WHERE LocationTime.ID In (SELECT * FROM RoutePoints WHERE ID_Route = "+id+");", null);
+            Cursor cursor2 = db.rawQuery("SELECT Time, Velocity FROM LocationTime WHERE LocationTime.ID In (SELECT * FROM RoutePoints WHERE ID_Route = "+id+");", null);
             cursor2.moveToFirst();
             for(int j=0; j<cursor2.getCount(); j++){
                 GregorianCalendar gC = new GregorianCalendar();
