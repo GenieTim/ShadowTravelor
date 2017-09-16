@@ -135,9 +135,10 @@ public class DBHelper extends SQLiteOpenHelper {
         if(cursor.getCount() != 0) {
             cursor.moveToFirst();
             long id = cursor.getLong(0);
+            db.close;
             return id;
         }
-
+        db.close();
         return Long.parseLong(null);
     }
 
