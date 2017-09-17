@@ -41,6 +41,7 @@ import bernhardwebstudio.shadowtravelor.data.RouteHistory;
 import bernhardwebstudio.shadowtravelor.data.SampleData;
 import bernhardwebstudio.shadowtravelor.data.SampleRoute;
 import bernhardwebstudio.shadowtravelor.database.DBHelper;
+import bernhardwebstudio.shadowtravelor.management.MyPreferencesActivity;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -210,7 +211,7 @@ public class MainActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             //return true;
-            Intent intent = new Intent(getBaseContext(), SettingsActivity.class);
+            Intent intent = new Intent(getBaseContext(), MyPreferencesActivity.class);
 
             startActivity(intent);
         } else if (id == R.id.action_share) {

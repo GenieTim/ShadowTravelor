@@ -25,7 +25,7 @@
         </activity>
 
         <activity
-            android:name=".SettingsActivity"
+            android:name=".management.MyPreferencesActivity"
             android:label="@string/title_activity_settings" >
         </activity>
 
