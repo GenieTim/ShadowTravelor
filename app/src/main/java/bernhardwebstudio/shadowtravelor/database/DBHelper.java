@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
@@ -73,8 +72,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d("TEST", "creating database");
-
         db.execSQL(createTableLocation);
         db.execSQL(createTableLocationTime);
         db.execSQL(createTableRoute);
@@ -89,7 +86,6 @@ public class DBHelper extends SQLiteOpenHelper {
         for(int i=0; i<10; i++){
             ContentValues values = new ContentValues();
             float date = 1505590419784f-i*2000000f+Math.round(Math.random()*200);
-            Log.d("DATETIME gener 0", String.valueOf(date));
             values.put(COLUMN_TIME, date);
             values.put(COLUMN_LOC, i);
             values.put(COLUMN_VELOCITY, 9*i+Math.round(Math.random()*50));
@@ -98,7 +94,6 @@ public class DBHelper extends SQLiteOpenHelper {
         for(int i=0; i<10; i++){
             ContentValues values = new ContentValues();
             float date = 1505590419784f-i*180000000;
-            Log.d("DATETIME gener 1", String.valueOf(date));
             values.put(COLUMN_TIME, date);
             values.put(COLUMN_LOC, i+10);
             values.put(COLUMN_VELOCITY, 5*i+Math.round(Math.random()*15));
@@ -108,7 +103,6 @@ public class DBHelper extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
             values.put(COLUMN_SCORE, 100*i%2+15+i%3+Math.round(Math.random()*20));
             float date = 1505590419784f - 9000000000f*i;
-            Log.d("DATETIME gener 2", String.valueOf(date));
             values.put(COLUMN_DATE, date);
             db.insert(TABLE_ROUTE, null, values);
         }
@@ -117,7 +111,7 @@ public class DBHelper extends SQLiteOpenHelper {
             values.put(COLUMN_ID_ROUTE, Math.round(i/4));
             values.put(COLUMN_ID_POINT, i);
             if (0 > db.insert(TABLE_ROUTE_POINTS, null, values)) {
-                Log.e("ERROR", "Failed to insert");
+                //Log.e("ERROR", "Failed to insert");
             }
         }
     }
@@ -191,22 +185,18 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_ROUTE +
                 " ORDER BY " + COLUMN_DATE + " DESC;", null);
         RouteHistory rh = new RouteHistory();
-        Log.d("TEST", String.valueOf(cursor.getCount()));
         cursor.moveToFirst();
         if (cursor != null) {
             do {
                 Route route = new Route();
                 route.setScore(cursor.getDouble(cursor.getColumnIndex(COLUMN_SCORE)));
-                Log.d("TEST Score", String.valueOf(route.getScore()));
                 GregorianCalendar date = new GregorianCalendar();
                 date.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
                 route.setDate(date);
                 rh.add(route);
-                Log.d("rh lenght", String.valueOf(rh.getRoutes().size()));
             } while (cursor.moveToNext());
         }
         this.close();
-        Log.d("rh lenght", String.valueOf(rh.getRoutes().size()));
         return rh;
     }
 
@@ -225,7 +215,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 r.setDate(date);
                 r.setScore(cursor.getDouble(cursor.getColumnIndex(COLUMN_SCORE)));
                 Cursor cursor2 = db.rawQuery("SELECT * FROM " + TABLE_LOC_TIME_CON + " WHERE " + TABLE_LOC_TIME_CON + ".ID In (SELECT " + COLUMN_ID_POINT + " FROM " + TABLE_ROUTE_POINTS + " WHERE ID_Route = " + id + ");", null);
-                Log.d("cursor2 date", String.valueOf(date.getTimeInMillis()));
                 cursor2.moveToFirst();
                 if (cursor2.getCount() > 0) {
                     do {
@@ -236,11 +225,9 @@ public class DBHelper extends SQLiteOpenHelper {
                         ltc.setVelocity(cursor2.getDouble(cursor2.getColumnIndex(COLUMN_VELOCITY)));
                         ltc.setVolume(cursor2.getDouble(cursor2.getColumnIndex(COLUMN_VOLUME)));
                         r.add(ltc);
-                        Log.i("LTC ADDED", String.valueOf(r.getRoute().size()));
                     } while (cursor2.moveToNext());
                 }
 
-                Log.d("r COUNT", String.valueOf(r.getRoute().size()));
                 allRoutes.add(r);
             } while (cursor.moveToNext());
         }

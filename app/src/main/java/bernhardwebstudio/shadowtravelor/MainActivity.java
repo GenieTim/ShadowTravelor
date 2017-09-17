@@ -8,7 +8,6 @@ import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -76,7 +75,6 @@ public class MainActivity extends ActionBarActivity {
         for (int i = 0; i < allRoutes.size(); i++) {
             SimpleDateFormat fmt = new SimpleDateFormat("dd.MM.yyyy");
             fmt.setCalendar(allRoutes.get(i).getDate());
-            Log.d("DATETIME", String.valueOf(allRoutes.get(i).getDate().getTime()));
             String dateFormatted = fmt.format(allRoutes.get(i).getDate().getTime());
             dateSelection.add(dateFormatted);
         }
