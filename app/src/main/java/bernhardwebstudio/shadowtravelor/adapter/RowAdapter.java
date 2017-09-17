@@ -66,6 +66,14 @@ public class RowAdapter extends ArrayAdapter<ProfileDay> {
         profileDays.add(pd);
     }
 
+    /**
+     * Called by the OS for each row of the ListView
+     *
+     * @param position current position within the ListView
+     * @param convertView row of the ListView
+     * @param parent reference to the ListView
+     * @return the View corresponding to the current filled ListView row
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
@@ -75,6 +83,7 @@ public class RowAdapter extends ArrayAdapter<ProfileDay> {
         TextView day = (TextView) convertView.findViewById(R.id.day_text_label);
         ListView pdl = (ListView) convertView.findViewById(R.id.profile_detail_list);
 
+        //forward onClick Actions to parent View
         pdl.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -83,6 +92,7 @@ public class RowAdapter extends ArrayAdapter<ProfileDay> {
             }
         });
 
+        //forward onClick actions to parent view
         day.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,10 +107,9 @@ public class RowAdapter extends ArrayAdapter<ProfileDay> {
         ArrayAdapter<String> profileAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1);
         for (int i = 0; i < pd.getRoute().size(); i++) {
 
-
+            //extract human readable dateformat from time in milliseconds
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(pd.getRoute().get(i).getTime().getTimeInMillis());
-
             int hour = calendar.get(Calendar.HOUR_OF_DAY);
             int minute = calendar.get(Calendar.MINUTE);
             String time = hour + ":";
