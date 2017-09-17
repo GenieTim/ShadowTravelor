@@ -26,3 +26,27 @@ For every minute he spends walking without using his smartphone, he gets points.
 For every minute he bypasses rush hour, he gets points. 
 The points system is really mature, as it is even dependent on the volume of music the user is listening to!
 
+## Inspiration
+
+We were mostly inspired by the workshop given by the Zurich/T-Systems and the SBB teams as the problems they talked about seemed like they could be addressed and solved with technology that we could build
+
+## What it does
+The app tracks your movement and calculates the time you take between destinations.
+It also communicates with the SBB API in order to help the user prevent traffic jams and rush hours.
+Long and unoptimized routes punish the user by giving him a low score whereas short routes reward him with higher scores.
+Additionaly we track the usage in order to encourage attention to traffic.
+
+## How we built it
+We built an android app and used sqlite as our database language.
+
+## Challenges we ran into
+The biggest problem was visualization and how random the output often seemed.
+
+## Accomplishments that we're proud of
+Managing to get all that backend to actually produce an output :D
+
+## What we learned
+The swiss transport system provides a complex and useful API
+
+
+## What's next for ShadowTravelor
