@@ -67,11 +67,9 @@ public class MainActivity extends ActionBarActivity {
 
 
     public void setSpinnerAdapter() {
-        //for final version
+        // setup dropdown of elder Routes
         this.helper = new DBHelper(MainActivity.this, DBHelper.DB_NAME, null, DBHelper.currentVersion);
         this.allRoutes = helper.getAllRoutes();
-        Log.d("TEST allRoutes size", String.valueOf(allRoutes.size()));
-        //for testing and demo
 
         ArrayAdapter<String> dateSelection = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
         for (int i = 0; i < allRoutes.size(); i++) {
@@ -82,8 +80,6 @@ public class MainActivity extends ActionBarActivity {
             dateSelection.add(dateFormatted);
         }
         selectDateSpinner.setAdapter(dateSelection);
-
-
         profileDays = new ArrayList<ProfileDay>();
         for (int i = 1; i < 6; i++) {
             ProfileDay pd = new ProfileDay();
@@ -116,8 +112,6 @@ public class MainActivity extends ActionBarActivity {
 
         // draw Graph of RouteHistory
         GraphView graph = (GraphView) findViewById(R.id.view_route_history_stats);
-        //TextView title = (TextView) v.findViewById(R.id.graph_title);
-        //title.setText(R.string.route_history_title);
         RouteHistory rh = helper.getRouteHistory();
         Diagram diagram = new Diagram(rh);
         graph.setTitleTextSize(75);
@@ -129,13 +123,14 @@ public class MainActivity extends ActionBarActivity {
         graph.getViewport().setScalable(true);
         graph.addSeries(diagram.draw());
 
+        // draw Graph of last Route
         GraphView dayGraph = (GraphView) findViewById(R.id.view_route_stats);
         drawRouteGraph(0, dayGraph);
     }
 
 
     AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
-
+        // onclick on ListItem
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Intent intent = new Intent(MainActivity.this, ImproveActivity.class);
@@ -144,20 +139,13 @@ public class MainActivity extends ActionBarActivity {
     };
 
     AdapterView.OnItemSelectedListener selectedListener = new AdapterView.OnItemSelectedListener() {
-
+        // selected a day in the dropdown
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            Log.d("TEST", "Something selected");
             // load graphic of selected day
             if (allRoutes.size() > 0) {
-                //View v = getLayoutInflater().inflate(R.layout.statistics_graphic, null);
                 GraphView graph = (GraphView) findViewById(R.id.view_route_stats);
-
-                if (graph != null) {
                     drawRouteGraph(i, graph);
-                } else {
-                    Log.e("TEST", "NO Graph");
-                }
             }
         }
 
@@ -168,6 +156,7 @@ public class MainActivity extends ActionBarActivity {
     };
 
 
+    // draw graph of on Route
     private void drawRouteGraph(int i, GraphView graph) {
         graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.route_vertical_axis));
         graph.getGridLabelRenderer().setHorizontalAxisTitle(getResources().getString(R.string.route_horizontal_axis));
