@@ -1,11 +1,10 @@
 # ShadowTravelor
 
-ShadowTravelor is an Android-App to reduce stress in rush hour as well as help prevent 
-accidents on the streets.  
+ShadowTravelor is an Android-App which aims to  reduce stress during rush hour as well as help prevent accidents on the streets.  
 
-Your smartphone may be a super assistant to help find the way or catch the bus at the right. time. 
-BUT, it can also be a huge risk as it is easily disurbing, not only for yourself but for everyone 
-else if you just listen loud enough music. Its huge impact has to get under control!
+Your smartphone may be a super assistant to help you find the way or catch the bus at the right time 
+BUT, it can also be a huge risk as it is easily disturbing, not only for yourself but for everyone 
+else if you only listen to loud enough music. It's huge impact has to get under control!
 
 We have set our goals in symbiosis with the Workshops by Zurich and the Swiss Transport Associations. 
 We have found a solution following these criterias:
