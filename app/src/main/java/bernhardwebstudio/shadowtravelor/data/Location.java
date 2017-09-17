@@ -2,6 +2,9 @@ package bernhardwebstudio.shadowtravelor.data;
 
 /**
  * Created by Tim on 16.09.2017.
+ *
+ * Location Class including latitude and longtitude and
+ * getDistance function
  */
 public class Location {
     public Location() {

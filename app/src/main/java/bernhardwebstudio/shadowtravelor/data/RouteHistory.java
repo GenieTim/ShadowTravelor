@@ -6,6 +6,8 @@ import java.util.Comparator;
 
 /**
  * Created by Tim on 16.09.2017.
+ *
+ * Class in order to archive previous routes
  */
 public class RouteHistory {
     private ArrayList<Route> routes;
