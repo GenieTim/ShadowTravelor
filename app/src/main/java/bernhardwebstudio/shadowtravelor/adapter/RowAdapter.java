@@ -62,13 +62,13 @@ public class RowAdapter extends ArrayAdapter<ProfileDay> {
     }
 
     @Override
-    public void add(ProfileDay pd){
+    public void add(ProfileDay pd) {
         profileDays.add(pd);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView==null){
+        if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(resource, parent, false);
         }
@@ -95,7 +95,7 @@ public class RowAdapter extends ArrayAdapter<ProfileDay> {
         day.setText(weekdays[pd.getWeekday()].toString());
 
         ArrayAdapter<String> profileAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1);
-        for(int i=0; i<pd.getRoute().size(); i++){
+        for (int i = 0; i < pd.getRoute().size(); i++) {
 
 
             Calendar calendar = Calendar.getInstance();
@@ -104,15 +104,15 @@ public class RowAdapter extends ArrayAdapter<ProfileDay> {
             int hour = calendar.get(Calendar.HOUR_OF_DAY);
             int minute = calendar.get(Calendar.MINUTE);
             String time = hour + ":";
-            if(minute<10){
+            if (minute < 10) {
                 time = time + "0" + minute;
-            }else{
+            } else {
                 time = time + minute;
             }
-            String dest="";
-            if(hour>10){
+            String dest = "";
+            if (hour < 10) {
                 dest = "ETH";
-            }else{
+            } else {
                 dest = "Home";
             }
             profileAdapter.add(time + " Uhr - " + dest);

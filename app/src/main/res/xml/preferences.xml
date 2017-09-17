@@ -10,8 +10,8 @@
         <EditTextPreference
             android:key="edittext_preference"
             android:title="@string/wifi"
-            android:summary="summary_edittext_preference"
-            android:dialogTitle="dialog_title_edittext_preference" />
+            android:summary="@string/summary_edittext_preference"
+            android:dialogTitle="@string/dialog_title_edittext_preference" />
 
     </PreferenceCategory>
 
@@ -21,13 +21,13 @@
         <CheckBoxPreference
             android:key="nightmode"
             android:title="@string/night"
-            android:summary="summary_parent_preference" />
+            android:summary="@string/summary_nightmode_preference" />
 
 
         <CheckBoxPreference
             android:key="senddata"
-            android:title="@string/sendData"
-            android:summary="summary_parent_preference" />
+            android:title="@string/send_data"
+            android:summary="@string/summary_data_preference" />
 
     </PreferenceCategory>
 </PreferenceScreen>

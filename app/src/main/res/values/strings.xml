@@ -5,7 +5,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="action_share">Share Highscore</string>
-    <string name="title_activity_improve">ImproveActivity</string>
+    <string name="title_activity_improve">Search Improvement Recommendations</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="route_history_title">History</string>
     <string name="route_history_vertical_axis">Score</string>
@@ -17,8 +17,14 @@
     <string name="settings">Settings</string>
     <string name="security_settings">Security Settings</string>
     <string name="wifi">WLAN SSID</string>
-    <string name="sendData">Share Information</string>
+    <string name="send_data">Share Information</string>
     <string name="night">Night mode</string>
     <string name="best_score">Best Score: 113</string>
+    <string name="search">Search</string>
+    <string name="arrival_time">Arrival</string>
+    <string name="summary_edittext_preference">Your Home Network SSID</string>
+    <string name="dialog_title_edittext_preference">Enter your Home WLAN SSID</string>
+    <string name="summary_nightmode_preference">Protects your eyes at nighttime</string>
+    <string name="summary_data_preference">Help us improve passenger information</string>
 
 </resources>

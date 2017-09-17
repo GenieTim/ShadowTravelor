@@ -20,6 +20,7 @@ import bernhardwebstudio.shadowtravelor.service.PositionService;
  * Created by Benedict on 16.09.2017.
  */
 
+// listen for NetworkChange to detect when user leaves home network
 public class NetworkBroadcast extends BroadcastReceiver{
 
     @TargetApi(23)
@@ -27,7 +28,6 @@ public class NetworkBroadcast extends BroadcastReceiver{
     public void onReceive(Context context, Intent intent) {
         SharedPreferences preferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
         String homeNetwork = preferences.getString("ssid", "HackZurich2017");
-
 
         String action = intent.getAction();
         if (action.equals("android.net.conn.CONNECTIVITY_CHANGE")) {
