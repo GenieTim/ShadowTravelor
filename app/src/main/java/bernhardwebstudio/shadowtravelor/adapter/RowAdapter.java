@@ -109,7 +109,13 @@ public class RowAdapter extends ArrayAdapter<ProfileDay> {
             }else{
                 time = time + minute;
             }
-            profileAdapter.add(time + " Uhr - " + pd.getRoute().get(i).getLocation().getLatitude());
+            String dest="";
+            if(hour>10){
+                dest = "ETH";
+            }else{
+                dest = "Home";
+            }
+            profileAdapter.add(time + " Uhr - " + dest);
         }
         pdl.setAdapter(profileAdapter);
         return convertView;
