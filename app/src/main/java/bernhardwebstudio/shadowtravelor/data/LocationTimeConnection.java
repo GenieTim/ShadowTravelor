@@ -4,6 +4,9 @@ import java.util.GregorianCalendar;
 
 /**
  * Created by Tim on 16.09.2017.
+ *
+ * LocationTimeConnection class consisting of location and time
+ * in order to be able to calculate time between 2 locations
  */
 public class LocationTimeConnection {
 

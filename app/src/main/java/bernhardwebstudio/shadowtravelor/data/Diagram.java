@@ -13,6 +13,8 @@ import bernhardwebstudio.shadowtravelor.R;
 
 /**
  * Created by Tim on 16.09.2017.
+ *
+ * diagram class to visualize data
  */
 public class Diagram {
     private Route route;

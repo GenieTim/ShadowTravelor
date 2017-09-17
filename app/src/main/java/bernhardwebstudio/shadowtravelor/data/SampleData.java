@@ -8,6 +8,8 @@ import bernhardwebstudio.shadowtravelor.database.DBHelper;
 
 /**
  * Created by Cihad on 16.09.17.
+ *
+ * sample dates and locations
  */
 
 public class SampleData {

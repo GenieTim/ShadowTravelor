@@ -8,6 +8,8 @@ import java.util.Calendar;
 
 /**
  * Created by Tim on 16.09.2017.
+ *
+ * Route class which is basically an array of LocationTimeConnections
  */
 public class Route {
 
